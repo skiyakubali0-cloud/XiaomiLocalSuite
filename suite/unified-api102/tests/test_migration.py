@@ -39,8 +39,8 @@ class Migration(unittest.TestCase):
   s=s.replace('@UNIFIED_SHA@',self.state['local.xuanyuan.mipushcompat']['sha']);(self.r/'migration.sh').write_text(s)
   for cmd in ['id','getprop','am','pm','dumpsys']:
    q=bin/cmd;q.write_text(MOCK);q.chmod(0o755)
-  # Android and BSD stat differ; only the fixture's file-size use is translated.
-  q=bin/'stat';q.write_text('#!/bin/sh\n[ "$1" = -c ] && [ "$2" = %s ] || exit 90\n/usr/bin/stat -f %z "$3"\n');q.chmod(0o755)
+  # Emulate only Android stat's file-size call without relying on host stat syntax.
+  q=bin/'stat';q.write_text("#!/usr/bin/env python3\nimport os,sys\nif len(sys.argv)!=4 or sys.argv[1:3]!=['-c','%s']:sys.exit(90)\nprint(os.stat(sys.argv[3]).st_size)\n");q.chmod(0o755)
   self.env={**os.environ,'PATH':str(bin)+os.pathsep+os.environ['PATH'],'FIXTURE':str(self.r)}
  def tearDown(self):
   for p,v in self.data.items():self.assertEqual(p.read_bytes(),v)
@@ -51,8 +51,21 @@ class Migration(unittest.TestCase):
   self.assertEqual(self.run_action('remove').returncode,0);calls=self.calls();self.assertEqual(len(calls),5)
   self.assertEqual({x[-1] for x in calls},set(self.known));self.assertTrue(all(x[:4]==['uninstall','-k','--user','0'] for x in calls))
   self.assertIn('REBOOT_REQUIRED',self.run_action('status').stdout);(self.r/'boot').write_text('boot-b\n');self.assertIn('MIGRATION_READY',self.run_action('status').stdout)
-  self.assertEqual(self.run_action('restore').returncode,0);s=json.loads((self.r/'pm.json').read_text());self.assertTrue(all(x['installed'] for x in s.values()))
+  result=self.run_action('restore');self.assertEqual(result.returncode,0,'stdout:\n'+result.stdout+'stderr:\n'+result.stderr)
+  s=json.loads((self.r/'pm.json').read_text());self.assertTrue(all(x['installed'] for x in s.values()))
   self.assertTrue(all('com.mipay.wallet' not in x and 'com.xiaomi.xmsf' not in x for x in self.calls()))
+ def test_stat_fixture_reports_byte_size_for_spaced_path_and_symlink(self):
+  apk=self.r/'APK with spaces.apk';payload='字节'.encode('utf-8')+b'\x00\xff';apk.write_bytes(payload)
+  link=self.r/'linked APK.apk';link.symlink_to(apk)
+  for path in (apk,link):
+   with self.subTest(path=path.name):
+    result=subprocess.run([str(self.bin/'stat'),'-c','%s',str(path)],capture_output=True,text=True,env=self.env)
+    self.assertEqual(result.returncode,0,result.stderr);self.assertEqual(result.stdout,str(len(payload))+'\n');self.assertEqual(result.stderr,'')
+ def test_stat_fixture_rejects_unsupported_arguments(self):
+  for args in ([],['-f','%z','unused'],['-c','%s'],['-c','%s','unused','extra']):
+   with self.subTest(args=args):
+    result=subprocess.run([str(self.bin/'stat'),*args],capture_output=True,text=True,env=self.env)
+    self.assertEqual(result.returncode,90);self.assertEqual(result.stdout,'');self.assertEqual(result.stderr,'')
  def test_r2_xiaoai_requires_reviewed_replacement_before_removal(self):
   live=self.r/'modules/xuanyuan-os4-xiaoai';live.mkdir(parents=True);(live/'module.prop').write_text('versionCode=2026101502\n')
   result=self.run_action('remove');self.assertNotEqual(result.returncode,0);self.assertEqual(self.calls(),[])
