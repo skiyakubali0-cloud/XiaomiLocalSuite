@@ -12,15 +12,16 @@ import tkinter as tk
 from tkinter import filedialog, messagebox, scrolledtext, ttk
 
 import intake
+import environment
 import suite_builder as builder
 from gui_session import Session
 
 HERE = Path(__file__).resolve().parent
-GUI_VERSION = '0.4'
+GUI_VERSION = '0.5.0'
 REVIEWED = HERE / 'profiles/xuanyuan-eea-os4.0.0.6.json'
-KNOWN_TITLE = '小米15 Ultra · EEA OS4.0.0.6（完整1.4）'
+KNOWN_TITLE = '历史配方 · 小米15 Ultra（需自备完整1.4）'
 NEW_TITLE = '其他机型 · 从目标固件识别'
-SELECTED_TITLE = '小米15 Ultra · 刷入自动安装精选（不含钱包）'
+SELECTED_TITLE = '历史配方 · 三组件精选（需自备完整1.4）'
 KNOWN_COMPONENTS = [('market', '小米应用商店'), ('assistant', '智能助理负一屏'),
     ('xiaoai', '超级小爱'), ('phone', '电话、短信与录音'), ('gallery', '相册与AI编辑'),
     ('weather', '天气与街道定位'), ('disaster', '自然灾害预警与报警定位'),
@@ -50,7 +51,7 @@ class App:
         self.root = root
         root.title('小米套件构建工具 · ' + GUI_VERSION)
         root.geometry('1100x870')
-        root.minsize(950, 780)
+        root.minsize(950, 850)
         self.session = Session()
         self.sources = []
         self.busy = False
@@ -58,11 +59,11 @@ class App:
         self.events = queue.Queue()
         self.widgets = []
         self.row_map = {}
-        self.mode = tk.StringVar(value=KNOWN_TITLE)
+        self.mode = tk.StringVar(value=NEW_TITLE)
         self.target = tk.StringVar()
         self.source_summary = tk.StringVar()
         self.profile_id = tk.StringVar(value='my-device-os4')
-        self.workspace = tk.StringVar(value=str(HERE.parent / 'gui-workspace'))
+        self.workspace = tk.StringVar(value=str(Path.home() / 'XiaomiLocalSuite-work'))
         self.artifact = tk.StringVar()
         self.identity_text = tk.StringVar(value='选择机型配置或导入目标固件')
         self.last_output = None
@@ -97,10 +98,17 @@ class App:
         outer.pack(fill='both', expand=True)
         ttk.Label(outer, text='小米套件构建工具', style='Title.TLabel').pack(anchor='w')
         ttk.Label(outer, text='选择材料  →  勾选组件  →  检查兼容性  →  生成安装包', style='Hint.TLabel').pack(anchor='w', pady=(5, 12))
+        helpbar = ttk.Frame(outer)
+        helpbar.pack(fill='x', pady=(0, 8))
+        ttk.Label(helpbar, text='工具不含小米 APK / 固件。普通导入流程不需要旧版套件。', style='Hint.TLabel').pack(side='left')
+        self.help_button = self._button(helpbar, '使用教程', self.show_help)
+        self.help_button.pack(side='right')
+        self.environment_button = self._button(helpbar, '环境检查', self.check_environment)
+        self.environment_button.pack(side='right', padx=6)
         top = ttk.Frame(outer)
         top.pack(fill='x')
         ttk.Label(top, text='机型配置').pack(side='left', padx=(0, 10))
-        self.mode_box = ttk.Combobox(top, textvariable=self.mode, values=[KNOWN_TITLE, SELECTED_TITLE, NEW_TITLE], state='readonly', width=43)
+        self.mode_box = ttk.Combobox(top, textvariable=self.mode, values=[NEW_TITLE, KNOWN_TITLE, SELECTED_TITLE], state='readonly', width=43)
         self.mode_box.pack(side='left', fill='x', expand=True)
         self.mode_box.bind('<<ComboboxSelected>>', lambda _: self._mode_changed())
         self.widgets.append(self.mode_box)
@@ -161,7 +169,7 @@ class App:
         table = ttk.Frame(selection)
         table.pack(fill='both', expand=True, pady=(7, 0))
         columns = ('selected', 'name', 'package', 'state')
-        self.table = ttk.Treeview(table, columns=columns, show='headings', height=7, selectmode='browse')
+        self.table = ttk.Treeview(table, columns=columns, show='headings', height=5, selectmode='browse')
         for name, title, width in [('selected', '选择', 54), ('name', '组件 / APK', 200), ('package', '包名 / 目标', 460), ('state', '状态', 190)]:
             self.table.heading(name, text=title)
             self.table.column(name, width=width, minwidth=45, stretch=name in ('package', 'name'))
@@ -177,7 +185,7 @@ class App:
 
         reports = ttk.LabelFrame(outer, text='3 · 兼容报告与生成结果', padding=(10, 7))
         reports.pack(fill='both', expand=True, pady=(9, 8))
-        self.report_text = scrolledtext.ScrolledText(reports, height=7, wrap='word', font=('Menlo', 11), state='disabled')
+        self.report_text = scrolledtext.ScrolledText(reports, height=5, wrap='word', font=('Menlo', 11), state='disabled')
         self.report_text.pack(fill='both', expand=True)
         foot = ttk.Frame(outer)
         foot.pack(fill='x')
@@ -230,6 +238,25 @@ class App:
         self.updating = False
         self._render_rows()
         self._refresh()
+
+    def check_environment(self):
+        self._start('正在检查本机依赖，不下载或安装任何工具…', environment.inspect,
+                    lambda result: self._show(environment.format_report(result)))
+
+    def show_help(self):
+        path = HERE.parents[1] / 'docs/USER_GUIDE.md'
+        try:
+            text = path.read_text(encoding='utf-8')
+        except OSError:
+            self._show('未找到离线教程，请检查是否完整解压工具包。仓库中的 docs/USER_GUIDE.md 提供完整步骤。')
+            return
+        window = tk.Toplevel(self.root)
+        window.title('XiaomiLocalSuite · 离线使用教程')
+        window.geometry('900x700')
+        content = scrolledtext.ScrolledText(window, wrap='word', font=('Menlo', 12), padx=15, pady=15)
+        content.pack(fill='both', expand=True)
+        content.insert('1.0', text)
+        content.configure(state='disabled')
 
     def _materials(self):
         return str(Path(self.artifact.get()).expanduser().parent) if self.artifact.get().strip() else None
@@ -590,7 +617,7 @@ class App:
 
 def main():
     if sys.platform == 'darwin' and tk.TkVersion < 8.6:
-        raise SystemExit('系统自带Tk过旧，可能显示空白窗口。请使用启动图形界面.command，或带Tk8.6+的Python运行gui.py。')
+        raise SystemExit('Tk版本过旧。请使用 launchers/macOS.command，或带Tk8.6+的Python3.11+运行launch.py。')
     root = tk.Tk()
     App(root)
     root.mainloop()

@@ -71,13 +71,36 @@ class NativeUiTests(UiHarness, unittest.TestCase):
         self.assertTrue(self.app.build_button.instate(['disabled']))
         self.assertFalse(any(c['enabled'] for c in self.app.session.profile['components']))
 
-    def test_initial_reviewed_mode_requires_check(self):
+    def test_initial_import_mode_needs_no_private_suite(self):
+        self.assertEqual(self.app.mode.get(), gui.NEW_TITLE)
+        self.assertIsNone(self.app.session.profile)
+        self.assertEqual(self.app.table.get_children(), ())
+        self.assertTrue(self.app.build_button.instate(['disabled']))
+        self.assertFalse(self.app.analyse_button.instate(['disabled']))
+        self.assertTrue(self.app.new_frame.winfo_manager())
+        self.assertFalse(self.app.known_frame.winfo_manager())
+
+    def test_legacy_reviewed_mode_requires_check(self):
+        self.app.mode.set(gui.KNOWN_TITLE)
+        self.app._mode_changed()
         self.assertTrue(self.app.reviewed)
         self.assertEqual(len(self.app.table.get_children()), 11)
         self.assertTrue(self.app.build_button.instate(['disabled']))
         self.assertTrue(self.app.all_button.instate(['disabled']))
         self.assertIn('手机', self.app.selection_note.get())
         self.assertEqual(self.app.table.item('7', 'values')[3], '单独验证')
+
+    def test_environment_button_reports_missing_dependencies_without_changing_selection(self):
+        self.draft()
+        before = copy.deepcopy(self.app.session.profile)
+        with patch.object(gui.environment, 'inspect', return_value={'ready': False, 'checks': [
+                {'name': 'aapt2', 'ready': False, 'required': True, 'detail': 'SDK missing'}]}):
+            self.app.environment_button.invoke()
+            self.wait()
+        self.assertIn('aapt2', self.app.report_text.get('1.0', 'end'))
+        self.assertIn('环境尚未就绪', self.app.report_text.get('1.0', 'end'))
+        self.assertEqual(self.app.session.profile, before)
+        self.assertTrue(self.app.build_button.instate(['disabled']))
 
     def test_wallet_cannot_be_selected_and_all_toggle_invalidates(self):
         self.draft()

@@ -33,3 +33,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y xvfb xauth
       - name: Run public host validation
         run: xvfb-run -a python3 tools/run_tests.py
+      - name: Build and verify source-only desktop release
+        run: |
+          python3 tools/package_tool.py --output "$RUNNER_TEMP/XiaomiLocalSuite-Tool-0.5.0.zip"
+          python3 tools/package_tool.py --verify "$RUNNER_TEMP/XiaomiLocalSuite-Tool-0.5.0.zip"

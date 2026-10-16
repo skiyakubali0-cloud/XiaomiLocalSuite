@@ -16,7 +16,7 @@ import zipfile
 import intake
 
 HERE = Path(__file__).resolve().parent
-VERSION = '0.1'
+VERSION = '0.5.0'
 TOKEN = re.compile(r'[A-Za-z0-9][A-Za-z0-9_.-]{0,119}\Z')
 PACKAGE = re.compile(r'[a-zA-Z][a-zA-Z0-9_]*(?:\.[a-zA-Z0-9_]+)+\Z')
 SHA = re.compile(r'[0-9a-f]{64}\Z')
@@ -286,7 +286,7 @@ def overlay_files(profile, report):
         "ui_print 'Candidate APK overlay only. Reboot to activate; disable this module and reboot to restore mounts.'",
         "ui_print 'No app-data, wallet, XMSF, permission, role or LSPosed settings changed.'", ''])
     prop = ('id=xiaomi-profile-' + profile['id'] + '\nname=Xiaomi APK candidate ' + profile['id'] +
-            '\nversion=0.1-candidate\nversionCode=1\nauthor=local\ndescription=Exact-ROM APK overlay; static checks only; no wallet migration or data reset.\n')
+            '\nversion=0.5.0-candidate\nversionCode=5\nauthor=local\ndescription=Exact-ROM APK overlay; static checks only; no wallet migration or data reset.\n')
     public = {'schema': 1, 'profile': profile['id'], 'target': target, 'qualification': report['state'],
               'wallet': report['wallet'], 'device_tested': False,
               'components': [{k: v for k, v in c.items() if not k.endswith('_apk')} for c in report['components']]}
