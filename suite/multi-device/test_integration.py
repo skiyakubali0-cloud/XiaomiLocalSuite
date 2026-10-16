@@ -63,7 +63,7 @@ class SignedApkIntegration(unittest.TestCase):
         self.assertEqual(apk['package'], 'local.builder.fixture')
         self.assertEqual(apk['min_sdk'], 30)
         self.assertEqual(apk['requested_permissions'], ['android.permission.INTERNET'])
-        self.assertTrue(apk['signature_verified'])
+        self.assertTrue(apk['signature_verified'], apk['warnings'])
         self.assertTrue(apk['metadata_complete'])
         self.assertEqual(len(apk['signers_sha256']), 1)
 
@@ -117,7 +117,7 @@ class SignedApkIntegration(unittest.TestCase):
             '--out', signed, unsigned])), check=True, capture_output=True)
         apk = intake.scan(signed)['apks'][0]
         self.assertTrue(apk['metadata_complete'])
-        self.assertTrue(apk['signature_verified'])
+        self.assertTrue(apk['signature_verified'], apk['warnings'])
         self.assertTrue(apk['requires_splits'])
         p = b.draft('split-base-test', self.target, signed)
         p['components'][0]['enabled'] = True

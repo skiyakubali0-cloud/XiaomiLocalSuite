@@ -7,6 +7,9 @@ permissions:
 jobs:
   host:
     runs-on: ubuntu-latest
+    env:
+      ANDROID_HOME: ${{ runner.temp }}/android-sdk
+      ANDROID_SDK_ROOT: ${{ runner.temp }}/android-sdk
     steps:
       - uses: actions/checkout@v4
         with:
@@ -25,5 +28,7 @@ jobs:
           log-accepted-android-sdk-licenses: false
       - name: Fetch exact compile dependencies
         run: python3 suite/unified-api102/fetch_dependencies.py --download
+      - name: Install virtual display for GUI tests
+        run: sudo apt-get update && sudo apt-get install -y xvfb xauth
       - name: Run public host validation
-        run: python3 tools/run_tests.py
+        run: xvfb-run -a python3 tools/run_tests.py
