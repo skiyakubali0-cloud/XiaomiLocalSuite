@@ -20,7 +20,8 @@ MANIFEST = 'SHA256SUMS'
 METADATA = 'SOURCE.json'
 ROOT_FILES = {'README.md', 'LICENSE', 'NOTICE', 'CONTRIBUTING.md', 'SECURITY.md',
               'THIRD_PARTY_NOTICES.md', 'materials.lock.json', 'launch.py'}
-SOURCE_DIRS = {'clock', 'components', 'docs', 'launchers', 'native', 'phone', 'suite', 'tools'}
+SOURCE_DIRS = {'clock', 'components', 'docs', 'launchers', 'native', 'phone', 'suite', 'tools',
+               'xiaoai-privacy', 'xiaoai-suggestions'}
 TEXT_SUFFIXES = {'.py', '.sh', '.command', '.cmd', '.md', '.txt', '.json', '.xml',
                  '.java', '.cpp', '.S', '.prop', '.in', '.html', '.js', '.css', '.list'}
 TEXT_NAMES = {'skip_mount', 'use_china'}
@@ -39,6 +40,9 @@ REQUIRED_FILES = POSIX_LAUNCHERS | {
     'suite/multi-device/autoinstall.sh',
     'suite/multi-device/profiles/reviewed-recipes.json',
     'suite/multi-device/profiles/xuanyuan-eea-os4.0.0.6.json',
+    'xiaoai-privacy/src/local/xuanyuan/aiprivacy/Manager.java',
+    'xiaoai-privacy/src/local/xuanyuan/aiprivacy/PrivacyHook.java',
+    'xiaoai-suggestions/hook/src/local/xuanyuan/suggestioncompat/SuggestionHook.java',
 }
 
 

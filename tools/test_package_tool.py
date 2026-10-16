@@ -72,6 +72,7 @@ class PackageTests(unittest.TestCase):
             self.assertEqual(archive.read(p.TITLE + '/README.md'), b'Public source\n')
             self.assertNotIn(p.TITLE + '/docs/temporary.md', members)
             self.assertFalse(any('/.git' in name for name in members))
+            self.assertTrue(all(p.TITLE + '/' + name in members for name in p.REQUIRED_FILES))
             sums = archive.read(p.TITLE + '/' + p.MANIFEST).decode().splitlines()
             expected = {name[len(p.TITLE) + 1:] for name in members} - {p.MANIFEST}
             self.assertEqual({line.split('  ', 1)[1] for line in sums}, expected)

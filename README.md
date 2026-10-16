@@ -27,6 +27,8 @@
 
 要求Python3.11+、JDK17+；插件构建需要Android SDK platform36、build-tools36.0.0。目标运行ROM仍是Android17/API37，编译SDK36不是目标ROM声明。
 
+开发回归请先用 Git 克隆仓库；Release 解压目录不含 Git 元数据。运行图形工具和离线 ZIP 校验不需要 Git。
+
 ```sh
 export ANDROID_SDK_ROOT="$HOME/Android/Sdk"
 python3 suite/unified-api102/fetch_dependencies.py --download
