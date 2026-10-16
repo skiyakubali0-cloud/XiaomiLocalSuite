@@ -1,0 +1,6 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>应用商店</title>
+<style>body{font:17px system-ui;background:#15191e;color:#eee;padding:28px}button{display:block;width:100%;padding:18px;margin:16px 0;border:0;border-radius:16px;background:#b7dcff;color:#142b42;font:inherit}p{line-height:1.7;color:#bbc7d4}</style>
+<h1>应用商店</h1><p>默认关闭旧 GetApps，使用小米应用商店。可以随时重新开启，应用数据保留。</p><button data-cmd="disable">关闭旧商店</button><button data-cmd="enable">开启旧商店</button><pre id="status"></pre>
+<script>
+const status=document.getElementById('status');function run(a){if(!['enable','disable','status'].includes(a))return;if(!window.ksu){status.textContent='请从 KernelSU Next 模块的 WebUI 打开';return;}const cb='store'+Date.now();window[cb]=(c,o,e)=>{delete window[cb];status.textContent=o||e;};window.ksu.exec('/system/bin/sh /data/adb/modules/xuanyuan-os4-market/control.sh '+a,'{}',cb);}document.querySelectorAll('button').forEach(b=>b.onclick=()=>run(b.dataset.cmd));run('status');
+</script></html>

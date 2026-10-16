@@ -1,0 +1,17 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="local.xuanyuan.mipushcompat">
+    <uses-sdk android:minSdkVersion="34" android:targetSdkVersion="36" />
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <application android:label="小米本地化统一兼容" android:theme="@android:style/Theme.Material.Light.NoActionBar" android:allowBackup="false" android:supportsRtl="true">
+        <activity android:name="local.xuanyuan.unified.SettingsActivity" android:exported="true">
+            <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
+            <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="de.robv.android.xposed.category.MODULE_SETTINGS"/></intent-filter>
+        </activity>
+        <activity android:name="local.xuanyuan.unified.PresetActivity" android:exported="false" android:label="一键配置当前方案"/>
+        <activity android:name=".Manager" android:exported="true" android:label="MiPush应用与钱包推送"/>
+        <activity android:name="local.xuanyuan.disastercompat.EntryActivity" android:exported="true" android:label="预警与报警定位"/>
+        <receiver android:name="local.xuanyuan.unified.BootReceiver" android:exported="false"><intent-filter><action android:name="android.intent.action.BOOT_COMPLETED" /></intent-filter></receiver>
+        <provider android:name="io.github.libxposed.service.XposedProvider" android:authorities="local.xuanyuan.mipushcompat.XposedService" android:exported="true" />
+        <provider android:name=".DiagnosticProvider" android:authorities="local.xuanyuan.mipushcompat.diagnostics" android:exported="true" />
+    </application>
+</manifest>

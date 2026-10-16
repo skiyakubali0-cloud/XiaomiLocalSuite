@@ -1,0 +1,6 @@
+id=xuanyuan-os4-weather
+name=国行天气 · Android 17
+version=1.1 (18.0.0.23/27-R)
+versionCode=2026101302
+author=XiaomiLocalSuite contributors
+description=xuanyuan EEA OS4.0.0.6 专用；原签名国行天气，天气安装目录原生库局部地区兼容。保留数据，内置国际版回退。不需要LSPosed。

@@ -1,0 +1,165 @@
+[
+  {
+    "id": "market",
+    "title": "小米应用商店",
+    "version": "1.0",
+    "description": "小米商店与旧 GetApps 切换",
+    "dependencies": [],
+    "scopes": [],
+    "restoreLabel": "恢复旧商店",
+    "restoreNote": "开启旧 GetApps，隐藏小米商店并停用挂载，保留双方数据和商店更新。",
+    "restoreSupported": true,
+    "kind": "module",
+    "sha256": "1d53c4dd674930c1ed907e6b36aa71996b83860e48030fd9ba8be5ae9cb6ec1a",
+    "bytes": 49742958,
+    "source": "xuanyuan-os4-market-1.0.zip"
+  },
+  {
+    "id": "assistant",
+    "title": "智能助理负一屏",
+    "version": "1.4",
+    "description": "小米智能助理与 Google 信息流切换",
+    "dependencies": [],
+    "scopes": [],
+    "restoreLabel": "恢复 Google 负一屏",
+    "restoreNote": "切回 Google 并停用本组件；超级小爱启用时须先处理其依赖。",
+    "restoreSupported": true,
+    "kind": "module",
+    "sha256": "d2535c0d026827b5aa0c0a801ce0badc30cae515d09eb52026a4a8a1b9893537",
+    "bytes": 18987309,
+    "source": "xuanyuan-os4-assistant-1.4.zip"
+  },
+  {
+    "id": "xiaoai",
+    "title": "超级小爱",
+    "version": "1.6",
+    "description": "识屏、智控、建议与配套服务",
+    "dependencies": [
+      "assistant"
+    ],
+    "scopes": [
+      "AI识屏智控兼容：仅系统框架",
+      "小爱建议兼容：com.xiaomi.aicr、com.miui.personalassistant"
+    ],
+    "restoreLabel": "停用小爱组件",
+    "restoreNote": "先在系统设置切换默认助理；停用新增组件，保留数据及用户已授予的权限。",
+    "restoreSupported": true,
+    "kind": "module",
+    "sha256": "8955d71a115deb1f32924bdc1e0eef4fa8046531159aae179a444db7e2fa0413",
+    "bytes": 296061792,
+    "source": "xuanyuan-os4-xiaoai-1.6.zip"
+  },
+  {
+    "id": "phone",
+    "title": "电话、短信与录音",
+    "version": "1.7",
+    "description": "国行电话、短信、黄页和应用录音",
+    "dependencies": [
+      "market"
+    ],
+    "scopes": [
+      "电话短信兼容：com.android.mms、com.android.soundrecorder、com.miui.audiomonitor、com.miui.yellowpage、com.android.incallui、com.android.providers.telephony、com.android.phone"
+    ],
+    "restoreLabel": "恢复原电话短信",
+    "restoreNote": "恢复原默认应用及已知国际黄页、录音监控，停用国行组件。保留通话与短信数据。",
+    "restoreSupported": true,
+    "kind": "module",
+    "sha256": "2f3edb9b60a9444d47702cddff031b73f30f94da980fb1e05ffbf800f917a443",
+    "bytes": 54952138,
+    "source": "xuanyuan-os4-phone-1.7.zip"
+  },
+  {
+    "id": "gallery",
+    "title": "相册与 AI 编辑",
+    "version": "1.1",
+    "description": "国行相册、编辑器、插件与特效",
+    "dependencies": [],
+    "scopes": [],
+    "restoreLabel": "撤销相册挂载",
+    "restoreNote": "保留应用商店更新、照片和数据库，只撤销模块挂载；不会强行降级为国际版。",
+    "restoreSupported": true,
+    "kind": "module",
+    "sha256": "77da835bcb8123f288c50ec77b5f657772c34d64dc5e65842c30863313316335",
+    "bytes": 385252047,
+    "source": "xuanyuan-os4-gallery-1.1.zip"
+  },
+  {
+    "id": "weather",
+    "title": "天气与街道定位",
+    "version": "1.1",
+    "description": "支持天气23/27及街道地址解析",
+    "dependencies": [],
+    "scopes": [],
+    "restoreLabel": "恢复国际天气",
+    "restoreNote": "恢复精确国际天气及核心组件，保留城市和数据。",
+    "restoreSupported": true,
+    "kind": "module",
+    "sha256": "cdfb2867fe1f6837022be655134fa6653519b60e75dda3386fca7b2dc8ae4738",
+    "bytes": 134617576,
+    "source": "xuanyuan-os4-weather-1.1.zip"
+  },
+  {
+    "id": "disaster",
+    "title": "自然灾害预警与报警定位",
+    "version": "1.1",
+    "description": "预警中心、地震预警及报警辅助入口",
+    "dependencies": [],
+    "scopes": [
+      "自然灾害预警兼容：仅com.miui.securitycenter"
+    ],
+    "restoreLabel": "恢复国际手机管家",
+    "restoreNote": "撤销手机管家挂载并重启；不覆盖设置数据，不进行报警测试。",
+    "restoreSupported": true,
+    "kind": "module",
+    "sha256": "048c3c18d2a2ad82bdfc00f0106e9a38f80ecd09d1f18f4cb5573855e079aff3",
+    "bytes": 55708386,
+    "source": "xuanyuan-os4-disaster-1.1.zip"
+  },
+  {
+    "id": "wallet",
+    "title": "小米钱包与 NFC",
+    "version": "1.0",
+    "description": "国行钱包与 TSM，保留 Google 钱包",
+    "dependencies": [],
+    "scopes": [],
+    "restoreLabel": "需单独处理凭据",
+    "restoreNote": "仅支持已完成精确国行 TSM 迁移后的重复安装。首次迁移与恢复须核实卡片和凭据，不提供批量重置。",
+    "restoreSupported": false,
+    "kind": "module",
+    "sha256": "d4d717ed5f49b5fd16d9919ccc04c6138267166090c9a8dac9938f1896ad2b8f",
+    "bytes": 84342617,
+    "source": "xuanyuan-os4-wallet-1.0.zip"
+  },
+  {
+    "id": "clock",
+    "title": "时钟法定节假日",
+    "version": "1.0",
+    "description": "法定工作日、节假日与作息重复规则",
+    "dependencies": [],
+    "scopes": [
+      "时钟法定节假日适配：仅com.android.deskclock"
+    ],
+    "restoreLabel": "在 LSPosed 停用",
+    "restoreNote": "先把使用法定日期的闹钟及作息改为普通重复，再在 LSPosed 停用并重启时钟。保留闹钟数据。",
+    "restoreSupported": false,
+    "kind": "apk",
+    "sha256": "7c85575c3b32decdc5398d905d7a1d4f3655b9f1f3ee8cdbad59721d1521a073",
+    "bytes": 12779,
+    "source": "XuanyuanClockCompat-1.0.apk"
+  },
+  {
+    "id": "calendar",
+    "title": "国行日历",
+    "version": "18.0.1.30",
+    "description": "国行日历及基本日程权限",
+    "dependencies": [],
+    "scopes": [],
+    "restoreLabel": "恢复国际日历",
+    "restoreNote": "两版日历不能共存；保留应用数据，不修改日历内容服务。仅支持用户0。",
+    "restoreSupported": true,
+    "kind": "apk",
+    "sha256": "ed8f4356bb7c44038abbe5f215f215277c114e75de4bd21ac0a65f77d75f75f0",
+    "bytes": 17831333,
+    "source": "日历-18.0.1.30.apk"
+  }
+]

@@ -1,0 +1,6 @@
+id=xuanyuan-os4-suite
+name=小米本地化套件 · 统一兼容与推送
+version=1.4
+versionCode=2026101504
+author=XiaomiLocalSuite contributors
+description=EEA OS4.0.0.6 专用；11项组件，共享API102兼容APK；Root组件独立恢复，旧插件由用户迁移。

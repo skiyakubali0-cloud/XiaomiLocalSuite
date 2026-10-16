@@ -1,0 +1,7 @@
+XiaomiLocalSuite
+Copyright 2026 XiaomiLocalSuite contributors
+
+This distribution contains independently authored tooling and compatibility code.
+It does not include Xiaomi firmware, proprietary applications, OEM libraries or
+DEX payloads. No Xiaomi or libxposed affiliation or endorsement is implied.
+Third-party dependencies retain their own licenses; see THIRD_PARTY_NOTICES.md.

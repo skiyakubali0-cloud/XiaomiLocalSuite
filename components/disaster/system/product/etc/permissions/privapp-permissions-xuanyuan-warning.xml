@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<permissions><privapp-permissions package="com.miui.securitycenter"><permission name="android.permission.GET_APP_OPS_STATS"/></privapp-permissions></permissions>

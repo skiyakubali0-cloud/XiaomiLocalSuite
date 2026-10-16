@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI识屏和智控</title>
+<style>
+:root{color-scheme:dark;font:16px system-ui,sans-serif;background:#10131a;color:#eef2ff}*{box-sizing:border-box}body{max-width:760px;margin:auto;padding:24px 18px}h1{font-size:27px}h2{font-size:21px}.card{background:#1c2230;padding:18px;border:1px solid #313b50;border-radius:18px;margin:12px 0}button{font:inherit;background:#c1d8ff;color:#152641;border:0;border-radius:12px;padding:12px;cursor:pointer}button:disabled,input:disabled{opacity:.5;cursor:default}a{color:#c1d8ff}.row{display:flex;align-items:center;justify-content:space-between;gap:14px}.row label{flex:1}input[type=checkbox]{width:25px;height:25px;accent-color:#8fbaff}p,.hint{font-size:13px;line-height:1.7;color:#b8c2d6}.manage{margin-top:12px;width:100%;text-align:left}#message{white-space:pre-wrap;color:#efc280;min-height:22px}#search{width:100%;font:inherit;padding:12px;border:1px solid #546078;border-radius:12px;background:#1c2230;color:inherit}.pkg{font-size:11px;word-break:break-all;color:#8f9eb9}#apps .card{padding:14px}small{display:block;line-height:1.5} [hidden]{display:none!important}
+</style></head><body>
+<a href="index.html">‹ 小爱功能管理</a><h1>AI识屏和智控</h1>
+<p>模块兼容管理页。开关及逐应用规则由系统 AI 权限服务保存。</p>
+<section id="overview"><button class="card row" id="open" style="width:100%;color:inherit;text-align:left"><span>超级小爱</span><span>›</span></button></section>
+<section id="detail" hidden><h2>超级小爱</h2>
+<div class="card"><div class="row"><label for="screen">AI识屏<small class="hint">允许小爱识别和访问屏幕内容</small></label><input type="checkbox" id="screen" disabled></div><button class="manage" id="screen-manage" disabled>AI识屏管理 ›</button><p>选择允许小爱识别内容的应用。</p></div>
+<div class="card"><div class="row"><label for="control">AI智控<small class="hint">允许小爱通过屏幕操作应用</small></label><input type="checkbox" id="control" disabled></div><button class="manage" id="control-manage" disabled>AI智控管理 ›</button><p>选择允许小爱操作的应用。此权限与小爱“应用控制”的工具授权不同。</p></div>
+<p>仅列出系统原厂允许逐项管理的应用；部分系统应用不提供单独开关。开启 AI 智控不代表每个应用都支持小爱的自动操作。</p></section>
+<section id="app-page" hidden><button id="back">‹ 超级小爱</button><h2 id="app-title"></h2><input id="search" type="search" placeholder="搜索应用名称或包名"><div id="apps"></div></section>
+<p id="message" role="status"></p><button id="refresh">刷新真实状态</button><p>后台未就绪时请检查 LSPosed 中“小爱 AI 识屏与智控管理兼容”已启用，并勾选“系统框架”，然后重启。模块停用后需重启才会卸载后台兼容逻辑。</p>
+<script src="privacy.js"></script></body></html>

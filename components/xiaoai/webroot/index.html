@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="light dark"><title>小爱功能管理</title>
+<style>
+:root{font:16px system-ui,sans-serif;color:#eef2ff;background:#10131a;color-scheme:dark}*{box-sizing:border-box}body{max-width:840px;margin:auto;padding:24px 18px 40px}header{padding:8px 4px 16px}.eyebrow{color:#a4b3d7;font-size:12px;letter-spacing:2px}h1{font-size:29px;margin:10px 0}header p{font-size:14px;line-height:1.75;color:#b7c0d5;margin:0}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.card{padding:17px 14px;background:#1c2230;border:1px solid #313b50;border-radius:20px;display:flex;flex-direction:column}.icon{color:#b5d2ff;font-size:22px;font-weight:600}h2{font-size:17px;margin:12px 0 8px}.card p{font-size:13px;line-height:1.6;color:#b8c2d6;margin:0 0 12px;min-height:42px}.state{font-size:12px;color:#92d9ba;margin:auto 0 12px}.warn{color:#efc280}button{font:inherit;cursor:pointer;border:0;border-radius:12px;padding:11px;background:#c1d8ff;color:#152641;font-size:14px;font-weight:600}button:disabled{opacity:.5;cursor:default}button.secondary{background:#293347;color:#d6e2ff}.toolbar{display:flex;align-items:center;gap:12px;margin:20px 4px 10px}.toolbar span{font-size:12px;color:#aab6cd}#notice{white-space:pre-wrap;font-size:13px;line-height:1.6;margin:12px 4px;color:#c7d5ed}footer{font-size:12px;line-height:1.7;color:#99a7bf;padding:10px 4px}@media(min-width:700px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}@media(max-width:330px){.grid{grid-template-columns:1fr}}
+</style></head><body>
+<header><div class="eyebrow">SUPER XIAOAI · ANDROID 17</div><h1>按需要，开启小爱</h1><p>选择功能进入原厂页面，启用或关闭后返回这里。权限、协议与声纹录入也在对应页面完成。</p></header>
+<a href="privacy.html" style="display:block;padding:18px;background:#1c2230;border:1px solid #313b50;border-radius:18px;color:#c1d8ff;text-decoration:none;margin-bottom:16px">AI识屏和智控 ›<br><small>超级小爱的总开关与逐应用权限管理</small></a>
+<main class="grid" id="features"></main>
+<div class="toolbar"><button class="secondary" id="refresh">刷新入口状态</button><span>开关以原厂页面为准</span></div>
+<div id="notice" role="status" aria-live="polite"></div>
+<footer>“入口已就绪”表示组件和设置入口存在，不代表已开启或完成实测。AI 通话需要 SIM；号码识别依赖联网及号码库。首次使用陌生号码识别，需要启用电话兼容补丁的“黄页”和“通话界面”作用范围。</footer>
+<script src="app.js"></script></body></html>

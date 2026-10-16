@@ -1,0 +1,30 @@
+[
+  {
+    "package": "com.miui.gallery",
+    "source": "data-app/MIUIGallery/MIUIGallery.apk",
+    "target": "priv-app/MIUIGalleryGlobal/MIUIGalleryGlobal.apk",
+    "sha256": "be6bb05752cf667430c9359cd46fa8f4ed3552ecbe2e90a7b6279eaeb471f4a2",
+    "original_sha256": "c25c993cc1462a955b145035ee071d98781ba51370bad232a78eb567eb84cfbc"
+  },
+  {
+    "package": "com.hyper.gallery.plugin",
+    "source": "data-app/HyperGalleryPluginCn/HyperGalleryPluginCn.apk",
+    "target": "app/HyperGalleryPluginGlobal/HyperGalleryPluginGlobal.apk",
+    "sha256": "f763216706094ca04cf2c4e67600595bbfa55f0533b8468a7c36ca2463bf9497",
+    "original_sha256": "d0a6af98b4910113fb4ecf62fff349881ec1adde8291682fe500bde59eadf8d1"
+  },
+  {
+    "package": "com.miui.mediaeditor",
+    "source": "data-app/MiMediaEditor/MiMediaEditor.apk",
+    "target": "data-app/MIMediaEditorGlobal/MIMediaEditorGlobal.apk",
+    "sha256": "365954e0e94263b7372fa5e6f4d244690b5edd9607b5642a1488a622732f7756",
+    "original_sha256": "52343b5d46f227100fc0b75ee6eed633a431db51f95eb3c2f1ba44ad40aacefc"
+  },
+  {
+    "package": "com.miui.extraphoto",
+    "source": "priv-app/MiuiExtraPhoto/MiuiExtraPhoto.apk",
+    "target": "priv-app/MiuiExtraPhoto/MiuiExtraPhoto.apk",
+    "sha256": "b6149345f1aa4f3b84d84152b186f5c60bc6bc4c95957ac3cc232fb047722756",
+    "original_sha256": "ca7794bb50c7ab612aab9494d0fc8fe887bfbd5a28ba3ffd8fecaba7a218c7c4"
+  }
+]

@@ -1,0 +1,6 @@
+id=xuanyuan-os4-disaster
+name=自然灾害预警 · Android 17
+version=1.2 (unified API102)
+versionCode=2026101501
+author=XiaomiLocalSuite contributors
+description=xuanyuan EEA OS4.0.0.6专用。挂载完整原签名手机管家13.6.5，合并国行报警定位，需启用预警LSPosed模块（仅手机管家）。真实报警上报及灾害推送未实测。

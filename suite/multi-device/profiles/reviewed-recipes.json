@@ -1,0 +1,13 @@
+{
+  "xuanyuan-eea-os4.0.0.6": {
+    "target": {
+      "device": "xuanyuan",
+      "sdk": 37,
+      "incremental": "OS4.0.0.6.XOAEUXM",
+      "abis": ["arm64-v8a"]
+    },
+    "artifact": "xuanyuan-os4-suite-1.4.zip",
+    "artifact_sha256": "a9e08dd1a312b1824e28903828a71c82f31a63e045a0ed01e25251cc0752d2e7",
+    "device_tested": true
+  }
+}

@@ -1,0 +1,6 @@
+id=xuanyuan-os4-xiaoai
+name=超级小爱与配套服务 · Android 17
+version=1.7.6 (wallet API102)
+versionCode=2026101603
+author=XiaomiLocalSuite contributors
+description=xuanyuan EEA OS4.0.0.6 专用；原签名小爱与八个缺失的国行配套组件。内置AI权限及小爱建议兼容组件；保留现有AI引擎和Gemini，首次需配置LSPosed。

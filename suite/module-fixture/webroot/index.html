@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>小米本地化套件</title>
+<style>
+:root{--bg:#f4f5f1;--surface:#fff;--ink:#202b27;--muted:#64716b;--line:#dce3dd;--accent:#267055;--soft:#e8f2eb;--warn:#94572d;--shadow:0 12px 36px #23392b08;font-family:system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;color:var(--ink);background:var(--bg);font-size:15px}*{box-sizing:border-box}body{margin:0}button,input{font:inherit}button{cursor:pointer;min-height:44px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);padding:10px 15px;font-weight:600}button:hover:not(:disabled){border-color:var(--accent)}button:disabled{opacity:.45;cursor:not-allowed}button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:3px}button.primary{background:var(--accent);border-color:var(--accent);color:#fff}main{max-width:860px;margin:auto;padding:30px 20px calc(32px + env(safe-area-inset-bottom))}.eyebrow{font-size:11px;font-weight:750;letter-spacing:2px;color:var(--accent);margin:0 0 10px}h1{font-size:29px;letter-spacing:-1px;margin:0 0 10px}h2{font-size:18px;margin:0}h3{font-size:16px;margin:0}.intro,p{line-height:1.65}.intro{color:var(--muted);margin:0 0 24px}.card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:20px;margin-bottom:18px;box-shadow:var(--shadow)}.heading{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:16px}.pill{display:inline-flex;align-items:center;border-radius:100px;padding:5px 10px;font-size:12px;background:var(--soft);color:var(--accent);white-space:nowrap}.muted{color:var(--muted);font-size:13px}.notice{font-size:13px;padding:12px 14px;border-radius:12px;background:var(--soft);line-height:1.7;overflow-wrap:anywhere}.notice.warn{color:var(--warn);background:transparent;border:1px solid var(--line)}.device-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}.device-grid dt{font-size:12px;color:var(--muted);margin-bottom:5px}.device-grid dd{margin:0;font-weight:650;overflow-wrap:anywhere}.device-grid .wide{grid-column:1/-1}.component{border-top:1px solid var(--line);padding:18px 0}.component:last-child{padding-bottom:0}.select-row{display:flex;align-items:flex-start;gap:12px;cursor:pointer;min-height:44px}.select-row input{accent-color:var(--accent);width:22px;height:22px;flex-shrink:0;margin:1px 0 0}.component-head{flex:1;min-width:0}.component-title{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.version{font-size:12px;color:var(--muted)}.description{font-size:14px;color:var(--muted);margin:8px 0 12px;overflow-wrap:anywhere}.meta{font-size:12px;color:var(--muted);line-height:1.7;margin:6px 0;overflow-wrap:anywhere}.auto{color:var(--accent);font-size:12px;line-height:1.6;margin:6px 0}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.actions button{font-size:13px;padding:8px 12px}.selection-bar{margin-top:20px;padding-top:16px;border-top:1px solid var(--line);display:flex;gap:12px;align-items:center;justify-content:space-between}.selection-bar p{margin:0}.selection-bar button{flex-shrink:0}.task-message{margin:10px 0;white-space:pre-wrap;overflow-wrap:anywhere}.activity{height:4px;overflow:hidden;background:var(--line);border-radius:4px;margin-bottom:14px}.activity span{display:block;height:100%;width:35%;background:var(--accent);animation:move 1.8s infinite ease-in-out}@keyframes move{0%{transform:translateX(-100%)}100%{transform:translateX(390%)}}details{margin-top:12px}summary{cursor:pointer;color:var(--muted);font-size:13px;padding:8px 0}pre{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:14px;font:12px/1.65 ui-monospace,SFMono-Regular,monospace;white-space:pre-wrap;overflow-wrap:anywhere;max-height:320px;overflow:auto;margin:8px 0 0}.footer{display:flex;gap:18px;align-items:center;justify-content:space-between}.footer p{margin:6px 0 0}.error{color:var(--warn);font-size:13px;line-height:1.65;white-space:pre-wrap;overflow-wrap:anywhere;margin:12px 0 0}[hidden]{display:none!important}.overlay{position:fixed;inset:0;background:#10241dc0;z-index:10;display:flex;align-items:center;justify-content:center;padding:20px}.dialog{width:100%;max-width:520px;max-height:85dvh;overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:24px;box-shadow:0 24px 80px #0004}.dialog ul{padding-left:21px;line-height:1.8;font-size:14px}.dialog-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:22px}.dialog-actions button{flex:1}.dialog p{white-space:pre-wrap;overflow-wrap:anywhere}.dialog pre{max-height:180px}body.modal-open{overflow:hidden}@media(min-width:640px){main{padding-top:48px}h1{font-size:36px}.device-grid{grid-template-columns:1fr 2fr 1fr}.device-grid .wide{grid-column:auto}.card{padding:24px}.component{padding:20px 0}}@media(prefers-color-scheme:dark){:root{--bg:#111916;--surface:#1b2520;--ink:#e8eee9;--muted:#a1b2a7;--line:#34443a;--accent:#85c9a7;--soft:#263e30;--warn:#e9b28a;--shadow:none}button.primary{color:#13251b}}@media(prefers-reduced-motion:reduce){.activity span{animation:none;width:100%;opacity:.65}}
+</style>
+<style>
+main{padding-bottom:calc(130px + env(safe-area-inset-bottom))}.selection-bar{position:fixed;z-index:4;left:20px;right:20px;bottom:calc(12px + env(safe-area-inset-bottom));max-width:812px;margin:0 auto;padding:12px 16px;background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:0 8px 36px #0002}.device-grid .wide{order:1}
+</style>
+</head>
+<body>
+<main id="content">
+<header><p class="eyebrow">XUANYUAN · LOCAL SUITE</p><h1>小米本地化套件</h1><p class="intro">按需选择组件，让熟悉的本地功能回到手机。</p></header>
+<section class="card" aria-labelledby="device-heading"><div class="heading"><h2 id="device-heading">设备与版本</h2><span class="pill" id="device-badge">尚未读取</span></div><dl class="device-grid"><div><dt>机型</dt><dd id="device">尚未读取</dd></div><div class="wide"><dt>系统版本</dt><dd id="rom">尚未读取</dd></div><div><dt>Android API</dt><dd id="api">尚未读取</dd></div></dl><div class="notice" id="environment" role="status">正在检查运行环境…</div></section>
+<section class="card" aria-labelledby="components-heading"><div class="heading"><h2 id="components-heading">选择组件</h2><span class="muted" id="catalog-count">加载中</span></div><p class="muted">仅安装你勾选的组件及其依赖。其他组件不会自动移除。</p><div id="components"></div><p class="error" id="catalog-error" hidden></p><div class="selection-bar"><p class="muted" id="selection">尚未选择组件</p><button class="primary" id="install" disabled>安装所选</button></div></section>
+<section class="card" aria-labelledby="task-heading"><div class="heading"><h2 id="task-heading">任务与日志</h2><span class="pill" id="task-state">尚未读取</span></div><div class="activity" id="activity" hidden aria-label="任务正在执行"><span></span></div><p class="task-message" id="task-message" role="status" aria-live="polite">读取设备状态后显示任务进度。</p><details><summary>查看任务日志</summary><pre id="log">尚无日志</pre></details><p class="error" id="action-error" role="alert" hidden></p></section>
+<section class="card"><div class="footer"><div><h2>应用更改</h2><p class="muted">如需重启，请先保存正在进行的工作。</p></div><button id="reboot" disabled>手动重启</button></div><div class="actions"><button id="refresh" disabled>刷新状态</button><button id="lsp" disabled>打开 LSPosed</button></div></section>
+</main>
+<div class="overlay" id="overlay" hidden><section class="dialog" role="dialog" aria-modal="true" aria-labelledby="confirm-title" aria-describedby="confirm-note" tabindex="-1"><h2 id="confirm-title"></h2><p class="muted" id="confirm-note"></p><ul id="confirm-list"></ul><details id="plan-details"><summary>查看检查结果</summary><pre id="plan-output"></pre></details><div class="dialog-actions"><button id="cancel">取消</button><button class="primary" id="confirm">确认继续</button></div></section></div>
+<script>
+'use strict';
+const shell = '/data/adb/modules/xuanyuan-os4-suite/control.sh';
+const $ = id => document.getElementById(id);
+const ID = /^[a-z]+$/;
+const ACTIVE = new Set(['queued','running']);
+const TERMINAL = new Set(['succeeded','failed','interrupted']);
+const JOB_STATES = new Set([...ACTIVE,...TERMINAL,'idle']);
+const jobNames = {queued:'等待执行',running:'正在执行',succeeded:'已完成',failed:'执行失败',interrupted:'已中断',idle:'暂无任务'};
+const componentNames = {absent:'未安装',enabled:'已启用',disabled:'已停用',pending:'待生效',unknown:'状态未知',installed:'已安装'};
+const host = !!(window.ksu && typeof window.ksu.exec === 'function');
+let catalog = [], byId = new Map(), selected = new Set(), componentStates = new Map();
+let statusOK = false, supported = false, ready = false, busy = false, preparing = false, awaitingJob = false;
+let polling = false, timer = null, refreshInFlight = false, callbackSerial = 0, modalResolve = null, previousFocus = null;
+function setText(id, value){ $(id).textContent = value; }
+function error(message){ setText('action-error',message || ''); $('action-error').hidden = !message; }
+function printable(value){ return typeof value === 'string' ? value : value == null ? '未提供' : JSON.stringify(value); }
+function element(tag, text, className){ const node = document.createElement(tag); if(text != null) node.textContent = text; if(className) node.className = className; return node; }
+function validId(id){ return typeof id === 'string' && ID.test(id) && byId.has(id); }
+function command(action, mode, ids){
+  if(['status','job','lsp','reboot'].includes(action) && mode === undefined) return action;
+  if(action === 'open' && validId(mode) && ids === undefined) return 'open ' + mode;
+  if(['plan','start'].includes(action) && ['install','restore'].includes(mode) && Array.isArray(ids) && ids.length && ids.every(validId) && (mode === 'install' || ids.length === 1)) return action + ' ' + mode + ' ' + ids.join(',');
+  throw new Error('命令或组件不在允许列表中。');
+}
+function exec(action, mode, ids){
+  const args = command(action,mode,ids);
+  if(!host) return Promise.reject(new Error('请从 KernelSU 中打开此页面。'));
+  return new Promise((resolve,reject) => {
+    const name = '__suiteCallback' + (++callbackSerial);
+    let finished = false;
+    const timeout = setTimeout(() => finish(new Error('后台响应超时，请刷新状态查看结果。')),30000);
+    function finish(err,result){ if(finished) return; finished = true; clearTimeout(timeout); delete window[name]; err ? reject(err) : resolve(result); }
+    window[name] = (c,o,e) => {
+      const result = {code:Number(c),out:typeof o === 'string' ? o : '',err:typeof e === 'string' ? e : ''};
+      if(result.code !== 0){ const failure = new Error(result.err || result.out || '后台执行失败（' + c + '）。'); failure.confirmedFailure = true; finish(failure); }
+      else finish(null,result.out);
+    };
+    try{ window.ksu.exec('sh '+shell+' '+args,'{}',name); }catch(err){ finish(err); }
+  });
+}
+function parseJSON(raw){ let value; try{ value = JSON.parse(raw); }catch{ throw new Error('后台返回的状态格式不正确。'); } if(!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('后台返回的状态格式不正确。'); return value; }
+function dependencyClosure(ids){
+  const result = new Set();
+  function visit(id){ if(!validId(id)) throw new Error('缺少依赖组件：' + id + '。请检查组件目录。'); if(result.has(id)) return; result.add(id); byId.get(id).dependencies.forEach(visit); }
+  ids.forEach(visit); return result;
+}
+function requiredBy(id){ return [...selected].filter(other => other !== id && dependencyClosure([other]).has(id)); }
+function writable(){ return host && statusOK && supported && ready && !busy && !preparing && !refreshInFlight; }
+function updateControls(){
+  $('install').disabled = !writable() || !selected.size;
+  $('reboot').disabled = !writable();
+  $('refresh').disabled = !host || refreshInFlight || preparing;
+  $('lsp').disabled = !host || !statusOK || busy || preparing;
+  document.querySelectorAll('[data-component]').forEach(node => {
+    const item = byId.get(node.dataset.component);
+    if(node.tagName === 'INPUT') node.disabled = !writable();
+    else if(node.dataset.action === 'restore') node.disabled = !writable() || !item.restoreSupported;
+    else node.disabled = !host || !statusOK || busy || preparing;
+  });
+  setText('selection',selected.size ? '已选择 ' + selected.size + ' 项（含依赖）' : '尚未选择组件');
+}
+function renderComponents(){
+  const container = $('components'); container.replaceChildren();
+  for(const item of catalog){
+    const row = element('article',null,'component');
+    const label = element('label',null,'select-row');
+    const input = element('input'); input.type = 'checkbox'; input.checked = selected.has(item.id); input.dataset.component = item.id; input.setAttribute('aria-label','选择'+item.title);
+    input.addEventListener('change',() => {
+      error('');
+      try{
+        if(input.checked){ dependencyClosure([item.id]).forEach(id => selected.add(id)); }
+        else{ const parents = requiredBy(item.id); if(parents.length) throw new Error('此项是 '+parents.map(id => byId.get(id).title).join('、')+' 的依赖，请先取消这些组件。'); selected.delete(item.id); }
+      }catch(err){ error(err.message); }
+      renderComponents();
+    });
+    const head = element('div',null,'component-head'); const title = element('div',null,'component-title');
+    title.append(element('h3',item.title),element('span',item.version || '版本未提供','version'));
+    if(item.kind === 'apk' || item.kind === 'module') title.append(element('span',item.kind === 'apk' ? '独立应用' : '功能模块','version'));
+    const live = componentStates.get(item.id); const state = live && componentNames[live.state] ? componentNames[live.state] : '状态未知';
+    title.append(element('span',statusOK ? state : '尚未读取','pill'));
+    head.append(title,element('p',item.description,'description'));
+    label.append(input,head); row.append(label);
+    if(live && live.version) row.append(element('p','设备版本：'+printable(live.version),'meta'));
+    if(item.dependencies.length) row.append(element('p','依赖：'+item.dependencies.map(id => byId.get(id)?.title || id+'（目录缺失）').join('、'),'meta'));
+    if(selected.has(item.id)){
+      try{ const parents = requiredBy(item.id); if(parents.length) row.append(element('p','依赖补选 · '+parents.map(id => byId.get(id).title).join('、')+' 需要此项','auto')); }catch{ /* Invalid dependencies are explained above and blocked before planning. */ }
+    }
+    if(item.scopes.length){ const details = element('details'); details.append(element('summary','LSPosed 作用域 · '+item.scopes.length+' 项'),element('p',item.scopes.join('、'),'meta')); row.append(details); }
+    row.append(element('p',item.restoreNote || (item.restoreSupported ? '恢复前会显示检查结果，请确认后继续。' : '此组件暂不支持恢复。'),'meta'));
+    const actions = element('div',null,'actions');
+    const open = element('button','原生设置'); open.dataset.component = item.id; open.dataset.action = 'open'; open.setAttribute('aria-label','打开'+item.title+'原生设置'); open.addEventListener('click',() => openSettings(item.id)); actions.append(open);
+    if(item.restoreSupported){ const restore = element('button',item.restoreLabel || '单独恢复'); restore.dataset.component = item.id; restore.dataset.action = 'restore'; restore.setAttribute('aria-label',(item.restoreLabel || '恢复')+item.title); restore.addEventListener('click',() => prepare('restore',[item.id])); actions.append(restore); }
+    row.append(actions); container.append(row);
+  }
+  if(!catalog.length) container.append(element('p','暂无可用组件，请检查 catalog.json。','muted'));
+  updateControls();
+}
+function showJob(job){
+  if(!job || !JOB_STATES.has(job.state)) throw new Error('无法确认任务状态，已暂停操作。');
+  busy = ACTIVE.has(job.state) || (awaitingJob && job.state === 'idle');
+  if(job.state !== 'idle') awaitingJob = false;
+  setText('task-state',jobNames[job.state]);
+  setText('task-message',busy && job.state === 'idle' ? '任务已提交，等待后台开始执行…' : printable(job.message || (job.state === 'idle' ? '选择组件后即可开始。' : jobNames[job.state])));
+  if(Object.prototype.hasOwnProperty.call(job,'log')) setText('log',Array.isArray(job.log) ? job.log.map(printable).join('\n') : printable(job.log || '暂无日志'));
+  $('activity').hidden = !busy; updateControls();
+  return !busy && TERMINAL.has(job.state);
+}
+async function refreshStatus(){
+  if(!host || refreshInFlight) return;
+  refreshInFlight = true; updateControls();
+  try{
+    const data = parseJSON(await exec('status'));
+    if(typeof data.supported !== 'boolean' || typeof data.ready !== 'boolean' || !Array.isArray(data.components)) throw new Error('设备状态字段不完整，已暂停操作。');
+    showJob(data.job);
+    supported = data.supported; ready = data.ready; statusOK = true;
+    componentStates = new Map(data.components.filter(item => item && validId(item.id)).map(item => [item.id,item]));
+    setText('device',printable(data.device)); setText('rom',printable(data.rom)); setText('api',printable(data.api));
+    setText('device-badge',!supported ? '不支持此设备' : !ready ? '尚未就绪' : '环境已就绪');
+    setText('environment',!supported ? '当前机型或系统版本不受支持，安装、恢复和重启已禁用。' : !ready ? '后台环境尚未就绪，请检查套件配置后刷新状态。' : busy ? '后台正在处理任务，请等待完成。' : '可以按需安装组件；更改前会先检查并请你确认。');
+    renderComponents(); if(busy) schedulePoll();
+  }catch(err){ statusOK = false; setText('device-badge','读取失败'); setText('environment',err.message); if(busy) schedulePoll(); }
+  finally{ refreshInFlight = false; updateControls(); }
+}
+function schedulePoll(){ if(!timer && !polling && busy) timer = setTimeout(() => {timer = null; pollJob();},2500); }
+async function pollJob(){
+  if(polling || !host || !busy) return;
+  polling = true;
+  try{
+    const finished = showJob(parseJSON(await exec('job')));
+    error(''); if(finished) await refreshStatus();
+  }catch(err){ error('任务状态暂时无法读取，写操作和重启保持禁用。\n'+err.message); }
+  finally{ polling = false; if(busy) schedulePoll(); }
+}
+function closeModal(result){
+  if(!modalResolve) return;
+  const resolve = modalResolve; modalResolve = null; $('overlay').hidden = true; document.body.classList.remove('modal-open'); $('content').inert = false;
+  if(previousFocus && previousFocus.isConnected) previousFocus.focus(); resolve(result);
+}
+function confirmModal(title,note,lines,plan){
+  setText('confirm-title',title); setText('confirm-note',note); $('confirm-list').replaceChildren(...lines.map(line => element('li',line)));
+  $('confirm-list').hidden = !lines.length; $('plan-details').hidden = plan === undefined; $('plan-details').open = false; setText('plan-output',plan || '检查通过。');
+  previousFocus = document.activeElement; $('overlay').hidden = false; document.body.classList.add('modal-open'); $('content').inert = true; $('cancel').focus();
+  return new Promise(resolve => {modalResolve = resolve;});
+}
+async function prepare(mode,ids){
+  if(!writable()) return;
+  preparing = true; updateControls(); error('');
+  let submitted = false;
+  try{
+    if(mode === 'install') ids = [...dependencyClosure(ids)];
+    if(mode === 'restore' && (!validId(ids[0]) || !byId.get(ids[0]).restoreSupported)) throw new Error('此组件不支持恢复。');
+    setText('task-message','正在检查'+(mode === 'install' ? '安装' : '恢复')+'条件…');
+    const plan = await exec('plan',mode,ids);
+    const lines = ids.map(id => { const item = byId.get(id); return item.title+(item.version ? ' · '+item.version : '')+(item.dependencies.length ? '（依赖：'+item.dependencies.map(dep => byId.get(dep).title).join('、')+'）' : ''); });
+    const note = mode === 'restore' ? byId.get(ids[0]).restoreNote || '仅恢复此组件。请确认检查结果后继续。' : '将安装以下组件，列表已包含所需依赖。其他组件不会自动移除。';
+    if(!await confirmModal(mode === 'install' ? '确认安装' : '确认恢复',note,lines,plan)){ setText('task-message','已取消，未提交任务。'); return; }
+    // Recheck live job immediately before writing, including tasks started elsewhere.
+    const data = parseJSON(await exec('status'));
+    showJob(data.job);
+    if(data.supported !== true || data.ready !== true || busy) throw new Error('设备未就绪或已有任务，请刷新状态后重试。');
+    busy = true; awaitingJob = true; submitted = true; updateControls(); $('activity').hidden = false;
+    setText('task-state','等待执行'); setText('task-message','正在提交任务…'); setText('log','等待任务日志…');
+    const result = await exec('start',mode,ids); setText('task-message',result || '任务已提交，等待后台执行。'); $('task-heading').scrollIntoView({behavior:'smooth',block:'start'});
+  }catch(err){
+    error(err.message);
+    if(submitted && err.confirmedFailure){ awaitingJob = false; await refreshStatus(); setText('task-message','启动失败，请查看提示和后台任务状态。'); }
+    else if(submitted) setText('task-message','提交结果未确认，正在读取后台任务状态。');
+    else setText('task-message','未提交任务，请查看提示。');
+  }
+  finally{ preparing = false; updateControls(); if(submitted || busy) schedulePoll(); }
+}
+async function openSettings(id){ if(!host || !statusOK || busy || preparing || !validId(id)) return; try{ error(''); await exec('open',id); }catch(err){error(err.message);} }
+$('install').addEventListener('click',() => prepare('install',[...selected]));
+$('refresh').addEventListener('click',refreshStatus);
+$('cancel').addEventListener('click',() => closeModal(false));
+$('confirm').addEventListener('click',() => closeModal(true));
+$('overlay').addEventListener('keydown',event => {
+  if(event.key === 'Escape'){event.preventDefault(); closeModal(false);}
+  if(event.key === 'Tab'){ const nodes = [...$('overlay').querySelectorAll('button,summary')].filter(node => !node.closest('[hidden]')); const first = nodes[0],last = nodes[nodes.length-1]; if(event.shiftKey && document.activeElement === first){event.preventDefault(); last.focus();}else if(!event.shiftKey && document.activeElement === last){event.preventDefault();first.focus();} }
+});
+$('lsp').addEventListener('click',async () => { if(!host || !statusOK || busy || preparing) return; try{error('');await exec('lsp');}catch(err){error(err.message);} });
+$('reboot').addEventListener('click',async () => {
+  if(!writable()) return; preparing = true; updateControls(); error('');
+  try{
+    if(!await confirmModal('确认重启手机','手机将立即重启。请先保存工作，任务完成前无法重启。',[],undefined)) return;
+    const data = parseJSON(await exec('status')); showJob(data.job);
+    if(data.supported !== true || data.ready !== true || busy) throw new Error('设备未就绪或任务正在执行，无法重启。');
+    await exec('reboot'); statusOK = false; setText('environment','重启指令已发送，请等待手机重新启动。');
+  }catch(err){error(err.message);}finally{preparing = false;updateControls();if(busy)schedulePoll();}
+});
+async function init(){
+  if(!host){ setText('device-badge','浏览说明'); setText('environment','当前没有 KernelSU 运行接口。请在 KernelSU 的套件模块中打开 WebUI，读取真实设备状态并管理组件。'); setText('task-message','当前仅展示组件说明，无法读取设备状态或执行操作。'); }
+  try{
+    const response = await fetch('./catalog.json'); if(!response.ok) throw new Error('组件目录读取失败（'+response.status+'）。');
+    const data = await response.json(); if(!Array.isArray(data)) throw new Error('catalog.json 应为组件数组。');
+    const seen = new Set();
+    catalog = data.map(item => {
+      if(!item || typeof item.id !== 'string' || !ID.test(item.id) || seen.has(item.id)) throw new Error('组件目录存在无效或重复的 id。'); seen.add(item.id);
+      if(!Array.isArray(item.dependencies) || !item.dependencies.every(id => typeof id === 'string' && ID.test(id))) throw new Error('组件依赖格式不正确：'+item.id);
+      return {id:item.id,title:typeof item.title === 'string' ? item.title : item.id,version:typeof item.version === 'string' ? item.version : '',description:typeof item.description === 'string' ? item.description : '',dependencies:item.dependencies,scopes:Array.isArray(item.scopes) ? item.scopes.filter(scope => typeof scope === 'string') : [],restoreLabel:typeof item.restoreLabel === 'string' ? item.restoreLabel : '',restoreNote:typeof item.restoreNote === 'string' ? item.restoreNote : '',restoreSupported:item.restoreSupported === true,kind:item.kind};
+    });
+    byId = new Map(catalog.map(item => [item.id,item])); setText('catalog-count',catalog.length+' 个组件'); renderComponents();
+  }catch(err){catalog = [];byId.clear();setText('catalog-count','目录不可用');setText('catalog-error',err.message);$('catalog-error').hidden = false;renderComponents();}
+  if(host) await refreshStatus(); updateControls();
+}
+init();
+</script>
+</body>
+</html>

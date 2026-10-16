@@ -1,0 +1,15 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>负一屏切换</title>
+<style>body{font:17px system-ui;background:#15191e;color:#eee;padding:28px}button{display:block;width:100%;padding:18px;margin:16px 0;border:0;border-radius:16px;background:#b7dcff;color:#142b42;font:inherit}pre{white-space:pre-wrap}p{line-height:1.7;color:#bbc7d4}</style>
+<h1>负一屏切换</h1><p>适用于当前 Android 17 桌面。切换会重新打开桌面，保留桌面数据。国行模式也会显示“问小爱”等国行桌面入口。</p>
+<button data-cmd="china">使用小米智能助理</button><button data-cmd="google">恢复系统负一屏</button><pre id="status"></pre>
+<script>
+const status=document.getElementById('status');
+function run(action){
+ if(!['china','google','status'].includes(action))return;
+ if(!window.ksu){status.textContent='请从 KernelSU Next 模块的 WebUI 打开';return;}
+ const cb='route'+Date.now();
+ window[cb]=(code,out,err)=>{delete window[cb];status.textContent=out||err||'切换完成';};
+ window.ksu.exec('/system/bin/sh /data/adb/modules/xuanyuan-os4-assistant/control.sh '+action,'{}',cb);
+}
+document.querySelectorAll('button').forEach(b=>b.onclick=()=>run(b.dataset.cmd));run('status');
+</script></html>

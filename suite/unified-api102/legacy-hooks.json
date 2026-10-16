@@ -1,0 +1,7 @@
+{
+  "local.xuanyuan.smscompat": "7bcafbdba0dc0acc54541e569ecc5c0c15680d433e4794f855b15dc6c6a1c2bb",
+  "local.xuanyuan.aiprivacy": "deb3c55f637b34db05ed2fe61cc62392dd9eb506f7934ca8c14eb0af87da894f",
+  "local.xuanyuan.suggestioncompat": "0e5eb88a019a25798a88d25e34d5035311c1513d3bd6da72d2053ddd73112757",
+  "local.xuanyuan.disastercompat": "fdf55ce527873da0036bf4219eeb6c3775bfaadae2adeb42583e6712bb3f55f3",
+  "local.xuanyuan.clockcompat": "7c85575c3b32decdc5398d905d7a1d4f3655b9f1f3ee8cdbad59721d1521a073"
+}

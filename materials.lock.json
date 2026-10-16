@@ -1,0 +1,1347 @@
+{
+  "schema": 1,
+  "target": {
+    "device": "xuanyuan",
+    "rom": "OS4.0.0.6.XOAEUXM",
+    "sdk": 37
+  },
+  "reference_suite": {
+    "name": "xuanyuan-os4-suite-1.7-wallet-selectable.zip",
+    "sha256": "ba0ee4103c9fcaa7b65366668cee5b5cfda352e314bf3f10f3f22085861c828f"
+  },
+  "original_unified_sha256": "02b4d7bc35ccfa6ec9d3e7ce82171b1a96bf81ba1abb3f1dcff70170c960679f",
+  "artifacts": [
+    {
+      "component": "market",
+      "path": "system/product/app/MIUISuperMarket/MIUISuperMarket.apk",
+      "sha256": "81857e2c0bb83a7b910ea51789546220b028c76c4e620dc712d02a69401d7b1b",
+      "bytes": 61786777
+    },
+    {
+      "component": "market",
+      "path": "system/product/app/MIUISuperMarket/lib/arm64/libMimobileEncryption.so",
+      "sha256": "2a6d1b0392824b45b80e560c396961ac68465ae18d4703cc3b521c4de117b78c",
+      "bytes": 358464
+    },
+    {
+      "component": "market",
+      "path": "system/product/app/MIUISuperMarket/lib/arm64/libbytehook.so",
+      "sha256": "1fa39f206cf1cb5863dc3770ec3a21339921364e647a3ab4dbb094eab83676d8",
+      "bytes": 59080
+    },
+    {
+      "component": "market",
+      "path": "system/product/app/MIUISuperMarket/lib/arm64/libc++_shared.so",
+      "sha256": "92ee8da641b969254cc8723f64aa115d36c8ffa87115e38bc9cb89e3eefee839",
+      "bytes": 1292896
+    },
+    {
+      "component": "market",
+      "path": "system/product/app/MIUISuperMarket/lib/arm64/libglide-webp.so",
+      "sha256": "2f7f38acc0d294a3333069aa8a3c07e69d4bc0a64f162215578bd55dbe1a4486",
+      "bytes": 412080
+    },
+    {
+      "component": "market",
+      "path": "system/product/app/MIUISuperMarket/lib/arm64/libijiami_1011.so",
+      "sha256": "c1c82ddfa2b10589ba4912d6760c903b8990518888b55071a6cb3a4557fcdd7c",
+      "bytes": 156960
+    },
+    {
+      "component": "market",
+      "path": "system/product/app/MIUISuperMarket/lib/arm64/libipdetector.so",
+      "sha256": "b874696f791a8a67b728f126f644efcf02553f08c70d7f13191cda468b3f087e",
+      "bytes": 9992
+    },
+    {
+      "component": "market",
+      "path": "system/product/app/MIUISuperMarket/lib/arm64/libkcg.so",
+      "sha256": "b34ca47c502e03a62da0100b860c16e2ffe243b36719cf18dc9c4d7d1d7ceac0",
+      "bytes": 7322696
+    },
+    {
+      "component": "market",
+      "path": "system/product/app/MIUISuperMarket/lib/arm64/libmarsnative.so",
+      "sha256": "836f0d2921a84be4aebc1a71b2688fa5ca8bf7c3070729f86dcb8233492b8cfc",
+      "bytes": 998296
+    },
+    {
+      "component": "market",
+      "path": "system/product/app/MIUISuperMarket/lib/arm64/libmilink.so",
+      "sha256": "1a8d8ce39626845b6971c828d9298a182652c13d57c0f8de9d207ded10caa074",
+      "bytes": 838576
+    },
+    {
+      "component": "market",
+      "path": "system/product/app/MIUISuperMarket/lib/arm64/libmmkv.so",
+      "sha256": "3850acf55b2c29bd3a3714ac84b7ab6ef402fedc61d9646209dd273d604d1bd1",
+      "bytes": 597000
+    },
+    {
+      "component": "market",
+      "path": "system/product/app/MIUISuperMarket/lib/arm64/libpatcherV1.so",
+      "sha256": "f84049fac8814f76b6e00aa11040a5556f65631daa8ac45327f71a064bd51a8b",
+      "bytes": 81440
+    },
+    {
+      "component": "market",
+      "path": "system/product/app/MIUISuperMarket/lib/arm64/libpatcherV2.so",
+      "sha256": "b122cba52f8de5e3ad7827ea9656f2924efce61077837f35425f43e2e45431e6",
+      "bytes": 143096
+    },
+    {
+      "component": "market",
+      "path": "system/product/app/MIUISuperMarket/lib/arm64/libpatcherV3.so",
+      "sha256": "908d7e2b9990f01cb9986bc9a6215e331f271fdb1575ebcc8e784e51e810703d",
+      "bytes": 267560
+    },
+    {
+      "component": "market",
+      "path": "system/product/app/MIUISuperMarket/lib/arm64/libpl_droidsonroids_gif.so",
+      "sha256": "8749489e1ff6c5acdb3e1d8ce98aacfde1abb10f02f1078a91ff3938d60e6d0c",
+      "bytes": 42464
+    },
+    {
+      "component": "market",
+      "path": "system/product/app/MIUISuperMarket/lib/arm64/libshadowhook.so",
+      "sha256": "5afb272443eafb5c6ccabf4bb019e49840aa0a22698930164a8ac0fd25de684a",
+      "bytes": 79464
+    },
+    {
+      "component": "market",
+      "path": "system/product/app/MIUISuperMarket/lib/arm64/libshadowhook_nothing.so",
+      "sha256": "f2cc6a6f94d7361be915daafff1d25b7b3af34972e7308ac540982cfd608bd32",
+      "bytes": 1112
+    },
+    {
+      "component": "market",
+      "path": "system/product/app/MIUISuperMarket/lib/arm64/libxcrash.so",
+      "sha256": "ad573840e4152b56a7dd4b91618b9adb6c286ca58d8dddf70651aa50b37956c0",
+      "bytes": 90776
+    },
+    {
+      "component": "market",
+      "path": "system/product/app/MIUISuperMarket/lib/arm64/libxcrash_dumper.so",
+      "sha256": "7c1916bd90269f62a157a23a247ca07ed3452c97e3e6b2684b99f0a46ebf49e7",
+      "bytes": 118376
+    },
+    {
+      "component": "market",
+      "path": "system/product/app/MIUISuperMarket/lib/arm64/libzstd-jni-1.5.7-7.so",
+      "sha256": "3c2658d9cb452baca4ff0c71384f5284c7c836ca8d190b9807995d5282b05faa",
+      "bytes": 603960
+    },
+    {
+      "component": "assistant",
+      "path": "system/product/priv-app/MIUIPersonalAssistantPhoneOS4/MIUIPersonalAssistantPhoneOS4.apk",
+      "sha256": "6ecb326cd18351e032f5fe493c1bc1bb28e417bd03954e5133c237bcffc43562",
+      "bytes": 25022781
+    },
+    {
+      "component": "assistant",
+      "path": "system/system_ext/lib64/libhyper_os_core_system_private.dylib.so",
+      "sha256": "71fa522160812cb9bf5f5f4f0f0227ed9acb227c9102521a65c0c6e3d172212f",
+      "bytes": 318656
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/ContentCatcherOS4/ContentCatcherOS4.apk",
+      "sha256": "d8d21e7d3ae0de9cfb0dd443a491b4baa774e104ac364ffed6de80196b1a0872",
+      "bytes": 321131
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/MIUIAiasstService/MIUIAiasstService.apk",
+      "sha256": "fc034b8e27cac5559bcacf0455b3d3c13eb7129b8b3e8d1b8acaf3b482078c1a",
+      "bytes": 24280129
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/MIUIAiasstService/lib/arm64/libLocalASR.so",
+      "sha256": "f43514493b52d09e70c472df530ad2dcea2a6e5aee1eaecc2c2b352d16b2fbd0",
+      "bytes": 4080792
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/MIUIAiasstService/lib/arm64/libaivs_jni.so",
+      "sha256": "0b959cc4cbab062642be4811500ff56928fcd1bf00cffc90e1c646428a2f098f",
+      "bytes": 727432
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/MIUIAiasstService/lib/arm64/libbytehook.so",
+      "sha256": "1fa39f206cf1cb5863dc3770ec3a21339921364e647a3ab4dbb094eab83676d8",
+      "bytes": 59080
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/MIUIAiasstService/lib/arm64/libmp3lame.so",
+      "sha256": "0fbb5b90a651502f8201b295ea91afbc8fe016890bee75308b5d5972d855c4ac",
+      "bytes": 233912
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/MIUIAiasstService/lib/arm64/libshadowhook.so",
+      "sha256": "5afb272443eafb5c6ccabf4bb019e49840aa0a22698930164a8ac0fd25de684a",
+      "bytes": 79464
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/MIUIAiasstService/lib/arm64/libshadowhook_nothing.so",
+      "sha256": "f2cc6a6f94d7361be915daafff1d25b7b3af34972e7308ac540982cfd608bd32",
+      "bytes": 1112
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/MIUIAiasstService/lib/arm64/libvad2.so",
+      "sha256": "386f048d2fb517e75c4638997a449fa45b277df5232e51be0e66b5f3186556ed",
+      "bytes": 1591568
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/MIUIAiasstService/lib/arm64/libxcrash.so",
+      "sha256": "ad573840e4152b56a7dd4b91618b9adb6c286ca58d8dddf70651aa50b37956c0",
+      "bytes": 90776
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/MIUIAiasstService/lib/arm64/libxcrash_dumper.so",
+      "sha256": "7c1916bd90269f62a157a23a247ca07ed3452c97e3e6b2684b99f0a46ebf49e7",
+      "bytes": 118376
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/MIUIAiasstService/lib/arm64/libxmd.so",
+      "sha256": "beeae157a49bd489abfd1c8dbf4cf114e915fc316d3e2b491a23c9b227302ab0",
+      "bytes": 2313120
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/MIUIXiaoAiSpeechEngine/MIUIXiaoAiSpeechEngine.apk",
+      "sha256": "203b4404c35e1a40fcb22e75608dbe54e4a54d6e0d5ab5efa0c0c6c73521e205",
+      "bytes": 32525965
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/MIUIXiaoAiSpeechEngine/lib/arm64/libaivs_jni.so",
+      "sha256": "0b959cc4cbab062642be4811500ff56928fcd1bf00cffc90e1c646428a2f098f",
+      "bytes": 727432
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/MIUIXiaoAiSpeechEngine/lib/arm64/libca.so",
+      "sha256": "fb25ac5f04a4ca93c42ea793bb15aa9083c81b9829aa263d8d86ab1de8efbbf3",
+      "bytes": 17800
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/MIUIXiaoAiSpeechEngine/lib/arm64/libcntts.so",
+      "sha256": "e4675d96eb46fb3ff0adf7770f22539130d50768c8b09eec19f373c6238d4976",
+      "bytes": 2862976
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/MIUIXiaoAiSpeechEngine/lib/arm64/libduiutils.so",
+      "sha256": "9d7643e784e0df1f669a1ff3a2d309508857387cf03e80783b2f4e6dbf2d5094",
+      "bytes": 281664
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/MIUIXiaoAiSpeechEngine/lib/arm64/libmibrainvad2.so",
+      "sha256": "e071d03e06c822cd6af1545b6460233b65e630bf7c455e55724a3cfc14cf1edb",
+      "bytes": 1509480
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/MIUIXiaoAiSpeechEngine/lib/arm64/libvad2.so",
+      "sha256": "386f048d2fb517e75c4638997a449fa45b277df5232e51be0e66b5f3186556ed",
+      "bytes": 1591568
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/MIUIXiaoAiSpeechEngine/lib/arm64/libwakeup.so",
+      "sha256": "db9c7d9c5550969fc5b6b787c02618387262a49e110dd1ba0b2137b3026016ee",
+      "bytes": 1020704
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/MIUIXiaoAiSpeechEngine/lib/arm64/libxmd.so",
+      "sha256": "beeae157a49bd489abfd1c8dbf4cf114e915fc316d3e2b491a23c9b227302ab0",
+      "bytes": 2313120
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/VoiceAssistProxy/VoiceAssistProxy.apk",
+      "sha256": "51b10fde445e804f1f6e1fd9181fe2795294b9c966a6a0615c68e5702efcb788",
+      "bytes": 1538276
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/VoiceTrigger/VoiceTrigger.apk",
+      "sha256": "5064cf66116be09de5af33780cc04e80c9669caf436ca6c5ae96d6bae625e3af",
+      "bytes": 39657880
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/VoiceTrigger/lib/arm64/libMdSpeechDataBean.so",
+      "sha256": "74cea2ca8eed3934b1488dc061d68fbfca250d99ce518021436fb3649a1b2694",
+      "bytes": 1546680
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/VoiceTrigger/lib/arm64/libaivs_jni.so",
+      "sha256": "0b959cc4cbab062642be4811500ff56928fcd1bf00cffc90e1c646428a2f098f",
+      "bytes": 727432
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/VoiceTrigger/lib/arm64/libbytehook.so",
+      "sha256": "1fa39f206cf1cb5863dc3770ec3a21339921364e647a3ab4dbb094eab83676d8",
+      "bytes": 59080
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/VoiceTrigger/lib/arm64/libc++_shared.so",
+      "sha256": "c4c2fe5cbcb1fba0003a31fc7ab29a9bb12df6cc187ec45a806462540e83d93b",
+      "bytes": 1374336
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/VoiceTrigger/lib/arm64/libflexkws.so",
+      "sha256": "233669e0beecd84888b6eb65c6e207ba46f755933c036a379490f387de9eb67e",
+      "bytes": 2637936
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/VoiceTrigger/lib/arm64/libflexkws_jni.so",
+      "sha256": "978dea52e4a9a65e1ba12fe0f4d6f5546b6430597e3b06222bee04548190a17f",
+      "bytes": 12232
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/VoiceTrigger/lib/arm64/libmicontinuity_sdk.so",
+      "sha256": "554e098a2eb880af29e5576b299ffe160ea07a2ecdbfe27c332998bd136d290b",
+      "bytes": 2064912
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/VoiceTrigger/lib/arm64/libshadowhook.so",
+      "sha256": "5afb272443eafb5c6ccabf4bb019e49840aa0a22698930164a8ac0fd25de684a",
+      "bytes": 79464
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/VoiceTrigger/lib/arm64/libshadowhook_nothing.so",
+      "sha256": "f2cc6a6f94d7361be915daafff1d25b7b3af34972e7308ac540982cfd608bd32",
+      "bytes": 1112
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/VoiceTrigger/lib/arm64/libvoiceprint.so",
+      "sha256": "66b3f0f332dfadf9c54e73a0b14658f96bd042ddd94234176d77805fb176fcb6",
+      "bytes": 2457272
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/VoiceTrigger/lib/arm64/libxcrash.so",
+      "sha256": "ad573840e4152b56a7dd4b91618b9adb6c286ca58d8dddf70651aa50b37956c0",
+      "bytes": 90776
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/VoiceTrigger/lib/arm64/libxcrash_dumper.so",
+      "sha256": "7c1916bd90269f62a157a23a247ca07ed3452c97e3e6b2684b99f0a46ebf49e7",
+      "bytes": 118376
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/XiaoaiRecommendation/XiaoaiRecommendation.apk",
+      "sha256": "32ee609ca478bd13bd635a3dd27ff042da91f903c26c744d7fd68374a7bdb020",
+      "bytes": 49647
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/com.xiaomi.macro/com.xiaomi.macro.apk",
+      "sha256": "860dadde411073cd69d1cfaffedb116d90fa1fa8eb18ab056cbd8afc6852660e",
+      "bytes": 10594197
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/com.xiaomi.macro/lib/arm64/libbytehook.so",
+      "sha256": "6b99c1443a14ea57570362b8964b56dcabf1d9933756da6e62edec101414d07d",
+      "bytes": 59080
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/com.xiaomi.macro/lib/arm64/libshadowhook.so",
+      "sha256": "f0a22bcd1fc9bb7bcbf0b54fc587a0afd8a700742d7ea6af29656ddbca382cda",
+      "bytes": 79464
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/com.xiaomi.macro/lib/arm64/libshadowhook_nothing.so",
+      "sha256": "fd4e8da8ec53b7297a7ba1148e34f597bc0e151d9599cc7ad8e56b5e8fd3640b",
+      "bytes": 1112
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/com.xiaomi.macro/lib/arm64/libxcrash.so",
+      "sha256": "7eb04739baae64b295b4864675f6d3247a29e72e5edffce6581bd91df9b4b041",
+      "bytes": 90776
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/app/com.xiaomi.macro/lib/arm64/libxcrash_dumper.so",
+      "sha256": "2a3fb0e839a1466550e2a93eb98297cbfdec4c5de9d9889e9cd3b1df6b05115a",
+      "bytes": 118376
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/etc/xuanyuan-ai-privacy.enabled",
+      "sha256": "f5fa32b4c51179e45899bdc1d30c30969425161f7d686c6cebb7522995b6b90e",
+      "bytes": 50
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/priv-app/MIUIContentExtension/MIUIContentExtension.apk",
+      "sha256": "e7810ef31917cd64c80bdd338d4434e9cb6c49f4c823ca9b8f7be6688f0b9c5b",
+      "bytes": 10951376
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/priv-app/MIUIContentExtension/lib/arm64/lib_arm_miui_arch_indicate.so",
+      "sha256": "4d82b4cdb3cd884c1343741c0147a3403fc688195dd57870fd6731cca7c54c6b",
+      "bytes": 5136
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/priv-app/MIUIContentExtension/lib/arm64/libmicontinuity_sdk.so",
+      "sha256": "c11f59f38f81512e224ceaca1420355376b080f6ec74aec63f471b570874ac77",
+      "bytes": 1663784
+    },
+    {
+      "component": "xiaoai",
+      "path": "system/product/priv-app/VoiceAssistAndroidT/VoiceAssistAndroidT.apk",
+      "sha256": "044f18277d3f22d46abd6fc3456d26c2794954a8b4d6094d449b1cba0d470328",
+      "bytes": 250508294
+    },
+    {
+      "component": "phone",
+      "path": "payload/MIUIYellowPage-cn.apk",
+      "sha256": "e07e59b9d9a99b0cce4bf06b9734002016b1c3bebe701c6ee368cdc8161cb733",
+      "bytes": 7018438
+    },
+    {
+      "component": "phone",
+      "path": "payload/MIUIYellowPage-eea.apk",
+      "sha256": "0c5c655fe93ffc0eade6a77dc56c05754d4a3afab8a6c122acd3a2f8a160c0ba",
+      "bytes": 6431224
+    },
+    {
+      "component": "phone",
+      "path": "payload/MiuiAudioMonitor-eea.apk",
+      "sha256": "f84954e6ef361a8204c565bfe365e66344e2984036febe784c1485e113d1ba71",
+      "bytes": 9779344
+    },
+    {
+      "component": "phone",
+      "path": "system/product/etc/xuanyuan-suite-phone.enabled",
+      "sha256": "eaaaf55774eb307e6f92663b545f220db37ecfa52d51c0cd944cb80a0a9261cd",
+      "bytes": 15
+    },
+    {
+      "component": "phone",
+      "path": "system/product/priv-app/InCallUI/InCallUI.apk",
+      "sha256": "590f2ed0e5e0923e79a452d72cd9c6e9783e1dde4cb8c987355ebcfce7b8c3bd",
+      "bytes": 9063609
+    },
+    {
+      "component": "phone",
+      "path": "system/product/priv-app/InCallUI/lib/arm64/libmievent.so",
+      "sha256": "d404076edc917984b6af87c5013c0e428f5acd9cf3fa18211e1124937ee24d3f",
+      "bytes": 4440
+    },
+    {
+      "component": "phone",
+      "path": "system/product/priv-app/InCallUI/lib/arm64/libmp3_encoder.so",
+      "sha256": "8a2903c974ee2e23c758f1aa9928556f43ecd00e55c5bf50919f4aef18027db2",
+      "bytes": 226176
+    },
+    {
+      "component": "phone",
+      "path": "system/product/priv-app/MIUIContactsT/MIUIContactsT.apk",
+      "sha256": "fed1ba5413833206f94d34183e1954c63489baa50c7969c825bfe211fd81da22",
+      "bytes": 19868679
+    },
+    {
+      "component": "phone",
+      "path": "system/product/priv-app/MiuiMms/MiuiMms.apk",
+      "sha256": "0a59d7338d31c70a0fb8f5477f264033d77abf4101f2897a60ffbabacbb1da14",
+      "bytes": 20403558
+    },
+    {
+      "component": "phone",
+      "path": "system/product/priv-app/MiuiMms/lib/arm64/libRcsStack.so",
+      "sha256": "1979d0ce25877274430769f1e616e538f960276dd1b81745b704a89cf463aeb0",
+      "bytes": 5746064
+    },
+    {
+      "component": "phone",
+      "path": "system/product/priv-app/MiuiMms/lib/arm64/libbytehook.so",
+      "sha256": "1fa39f206cf1cb5863dc3770ec3a21339921364e647a3ab4dbb094eab83676d8",
+      "bytes": 59080
+    },
+    {
+      "component": "phone",
+      "path": "system/product/priv-app/MiuiMms/lib/arm64/libloadSecretKey.so",
+      "sha256": "743551639eb8f3cee9e8098ca045432850ce9b9e048b91e334d7a1c65372e968",
+      "bytes": 23096
+    },
+    {
+      "component": "phone",
+      "path": "system/product/priv-app/MiuiMms/lib/arm64/libmiuidiffpatcher.so",
+      "sha256": "c174e4d091afa56b4a97ad2f01dbb93402adeff2552ab03288f5c43281a5999f",
+      "bytes": 76688
+    },
+    {
+      "component": "phone",
+      "path": "system/product/priv-app/MiuiMms/lib/arm64/libshadowhook.so",
+      "sha256": "5afb272443eafb5c6ccabf4bb019e49840aa0a22698930164a8ac0fd25de684a",
+      "bytes": 79464
+    },
+    {
+      "component": "phone",
+      "path": "system/product/priv-app/MiuiMms/lib/arm64/libshadowhook_nothing.so",
+      "sha256": "f2cc6a6f94d7361be915daafff1d25b7b3af34972e7308ac540982cfd608bd32",
+      "bytes": 1112
+    },
+    {
+      "component": "phone",
+      "path": "system/product/priv-app/MiuiMms/lib/arm64/libteddycom-jni.so",
+      "sha256": "0e7ca4a852ae61e3c0cc0ae03cdae2d5a113944f4b17a03a878d710983bfe2ac",
+      "bytes": 17368
+    },
+    {
+      "component": "phone",
+      "path": "system/product/priv-app/MiuiMms/lib/arm64/libxcrash.so",
+      "sha256": "ad573840e4152b56a7dd4b91618b9adb6c286ca58d8dddf70651aa50b37956c0",
+      "bytes": 90776
+    },
+    {
+      "component": "phone",
+      "path": "system/product/priv-app/MiuiMms/lib/arm64/libxcrash_dumper.so",
+      "sha256": "7c1916bd90269f62a157a23a247ca07ed3452c97e3e6b2684b99f0a46ebf49e7",
+      "bytes": 118376
+    },
+    {
+      "component": "phone",
+      "path": "system/system_ext/app/MiuiAudioMonitor/MiuiAudioMonitor.apk",
+      "sha256": "83133a62f37cefe873075064d39c5e176e768af251d678438a242116be8178b1",
+      "bytes": 8681616
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/app/HyperGalleryPluginGlobal/.replace",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/app/HyperGalleryPluginGlobal/HyperGalleryPluginGlobal.apk",
+      "sha256": "f763216706094ca04cf2c4e67600595bbfa55f0533b8468a7c36ca2463bf9497",
+      "bytes": 24891386
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/app/HyperGalleryPluginGlobal/lib/arm64/libgallery_sig.so",
+      "sha256": "7d96c58f9a81f5511e6abc4d5e673eef1b4fcc3c35665c9ad66d8fa5da412b9f",
+      "bytes": 4960
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/.replace",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/MIMediaEditorGlobal.apk",
+      "sha256": "365954e0e94263b7372fa5e6f4d244690b5edd9607b5642a1488a622732f7756",
+      "bytes": 221712646
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/lib/arm64/libCNamaSDK.so",
+      "sha256": "2fabdd246b72c78510308aabac9bdd9755bfbdac2dae1750a3ab475f4cd6834d",
+      "bytes": 12996584
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/lib/arm64/libFaceBeautyWrapper.so",
+      "sha256": "f98e8bf5c9ee9eefd0bf4326fa567c9ff4083b10dc2a587604bdcdc3d4be5788",
+      "bytes": 117104
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/lib/arm64/libMiFilterSDK.so",
+      "sha256": "4d66aaa632c223abd190672a8dcfea4b98882260e8d3a24a8d974b66537904d0",
+      "bytes": 724960
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/lib/arm64/libMiVideoSDK.so",
+      "sha256": "6f948df0e66fc1c0a271d221f503a00909d7e7a5e0ef6e88c734805de331486c",
+      "bytes": 5512320
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/lib/arm64/libXmStreamingSDK.so",
+      "sha256": "02485fc40eba81d908f1ef2d25ab4e4d5866b4fcdfc254bbf4825e98e4d89ab8",
+      "bytes": 1021904
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/lib/arm64/libarcsoft_dualcam_refocus.so",
+      "sha256": "062ca9f5df6b0f73a004c1ca098a28ff1a0f4ad96d162244710fad1f60fdb3bd",
+      "bytes": 3671368
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/lib/arm64/libavif_android.so",
+      "sha256": "278211a4aa0fe5034aef8ef9717736242b3b6868708dcd1e1b6d941c5f05150c",
+      "bytes": 899752
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/lib/arm64/libbitmap_util.so",
+      "sha256": "cac36a1618efea0f931d82cc1a707e4a1a0c9e30c12b8e6cbbf9df9c7836c758",
+      "bytes": 1015472
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/lib/arm64/libbytehook.so",
+      "sha256": "1fa39f206cf1cb5863dc3770ec3a21339921364e647a3ab4dbb094eab83676d8",
+      "bytes": 59080
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/lib/arm64/libc++.so",
+      "sha256": "c6486cd3f0e6dd6a12346d3b1d55ef4bef7f1cc11e4a26bbe9da720c07d4b83b",
+      "bytes": 1066192
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/lib/arm64/libc++_shared.so",
+      "sha256": "cd61762848882a16c8244c964a6f396c0caa0b440588a210ce9cc4ab0e6d9f0c",
+      "bytes": 1253544
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/lib/arm64/libcameraheif.so",
+      "sha256": "9633eb12066c898ac75917bded4db544282a13004d5bd38fbf0d886454d2829b",
+      "bytes": 1062664
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/lib/arm64/libcloud_text_loader.so",
+      "sha256": "2c3478d20462647ec7f1862ea1dfc36b4145dafd83836469bd217bdd717cf77e",
+      "bytes": 12904
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/lib/arm64/libdoc_photo_process.so",
+      "sha256": "5a4309bcf23f07437100dba1a36dc2ba9dc478c32e122063b0fa0613c6f54bb8",
+      "bytes": 19796024
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/lib/arm64/libfuai.so",
+      "sha256": "60402925af07b365094cdc1a6f91c248fce090fdc79f82ae189b615a8d7957bc",
+      "bytes": 8011688
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/lib/arm64/libgainmap_grayscale.so",
+      "sha256": "68472c21e72a05a026bba2202c172eb22779cb47a1b987db84a06d738f6a160b",
+      "bytes": 12280
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/lib/arm64/libgallery_block_sdk.so",
+      "sha256": "a23c1cfa40c62cc14340d130268ad8cf8e654bf185c5ab944043365de134fdf5",
+      "bytes": 7656
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/lib/arm64/libheif_jni.so",
+      "sha256": "c9484a6dcaacf8faf00c525b9a279fe975b3507651e64c1a46cdf05bdc1ed2aa",
+      "bytes": 60096
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/lib/arm64/libmegvii_bokeh_jni.so",
+      "sha256": "2cc70c1d0f3857c1ad16c95d2cdf7df6223ff0af356896bbfc9304e9b9a7b439",
+      "bytes": 31104
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/lib/arm64/libmegvii_single_bokeh_jni.so",
+      "sha256": "eed7e2b8981e883a34af231fa7fe82b4417729073e19fae592139222a543d584",
+      "bytes": 32408
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/lib/arm64/libmi_portrait_jni.so",
+      "sha256": "eb637d765999396971dd453fae692c9b3fc12ad86fc86241f24fbf03f09d7c3d",
+      "bytes": 33488
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/lib/arm64/libmievent.so",
+      "sha256": "d404076edc917984b6af87c5013c0e428f5acd9cf3fa18211e1124937ee24d3f",
+      "bytes": 4440
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/lib/arm64/libmiffmpeg.so",
+      "sha256": "4f8cc7089de2abdaffdaeb4e6520ab1921521eae0d9e1a7362869b20d67022ed",
+      "bytes": 7092288
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/lib/arm64/libmmkv.so",
+      "sha256": "58e0007042ef946979988cfe9cc94041cd3e735d92dc549ec0d87ac7fbb150e7",
+      "bytes": 588296
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/lib/arm64/libmpbase.so",
+      "sha256": "59ab8e32333d6da80381631730fa51cb12449ef8e46988c97ed688117dc17679",
+      "bytes": 6560
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/lib/arm64/libnative-buffer.so",
+      "sha256": "4e70b23cf294bd6d657301cbd14d0022e798440a41affc8ffc157215f54bbe07",
+      "bytes": 10336
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/lib/arm64/libnative_buffer.so",
+      "sha256": "c94c1195e47e72c5f2fd919a03038c32caa92d3c3aeb8f7b936320abd4b5045b",
+      "bytes": 7848
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/lib/arm64/libpendant.so",
+      "sha256": "84ced043410cf2f2ba739f18dd024acc0ca650392764823c1a959dca8215a8e1",
+      "bytes": 5240
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/lib/arm64/libqcloud-avif.so",
+      "sha256": "ca84f7417c70893ef2875e9f94c88459f3997796ddb9789cabb45b292eb66f32",
+      "bytes": 1214040
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/lib/arm64/librefocus.so",
+      "sha256": "1930d51257b8f6995a01f106c8a0698e9c52b1cd16724397bde6d00d6573978c",
+      "bytes": 59816
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/lib/arm64/libresource_loader.so",
+      "sha256": "950f42edd5f2a6221dfc76ac1986a18dbf6777355676a851715bab2c8a3935bc",
+      "bytes": 8472
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/lib/arm64/libshadowhook.so",
+      "sha256": "5afb272443eafb5c6ccabf4bb019e49840aa0a22698930164a8ac0fd25de684a",
+      "bytes": 79464
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/lib/arm64/libshadowhook_nothing.so",
+      "sha256": "f2cc6a6f94d7361be915daafff1d25b7b3af34972e7308ac540982cfd608bd32",
+      "bytes": 1112
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/lib/arm64/libturbojpeg.so",
+      "sha256": "e9b23e03f6e486ea62f324f10e47c352514f64d893a5131d00870a9779e98d97",
+      "bytes": 482352
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/lib/arm64/libvis.so",
+      "sha256": "7eb748bcac9d5ab0c94678ea1be8824ea775cac8a2e1dbce0f1cbfd7afa13253",
+      "bytes": 2296224
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/lib/arm64/libwatermark-service.so",
+      "sha256": "4bd2ae89e78b12da58bdd1d10ebe82740ffe7a16100ebc3e938510ca53a273ac",
+      "bytes": 7624
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/lib/arm64/libwatermark_effect.so",
+      "sha256": "f160a9f10f4bb4fb1c1662db7288d8ab54002d949e498d46017a001efa0a54dc",
+      "bytes": 294872
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/lib/arm64/libwm_native_tool.so",
+      "sha256": "c7bba4866df7d588c2c38178774023fecec69f8947960c77a3603d29c0ac8feb",
+      "bytes": 63088
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/lib/arm64/libxcrash.so",
+      "sha256": "ad573840e4152b56a7dd4b91618b9adb6c286ca58d8dddf70651aa50b37956c0",
+      "bytes": 90776
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/lib/arm64/libxcrash_dumper.so",
+      "sha256": "7c1916bd90269f62a157a23a247ca07ed3452c97e3e6b2684b99f0a46ebf49e7",
+      "bytes": 118376
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/data-app/MIMediaEditorGlobal/lib/arm64/libyuv.so",
+      "sha256": "35c55f7a84ce100c914bc59b46b929878a6fd24bae4c40859dd7fa5f939a11cf",
+      "bytes": 466768
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MIUIGalleryGlobal/.replace",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MIUIGalleryGlobal/MIUIGalleryGlobal.apk",
+      "sha256": "be6bb05752cf667430c9359cd46fa8f4ed3552ecbe2e90a7b6279eaeb471f4a2",
+      "bytes": 103381723
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MIUIGalleryGlobal/lib/arm64/libHyperMediaSDK.so",
+      "sha256": "fcce490e5fa092119c4533b0e47611f5037c1fb9c8d0f954dec5e405cf3d023b",
+      "bytes": 5533464
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MIUIGalleryGlobal/lib/arm64/libHyperSurfaceView.so",
+      "sha256": "f5014dd9ea59679defebc8ed4de1e1327df2924d8fe01b59650e6f8a873946e3",
+      "bytes": 907200
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MIUIGalleryGlobal/lib/arm64/libHyperUiMiMainColor.so",
+      "sha256": "54ff0d3175602311d321c899aafe1b1e6766583fd71cc783f101d7757292fd3d",
+      "bytes": 487096
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MIUIGalleryGlobal/lib/arm64/libapp.so",
+      "sha256": "55f728bbdd4543e1a05132f386ed6731b82164babcf7826210c3f3e47feae77f",
+      "bytes": 22217744
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MIUIGalleryGlobal/lib/arm64/libapp_gallery.so",
+      "sha256": "8c82a8a1768df419bf047c54be38720a2329f1ac04afe8d3bd68621f434ee15c",
+      "bytes": 39062120
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MIUIGalleryGlobal/lib/arm64/libc++_shared.so",
+      "sha256": "c19b889546c2626e68e0b0b9e5d6d78dcbd3dbf72c3418898527483735db8764",
+      "bytes": 1292544
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MIUIGalleryGlobal/lib/arm64/libdatastore_shared_counter.so",
+      "sha256": "ced1dc629456680fc55556f6be6abc6980d878b4b40e1fc990e3f5d7460333ea",
+      "bytes": 6976
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MIUIGalleryGlobal/lib/arm64/libheifrust.so",
+      "sha256": "5c4859ce6a158532eeb05507983f1cc45bce4b9ad71460ca175c83bb7fe28c58",
+      "bytes": 2610728
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MIUIGalleryGlobal/lib/arm64/libhyper_image.so",
+      "sha256": "9dad7239dc71836b1c649f36977e01f9149afb3bb3c75fa55c8b8ce0ea730db7",
+      "bytes": 7039920
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MIUIGalleryGlobal/lib/arm64/libmiffmpeg.so",
+      "sha256": "6dff4aff891d5733fa5e0d3ed8b8dcd53db296819e5ff241c96c352652a2b6da",
+      "bytes": 12377592
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MIUIGalleryGlobal/lib/arm64/libmivklumos.so",
+      "sha256": "76185761dd59b0ee3df6a0b25e4ac31d3cc20a03e788d70c59e639fd54fcc656",
+      "bytes": 238200
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MIUIGalleryGlobal/lib/arm64/libomp.so",
+      "sha256": "8c7eed6741bde59b295a891ecfe42fad4e2f03060f52300a2dee553f5c0cea13",
+      "bytes": 961080
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MIUIGalleryGlobal/lib/arm64/libraw.so",
+      "sha256": "30cab188de30864c32af17a4e85116910cb8b6092e4b92aecd0fbf21093148e1",
+      "bytes": 1160432
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MIUIGalleryGlobal/lib/arm64/libresources_frb.so",
+      "sha256": "938c9e77aebb4347fa51d344e72b769e7790e0627e7d02a6576a69e6faec8bc1",
+      "bytes": 2421960
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MIUIGalleryGlobal/lib/arm64/libretriever_phone.so",
+      "sha256": "46746c8ede50d567c763115a595603fe2eabf59fd12bec8fbe93b0fc5fcd8953",
+      "bytes": 378736
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MIUIGalleryGlobal/lib/arm64/libxcrash.so",
+      "sha256": "7fcd92c990b0b04ccf029bb273fbbde35778bbab5976f80eb5c59182b9ecf70e",
+      "bytes": 90592
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MIUIGalleryGlobal/lib/arm64/libxcrash_dumper.so",
+      "sha256": "64e2c00faed49b1d613f492d62925559d4024d78ccc8a51bcf9c18264ede2f8c",
+      "bytes": 118208
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/.replace",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/MiuiExtraPhoto.apk",
+      "sha256": "b6149345f1aa4f3b84d84152b186f5c60bc6bc4c95957ac3cc232fb047722756",
+      "bytes": 98562373
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libMNN.so",
+      "sha256": "5a3453f2be040b65f41fb13d34c02f342eea04faa0816bd44224ca98d1465096",
+      "bytes": 4136336
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libMiFilterSDK.so",
+      "sha256": "897da8c15f1c3492b9bfe6878bc4096c3a9900cb6d7b3113e5120de3606a2f48",
+      "bytes": 874648
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libanc_single_bokeh_refocus.so",
+      "sha256": "c6255e8342adc578b0233bced716c150965013880cc026b9dac58653007cc7fe",
+      "bytes": 6472288
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libarcsoft_dualcam_refocus.so",
+      "sha256": "d23924669593a183b5cf3a494d4810c35d20e334b4e3b62d805850371d18706b",
+      "bytes": 3583192
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libauto_crop_c++_shared.so",
+      "sha256": "791e62491671e1d5fe5c4de1fbc5195cc21c29ba06116573b5455e592d9b76be",
+      "bytes": 977256
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libautocrop.so",
+      "sha256": "4f3e323eece813eb738231562ede594e3e51cfeb964f06aefacac4071f93aed9",
+      "bytes": 419864
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libavif_android.so",
+      "sha256": "278211a4aa0fe5034aef8ef9717736242b3b6868708dcd1e1b6d941c5f05150c",
+      "bytes": 899752
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libc++.so",
+      "sha256": "31e722a30acb2815e9701b26efb77bffa5c23ab6094e6c0179595f0eb478296b",
+      "bytes": 712784
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libc++_shared.so",
+      "sha256": "92ee8da641b969254cc8723f64aa115d36c8ffa87115e38bc9cb89e3eefee839",
+      "bytes": 1292896
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libcameraheif.so",
+      "sha256": "d3f50a67e9a90fef09b197f26f2548e9dcf8ab412f05b4e4dda32e776233e307",
+      "bytes": 1062472
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libcommon.so",
+      "sha256": "50e18b18919b149dd90376a1d38a05df9f889e6bcc58d6b8f642edc74f7fa0c1",
+      "bytes": 5832
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libdmabufheap.so",
+      "sha256": "0281df8ef1b648687ee807552f726c0c45850b60a71052a0facb4c8c45870284",
+      "bytes": 87488
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libdoc_photo_c++_shared.so",
+      "sha256": "9fb28ade1af6a5afde978ee706fac466a5b63d19bbb36e013447ea886199b331",
+      "bytes": 1055016
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libdoc_photo_process.so",
+      "sha256": "c9032b522ee715b625635675dc02e9c22215ccde4f03dbbd96eef0ec06155a64",
+      "bytes": 19779640
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libheif_jni.so",
+      "sha256": "d1d52ee6608a40f0b94945ba5cda855ce5c0df1896eb324add75c8e21e702efb",
+      "bytes": 51096
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libmegvii_bokeh_jni.so",
+      "sha256": "32c062155e2fe1ab3b8b21b91526e9e88e4bbac3cf1b210705a02e2ea55794a0",
+      "bytes": 22392
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libmegvii_refocus_jni.so",
+      "sha256": "9cbe786ee0358e85affd059ddab759c2adb1509f983291cc26cf849a7b18500e",
+      "bytes": 21552
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libmegvii_single_bokeh_jni.so",
+      "sha256": "2396a332939f03e784703787c682d51a09c72b8726cc8a96fdb9b0735fd004fb",
+      "bytes": 22472
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libmegvii_single_refocus_jni.so",
+      "sha256": "4852ebf31137db5cadc2037f4ad8166967453bd19d4a5a9c39bb0876c2ea2f68",
+      "bytes": 21856
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libmi_portrait_jni.so",
+      "sha256": "eed494e852dd31c4c0313befab8aaa5fdd3a7e893150d8575a3359f6116db9e1",
+      "bytes": 22672
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libmialgo_ai_vision.so",
+      "sha256": "32d99457abf863bdb53e4d66cc742c41bb093541f268207acfa3b430fae9c599",
+      "bytes": 239960
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libmialgo_autocrop_mtk.so",
+      "sha256": "d1f0255d3361a41ba3448e5dbab084a7234ed6c346859af4efbcd5df88bc6b8a",
+      "bytes": 668592
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libmialgo_autocrop_qcom.so",
+      "sha256": "11c6c1fa103a9428203370215a3515890f4659af082d4d71f66130815508dc48",
+      "bytes": 734512
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libmialgo_utils_extraphoto.so",
+      "sha256": "2b80c8aa72afc46f5000c7ba8984ad3c504424eecc9f2a239eaf04d5232627da",
+      "bytes": 1051208
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libmialgo_utils_mtk.so",
+      "sha256": "750c8804e2952f3ac957534615e15e90d03eb4f4d95dd0c14f5b2ae454163ea1",
+      "bytes": 133320
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libmicamera_dual_bokeh_jni.so",
+      "sha256": "41c3d0550d83538f6b8a87aa43f312593b6bedb90f9a0e9153547e9d5edaddf7",
+      "bytes": 23504
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libmiphone_refocus_bokeh.so",
+      "sha256": "711d19300a3d72e8dc3c579197fecd5dd1ebc83c525d88bb063487282a769b74",
+      "bytes": 5326952
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libmisr.so",
+      "sha256": "6849d0161517e5c0e3bf8883778d2e89771d749b2423b38a682cdec5b94cee9a",
+      "bytes": 3853896
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libmisr_mtk.so",
+      "sha256": "f54589772142689ab7b850f431e9f1b9a8b2f58566d1f1b4e9afa8827c8d8848",
+      "bytes": 5213744
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libmotion_photo.so",
+      "sha256": "273ddd442ac38293d2fa75bf7e7d0f442c45b11d6ecdd6ce58e050c89ef3bad9",
+      "bytes": 22376
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libmotion_photo_c++_shared.so",
+      "sha256": "9fb28ade1af6a5afde978ee706fac466a5b63d19bbb36e013447ea886199b331",
+      "bytes": 1055016
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libmotion_photo_mace.so",
+      "sha256": "c064004bd5a52235cd6be0dc173879af22c45024dcbbcdf918f05262ee2ec489",
+      "bytes": 3504680
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libmotion_photo_mtk.so",
+      "sha256": "02db146a787189f70a24928c9698d20ea1491d159059916a01cb73667e22afca",
+      "bytes": 22376
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libmpbase.so",
+      "sha256": "f7d3d00a245a5c4619944228046a350e840161f2d00d6addeee4603607a80ae9",
+      "bytes": 5184
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libpendant.so",
+      "sha256": "c7b69fb0c10e2ae40d5e13478be4b2367fe4ce6d69a4a8696be50fcb29cc5fd3",
+      "bytes": 5240
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/librefocus.so",
+      "sha256": "3c97b4755d178a7f99e29c732f8c50d53d441414955cb6f23c57a2c0b4bf0b59",
+      "bytes": 45288
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libselection.so",
+      "sha256": "a9a9c38fed379dc3c7b4d095500ac42cf1bf77ba311c75a8be23f103bdb1e844",
+      "bytes": 1791248
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libselection_mtk.so",
+      "sha256": "730dc903c9028a4f21d34a23d22b27a866328e93238416191f06e401fc250480",
+      "bytes": 1837544
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libturbojpeg.so",
+      "sha256": "a51befaffa24ce3f72cc7bde953565d0db98796758d590f91b06dd2e49ac241e",
+      "bytes": 469272
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libwa_refocus.so",
+      "sha256": "b9be9ddf0b7267433b8f13d3de9479905f8f894b08ec9e22d307231137d9a0a7",
+      "bytes": 6934496
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libxcrash.so",
+      "sha256": "77009be205f8fc7a6784cbe2afc536e405356cc65a3a140dbcdb0b2381a92df0",
+      "bytes": 76088
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libxcrash_dumper.so",
+      "sha256": "bf7d35ad63d0fcd448f8c178d27b01da8616edae4ae1087f9ee9cc6c54b3c8a4",
+      "bytes": 113488
+    },
+    {
+      "component": "gallery",
+      "path": "system/product/priv-app/MiuiExtraPhoto/lib/arm64/libyuv.so",
+      "sha256": "7b37d00263fcedbfd785d6e8e99cb434b9888ec93978ae1d63a0a938b0c8ce48",
+      "bytes": 557000
+    },
+    {
+      "component": "weather",
+      "path": "payload/cn.apk",
+      "sha256": "2a8faed30ce5ffe4ae0229dce0d520d882dff990f6ef158e5fbb555153b7e887",
+      "bytes": 63138625
+    },
+    {
+      "component": "weather",
+      "path": "payload/cn27.apk",
+      "sha256": "017d613137c0512a937dc6b8565da856099e988feab47b9eabc5c3d0a13f06e6",
+      "bytes": 41311702
+    },
+    {
+      "component": "weather",
+      "path": "payload/core-cn.apk",
+      "sha256": "5abe56881dafbe3540e11c4ff4a450ae7bcd19d93753a251326f09314a2bb9e9",
+      "bytes": 45682504
+    },
+    {
+      "component": "weather",
+      "path": "payload/core-global.apk",
+      "sha256": "585703b25f0bce27f06f76ed568af9a9bbf58bcf7810600ad23eb4ab57be6902",
+      "bytes": 4286582
+    },
+    {
+      "component": "weather",
+      "path": "payload/global.apk",
+      "sha256": "9439e87555133762d362bfba651e7ab6e2f01e78b280fdd7ec745cbb6403b025",
+      "bytes": 45334680
+    },
+    {
+      "component": "weather",
+      "path": "payload/libweather27.so",
+      "sha256": "96f7cabbe8710418b2286dc50bd5dc519a5fad5f794f6827b332b660e4a47c72",
+      "bytes": 7059728
+    },
+    {
+      "component": "weather",
+      "path": "payload/libweather_app.so",
+      "sha256": "1aff04e6b7706980cf311b7cc128887aae54c43f6b69df13affc1779ae0d3e16",
+      "bytes": 7040320
+    },
+    {
+      "component": "disaster",
+      "path": "system/product/etc/xuanyuan-warning.enabled",
+      "sha256": "5a6b43414b54d157c5c148aad4b5257b670ebc1de3c9c5996d73e23dad37f0c5",
+      "bytes": 18
+    },
+    {
+      "component": "disaster",
+      "path": "system/product/framework/xuanyuan-warning.dex",
+      "sha256": "bd7b96b1aa2d3fa7b5f3a5200f39e16077636b0081f6df2c7201db47948d8d46",
+      "bytes": 95000
+    },
+    {
+      "component": "disaster",
+      "path": "system/product/priv-app/MIUISecurityCenterWarning/MIUISecurityCenterWarning.apk",
+      "sha256": "f3d338484cc5fd3f3fec9e8d9d0b4c6370923fba0f5e0d81975a45e914cbc776",
+      "bytes": 81091182
+    },
+    {
+      "component": "wallet",
+      "path": "payload/Mipay.apk",
+      "sha256": "2aa4d85ae0e23764fdc96d0d5d4b314a5a90e915f0ed02a85093522e216e7d51",
+      "bytes": 115360140
+    },
+    {
+      "component": "wallet",
+      "path": "system/product/app/MITSMClientGlobal/MITSMClientGlobal.apk",
+      "sha256": "567e8f05e4b2cbc7c203ce5f10672756ea8af0542c3fc5aafaa3e677ebcaa671",
+      "bytes": 32680220
+    },
+    {
+      "component": "wallet",
+      "path": "system/product/app/MITSMClientGlobal/lib/arm64/libentryexpro.so",
+      "sha256": "bf60478c35a4cf90a4646620251682fd8d1caff2d775cfca75828556b2dafaab",
+      "bytes": 177624
+    },
+    {
+      "component": "wallet",
+      "path": "system/product/app/MITSMClientGlobal/lib/arm64/libuptsmaddonmi.so",
+      "sha256": "9409a3c6a2eedf0a81cd3834d1c6daadfd2806f34a794d97173b0913551f6c4d",
+      "bytes": 776992
+    },
+    {
+      "component": "parent",
+      "path": "payload/calendar.apk",
+      "sha256": "ed8f4356bb7c44038abbe5f215f215277c114e75de4bd21ac0a65f77d75f75f0",
+      "bytes": 17831333
+    },
+    {
+      "component": "parent",
+      "path": "payload/calendar-global.apk",
+      "sha256": "e2f2e6f2cc5d5ab32480447c23b91c90b2c5db863a38907c6dff61fec80566e7",
+      "bytes": 22042966
+    },
+    {
+      "component": "parent",
+      "path": "payload/unified.apk",
+      "sha256": "02b4d7bc35ccfa6ec9d3e7ce82171b1a96bf81ba1abb3f1dcff70170c960679f",
+      "bytes": 254568
+    }
+  ],
+  "components": [
+    {
+      "id": "market",
+      "template": "components/market",
+      "parent_path": "payload/market.zip"
+    },
+    {
+      "id": "assistant",
+      "template": "components/assistant",
+      "parent_path": "payload/assistant.zip"
+    },
+    {
+      "id": "xiaoai",
+      "template": "components/xiaoai",
+      "parent_path": "payload/xiaoai.zip"
+    },
+    {
+      "id": "phone",
+      "template": "components/phone",
+      "parent_path": "payload/phone.zip"
+    },
+    {
+      "id": "gallery",
+      "template": "components/gallery",
+      "parent_path": "payload/gallery.zip"
+    },
+    {
+      "id": "weather",
+      "template": "components/weather",
+      "parent_path": "payload/weather.zip"
+    },
+    {
+      "id": "disaster",
+      "template": "components/disaster",
+      "parent_path": "payload/disaster.zip"
+    },
+    {
+      "id": "wallet",
+      "template": "components/wallet",
+      "parent_path": "payload/wallet.zip"
+    }
+  ]
+}

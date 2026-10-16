@@ -1,0 +1,6 @@
+id=xuanyuan-os4-suite
+name=小米本地化套件 · 小米15 Ultra
+version=1.1
+versionCode=2026101402
+author=XiaomiLocalSuite contributors
+description=EEA OS4.0.0.6专用；勾选安装、状态检查与逐项恢复。内置经过验证的原模块，不自动迁移钱包凭据。
