@@ -18,7 +18,7 @@ import suite_builder as builder
 from gui_session import Session
 
 HERE = Path(__file__).resolve().parent
-GUI_VERSION = '0.7.0'
+GUI_VERSION = '0.7.1'
 REVIEWED = HERE / 'profiles/xuanyuan-eea-os4.0.0.6.json'
 KNOWN_TITLE = '历史配方 · 小米15 Ultra（需自备完整1.4）'
 NEW_TITLE = '其他机型 · 从目标固件识别'

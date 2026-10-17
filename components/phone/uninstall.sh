@@ -1,5 +1,12 @@
 #!/system/bin/sh
 STATE=/data/adb/xuanyuan-os4-phone-state
+if [ -n "${XLS_STOCK_PARENT:-}" ]; then
+ [ "$XLS_STOCK_PARENT" = "$PPID" ] && [ "$(cat /data/adb/xuanyuan-os4-suite-state/lock/pid 2>/dev/null)" = "$PPID" ] &&
+ [ "$(cat /data/adb/xuanyuan-os4-suite-state/lock/boot 2>/dev/null)" = "$(cat /proc/sys/kernel/random/boot_id)" ] || exit 1
+else
+ # Sourcing keeps the recovery lock until the entire uninstall has finished.
+ . "${0%/*}/restore-stock.sh" || exit 1
+fi
 if [ "$(cmd role get-role-holders --user 0 android.app.role.DIALER)" = com.android.contacts ]; then
   OLD=$(cat "$STATE/before-dialer")
   [ -n "$OLD" ] && cmd role add-role-holder --user 0 android.app.role.DIALER "$OLD" 0

@@ -1,6 +1,6 @@
 # 小米 15 Ultra · OS4.0.0.6 完整 1.7 原始材料路线
 
-本文对应电脑工具 **0.7.0 prerelease**，tag 为 `tool-v0.7.0`。它用公开源码和用户自己的固件/APK 材料生成本地 1.7 parent ZIP，**不需要私有 1.7 参考 ZIP**。新版方案在用户另行刷入 ZIP 时部署电脑勾选的组件，保留数据和独立恢复；特殊的电话续装及首次钱包迁移见第 6 节。「完整」指精确配方能力，不表示全部功能已实机验收。
+本文对应电脑工具 **0.7.1 prerelease**，tag 为 `tool-v0.7.1`。它用公开源码和用户自己的固件/APK 材料生成本地 1.7 parent ZIP，**不需要私有 1.7 参考 ZIP**。新版方案在用户另行刷入 ZIP 时部署电脑勾选的组件，保留数据和独立恢复；特殊的电话续装及首次钱包迁移见第 6 节。「完整」指精确配方能力，不表示全部功能已实机验收。
 
 只支持小米 15 Ultra `xuanyuan`、EEA **`OS4.0.0.6.XOAEUXM`**、Android 17 / API 37 / `arm64-v8a`，配合同机型 CN **`OS4.0.0.6.XOACNXM`** 原始材料及配方锁定的额外 APK。不同 ROM、机型或同版本号但 SHA256 不符的材料不能替代。该路线不是通用移植器。
 
@@ -53,11 +53,13 @@ python3 suite/multi-device/suite_builder.py extract "/local/materials/xuanyuan-c
 
 智能助理和天气的原生补丁、预警 DEX 由公开配方从调用者的精确原始输入在本机生成，并核对生成结果的锁定哈希。相关配方见 `tools/recipe_generated.py`、`native/assistant/` 和 `recipes/generated.json`；仓库不包含生成所需的 OEM 二进制或 OEM 反编译代码。
 
-### 当前材料验证范围
+### 当前与历史材料验证范围
 
 0.6.0 已从现有原始材料匹配 214/214 项，并完成全量 ZIP 和实际 GUI 部分包生成，记录见 [FULL_RECIPE_VALIDATION.md](FULL_RECIPE_VALIDATION.md)。该证据不覆盖 0.7.0 新增的刷入部署或重启续装。本轮没有重新解包全量 OTA，也不操作手机。CN 固件之外仍需配方锁定的更新 APK 和 EEA 恢复 APK，按缺项清单补齐。
 
-0.7.0 已核对当前 APK 构建证据及 214/214 原始材料，生成全 11 项包 **1,101,469,378 字节**，并通过父子校验和、52 份 shell 及最终安装脚本核对；没有使用私有参考 ZIP。实际 GUI 生成商店/智能助理包 **68,561,763 字节**，固定自动部署计划正确。详细证据和未验证的设备范围见 [AUTOINSTALL_VALIDATION.md](AUTOINSTALL_VALIDATION.md)。
+0.7.0 历史验证已核对当时 APK 构建证据及 214/214 原始材料，生成全 11 项包 **1,101,469,378 字节**，并通过父子校验和、52 份 shell 及最终安装脚本核对；没有使用私有参考 ZIP。实际 GUI 生成商店/智能助理包 **68,561,763 字节**，固定自动部署计划正确。该版本最终 CI 已通过；详细历史证据和未验证的设备范围见 [AUTOINSTALL_VALIDATION.md](AUTOINSTALL_VALIDATION.md)。这些全量结果不是 0.7.1 新包证明。
+
+0.7.1 已完成当前 API102 APK 编译/源码证据校验，以及电话＋商店实际材料测试 ZIP 的父子校验清单、管理与恢复脚本核对；未包含钱包。原应用管理、恢复及主机回归记录见 [STOCK_APPS.md](STOCK_APPS.md#本次验证记录)，最终提交的 CI 与下载摘要见对应 Release。没有新版全 11 项构建或新设备证明。
 
 ## 2. 显式准备依赖
 
@@ -119,6 +121,8 @@ PY
 
 配方入口核对 APK SHA256、依赖 SHA256，以及当前 manifest、Java 源码、构建/取依赖脚本、lock 和 Xposed 元数据的**完整文件集合及哈希**。缺少或不匹配时，重新从当前公开源码编译，不能用旧 code 17 APK 顶替，也不要手改证据。证据用于防止误用过期文件，**不是构建来源的可信证明或 attestation**。插件保留 `versionCode=17`；文件名里的旧 `1.6` 名称同样不能证明源码是否为当前版本。
 
+0.7.1 的原电话/短信管理须重建当前 API102 APK 与配套 parent ZIP，并沿用现有插件的同一长期签名密钥；不能只更新 APK。旧电话子模块即使版本号相同也要重新安装并手动重启，因为禁用前会核对已安装的 `restore-stock.sh`、`uninstall.sh` 与本包 payload 的摘要身份。
+
 一个新编译的通用 API102 APK 即可配合任意合规组件子集，不需要按选择重新编译，也不需要私有旧 APK。新 UI 要求 parent 实现只读 `preset.sh capabilities`；旧私有 1.7 parent 未实现时会禁止应用并提示升级。旧参考包开发路线见 [BUILD_SUITE.md](BUILD_SUITE.md)，其原有结构校验不替代新路线的源码证据核对或 parent 配套要求。
 
 ## 4. GUI 操作
@@ -174,7 +178,7 @@ python3 tools/recipe_materials.py build \
 
 ## 6. 手机安装与钱包边界
 
-以下为 0.7.0 已通过核心 host 执行验证的部署契约，证据状态见 [AUTOINSTALL_VALIDATION.md](AUTOINSTALL_VALIDATION.md)。生成包保留 1.7 WebUI、各 Root 组件独立恢复入口与统一 API102 功能；catalog、能力列表及部署计划只覆盖电脑选定的组件和依赖。**电脑生成文件不操作手机；用户另行刷入 parent 才启动部署。**
+以下为 0.7.1 沿用、已在 0.7.0 完成历史核心 host 验证的部署契约，证据状态见 [AUTOINSTALL_VALIDATION.md](AUTOINSTALL_VALIDATION.md)。生成包保留 1.7 WebUI、各 Root 组件独立恢复入口与统一 API102 功能；catalog、能力列表及部署计划只覆盖电脑选定的组件和依赖。**电脑生成文件不操作手机；用户另行刷入 parent 才启动部署。**
 
 1. 用户先核对精确 ROM、Root、Zygisk、modern API102 LSPosed、已启用并重启生效的 OverlayFS MetaModule 1.3.1，以及原有 APK/签名/哈希、用户及版本等 guard。安装不绕过这些门禁，不通过清应用数据或凭据来解决检查失败。
 2. 刷入 parent 时安装统一插件，并同步安装电脑勾选且当前满足 guard 的组件。若电话依赖的商店需要先完成一次重启，先安装商店和其他当前可用的所选项，将电话留在该次固定部署计划中。
@@ -198,10 +202,18 @@ capabilities 只限制本包的组件配置与安装，不是运行时 hook 门�
 
 全局 XMSF 保持不变，不加入统一插件作用域。MiPush 路由/应用选择不自动开启；隐私协议、卡片、支付和真实业务验证需分别处理。本次文档与电脑构建工作不安排任何手机操作。
 
+### 0.7.1 原电话与短信 · 禁用 / 恢复
+
+用当前源码、现有插件的同一长期签名密钥重建统一 API102 APK 与配套证据，再生成匹配的 parent ZIP；选择 `phone` 自动包含 `market`。用户更新配套包后，旧电话子模块即使版本号相同也须重装并手动重启，因为禁用会核对已安装的恢复/卸载脚本摘要。
+
+在统一插件 App 首页进入「原电话与短信 · 禁用 / 恢复」，先到系统默认应用设置选择小米电话/短信，再返回检查并分别确认禁用原 Google 电话或短信。禁用要求替代 APK 精确哈希、启用状态、对应默认角色及电话模块已生效；电话还核对通话界面。仅对用户 0 执行 `disable-user`，保留数据。恢复按钮只 enable，不设置默认角色；需要切回时自行到系统设置选择。
+
+整项恢复电话组件先启用套件自己禁用的原应用，再停用模块；外部禁用状态保持不变，启用失败即停止恢复。独立卸载与父控制器共用任务锁，持续覆盖恢复流程。刷入、重启和预设均不会自动禁用原应用。完整升级步骤、门禁及验证边界见 [STOCK_APPS.md](STOCK_APPS.md)。本功能不改全局 XMSF 或钱包逻辑，首次 EEA TSM 仍须单任务明确确认。
+
 ## 7. 与保留路线的区别
 
 - 默认「其他机型 · 从目标固件识别」保留 0.5 通用受限候选能力：普通系统 APK、整组恢复，不自动获得完整 1.7 权限修复、WebUI 或逐项恢复，见 [USER_GUIDE.md](USER_GUIDE.md)。
 - 标注「历史配方」的 1.4/精选入口仍要求精确旧材料，不用任意固件代替。
 - `tools/build_suite.py` 与 [BUILD_SUITE.md](BUILD_SUITE.md) 保留作持有精确私有参考 ZIP 的开发路线。本文原始材料路线无需该 ZIP；不要把两条路线的输入、证据或安装兼容性混用。
 
-公开产物仅为 **`XiaomiLocalSuite-Tool-0.7.0.zip`** 源码包；不携带 OEM APK/库/DEX、第三方 AAR/JAR、SDK、签名密钥或本地生成的手机安装 ZIP。发布和验证边界见 [RELEASE_TOOL.md](RELEASE_TOOL.md)。
+公开产物仅为 **`XiaomiLocalSuite-Tool-0.7.1.zip`** 源码包；不携带 OEM APK/库/DEX、第三方 AAR/JAR、SDK、签名密钥或本地生成的手机安装 ZIP。发布和验证边界见 [RELEASE_TOOL.md](RELEASE_TOOL.md)。

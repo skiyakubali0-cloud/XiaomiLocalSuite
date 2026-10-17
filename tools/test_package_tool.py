@@ -86,7 +86,7 @@ class PackageTests(unittest.TestCase):
                 self.assertLess(info.extract_version, 45)
                 self.assertEqual(info.extra, b'')
             self.assertEqual(archive.getinfo(p.TITLE + '/launchers/linux.sh').external_attr >> 16, 0o100755)
-        self.assertEqual(p.verify(first), {'softwarecommit': self.head, 'buildversion': '0.7.0'})
+        self.assertEqual(p.verify(first), {'softwarecommit': self.head, 'buildversion': '0.7.1'})
 
     def test_allowlist_excludes_even_tracked_outputs_deps_private_and_oem(self):
         banned = ['.env', '.github/token.txt', 'materials/stock.apk', 'releases/previous.zip',
@@ -140,10 +140,13 @@ class PackageTests(unittest.TestCase):
                     self.assertEqual(actual, raw)
                     if name.endswith('.json'):
                         self.assertEqual(json.loads(actual), json.loads(raw))
-        self.assertEqual(p.verify(output)['buildversion'], '0.7.0')
+        self.assertEqual(p.verify(output)['buildversion'], '0.7.1')
 
-    def test_autoinstall_script_and_validation_doc_are_required_and_packaged(self):
-        names = {'suite/module/install-selected.sh', 'docs/AUTOINSTALL_VALIDATION.md'}
+    def test_autoinstall_and_stock_app_controls_are_required_and_packaged(self):
+        names = {'suite/module/install-selected.sh', 'docs/AUTOINSTALL_VALIDATION.md',
+                 'suite/module/stock-apps.sh', 'components/phone/restore-stock.sh',
+                 'components/phone/uninstall.sh', 'docs/STOCK_APPS.md',
+                 'suite/unified-api102/src/local/xuanyuan/unified/StockAppsActivity.java'}
         self.assertTrue(names <= p.REQUIRED_FILES)
         # setUp creates safe placeholders only in this disposable fixture repository.
         with zipfile.ZipFile(self.build()) as archive:

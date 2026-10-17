@@ -8,6 +8,7 @@
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="de.robv.android.xposed.category.MODULE_SETTINGS"/></intent-filter>
         </activity>
         <activity android:name="local.xuanyuan.unified.PresetActivity" android:exported="false" android:label="一键配置当前方案"/>
+        <activity android:name="local.xuanyuan.unified.StockAppsActivity" android:exported="false" android:label="原电话与短信"/>
         <activity android:name=".Manager" android:exported="true" android:label="MiPush应用与钱包推送"/>
         <activity android:name="local.xuanyuan.disastercompat.EntryActivity" android:exported="true" android:label="预警与报警定位"/>
         <receiver android:name="local.xuanyuan.unified.BootReceiver" android:exported="false"><intent-filter><action android:name="android.intent.action.BOOT_COMPLETED" /></intent-filter></receiver>

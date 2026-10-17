@@ -42,6 +42,7 @@ public final class SettingsActivity extends Activity {
         Button preset=AppUi.shortcut(shortcuts,"组件配置","按需勾选组件",0,()->startActivity(new Intent(this,PresetActivity.class)));preset.setEnabled(Platform.exactRom());
         Button push=AppUi.shortcut(shortcuts,"推送管理","MiPush 与钱包",6,()->startActivity(new Intent().setClassName(getPackageName(),"local.xuanyuan.mipushcompat.Manager")));push.setEnabled(Platform.exactRom());
         Button warning=AppUi.button(box,"预警与报警定位设置  ›",false,()->startActivity(new Intent().setClassName(getPackageName(),"local.xuanyuan.disastercompat.EntryActivity")));warning.setEnabled(Platform.exactRom());
+        Button stock=AppUi.button(box,"原电话与短信 · 禁用 / 恢复  ›",false,()->startActivity(new Intent(this,StockAppsActivity.class)));stock.setEnabled(Platform.exactRom());
         LinearLayout advanced=AppUi.details(box,"迁移与恢复");
         AppUi.space(advanced,AppUi.text(this,"已有旧兼容插件时，先迁移并重启，避免重复加载。只处理兼容插件，保留应用数据。",13,AppUi.muted(this)),8,14);
         migrate=AppUi.button(advanced,"迁移旧兼容插件（保留数据）",false,()->confirmMigration(false));

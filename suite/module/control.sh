@@ -301,8 +301,9 @@ restore_one() {
   echo '重启后小爱挂载标记失效；在统一设置中关闭 AI识屏智控和小爱建议，共享 APK 保留。';;
  phone)
   extract phone
+  XLS_STOCK_PARENT=$$ sh "$E/restore-stock.sh" || fail '原电话或短信未恢复启用，未停用电话模块'
   "$K" module disable "$MID"
-  sh "$E/uninstall.sh"
+  XLS_STOCK_PARENT=$$ sh "$E/uninstall.sh"
   echo '重启后电话挂载标记失效；在统一设置中关闭电话兼容，共享 APK 保留。'
   [ "$(pkg_sha com.miui.yellowpage)" = 0c5c655fe93ffc0eade6a77dc56c05754d4a3afab8a6c122acd3a2f8a160c0ba ] || fail '黄页恢复未通过验证'
   [ "$(pkg_sha com.miui.audiomonitor)" = f84954e6ef361a8204c565bfe365e66344e2984036febe784c1485e113d1ba71 ] || fail '录音监控恢复未通过验证'

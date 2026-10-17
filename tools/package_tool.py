@@ -13,7 +13,7 @@ import zipfile
 from check_public_tree import check
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = '0.7.0'
+VERSION = '0.7.1'
 TAG = 'tool-v' + VERSION
 TITLE = 'XiaomiLocalSuite-Tool-' + VERSION
 MANIFEST = 'SHA256SUMS'
@@ -34,7 +34,7 @@ POSIX_LAUNCHERS = {'launchers/macOS.command', 'launchers/linux.sh'}
 REQUIRED_FILES = POSIX_LAUNCHERS | {
     'launch.py', 'launchers/windows.cmd', 'README.md', 'LICENSE', 'NOTICE',
     'docs/USER_GUIDE.md', 'docs/FULL_RECIPE.md', 'tools/package_tool.py', 'tools/check_public_tree.py',
-    'docs/AUTOINSTALL_VALIDATION.md',
+    'docs/AUTOINSTALL_VALIDATION.md', 'docs/STOCK_APPS.md',
     'materials.lock.json', 'recipes/xuanyuan-1.7.json', 'recipes/generated.json', 'recipes/apk-materials.json',
     'tools/build_suite.py', 'tools/recipe_materials.py', 'tools/recipe_assemble.py',
     'tools/recipe_generated.py', 'tools/recipe_tools.py',
@@ -51,6 +51,8 @@ REQUIRED_FILES = POSIX_LAUNCHERS | {
     'suite/unified-api102/META-INF/xposed/scope.list',
     'suite/module/control.sh', 'suite/module/preset.sh', 'suite/module/webroot/catalog.json',
     'suite/module/install-selected.sh',
+    'suite/module/stock-apps.sh', 'components/phone/restore-stock.sh', 'components/phone/uninstall.sh',
+    'suite/unified-api102/src/local/xuanyuan/unified/StockAppsActivity.java',
     'suite/multi-device/profiles/reviewed-recipes.json',
     'suite/multi-device/profiles/xuanyuan-eea-os4.0.0.6.json',
     'xiaoai-privacy/src/local/xuanyuan/aiprivacy/Manager.java',

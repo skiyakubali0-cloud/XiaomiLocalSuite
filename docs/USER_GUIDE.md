@@ -1,24 +1,24 @@
-# 电脑工具 0.7.0 使用教程（prerelease）
+# 电脑工具 0.7.1 使用教程（prerelease）
 
 本工具在电脑上读取本地固件/APK、检查并生成本地 ZIP。默认入口「其他机型 · 从目标固件识别」**不需要原 1.4 套件**。工具不使用 ADB，不连接、安装或重启手机；依赖仅在用户显式点击「联网准备依赖」或执行下载命令时获取，不自动安装 SDK 或接受许可。
 
 **默认流程只生成普通系统 APK 的受限挂载候选包。** 不包含统一 API102 插件、权限修复或已有 1.7 的 WebUI，不会根据任意固件重建全部 1.7 功能。静态检查通过不等于国行功能移植成功，也不等于手机实测通过。
 
-**精确完整 1.7 模式另见 [FULL_RECIPE.md](FULL_RECIPE.md)。** 在 GUI 选择「小米15 Ultra · OS4.0.0.6 完整1.7适配」，使用 `xuanyuan` EEA `OS4.0.0.6.XOAEUXM` / CN `OS4.0.0.6.XOACNXM` 及锁定额外 APK，不需要私有参考 ZIP。11 项默认全不选，`phone→market`、`xiaoai→assistant` 自动补齐，钱包只能单独手选。0.7.0 方案在用户另行刷入生成的 parent 时按电脑选择部署满足 guard 的组件，保留数据、1.7 WebUI、逐项 Root 恢复和 API102；首次 EEA 钱包迁移仍延后到手机独立确认。核心 host 执行和实际 GUI 生成已通过，整包独立检查及 CI 等待结果，见 [AUTOINSTALL_VALIDATION.md](AUTOINSTALL_VALIDATION.md)。后面的通用候选限制仍仅适用于默认通用入口。
+**精确完整 1.7 模式另见 [FULL_RECIPE.md](FULL_RECIPE.md)。** 在 GUI 选择「小米15 Ultra · OS4.0.0.6 完整1.7适配」，使用 `xuanyuan` EEA `OS4.0.0.6.XOAEUXM` / CN `OS4.0.0.6.XOACNXM` 及锁定额外 APK，不需要私有参考 ZIP。11 项默认全不选，`phone→market`、`xiaoai→assistant` 自动补齐，钱包只能单独手选。0.7.1 沿用的部署方案在用户另行刷入生成的 parent 时按电脑选择部署满足 guard 的组件，保留数据、1.7 WebUI、逐项 Root 恢复和 API102；首次 EEA 钱包迁移仍延后到手机独立确认。0.7.0 的核心 host、实际 GUI、整包独立检查及最终 CI 已通过，属于[历史验证](AUTOINSTALL_VALIDATION.md)；0.7.1 定向验证见 [STOCK_APPS.md](STOCK_APPS.md#本次验证记录)，最终提交的 CI 与下载摘要见对应 Release。后面的通用候选限制仍仅适用于默认通用入口。
 
 ## 1. 下载与产物区分
 
-从 [tool-v0.7.0 预览版发布页](https://github.com/skiyakubali0-cloud/XiaomiLocalSuite/releases/tag/tool-v0.7.0) 下载 `XiaomiLocalSuite-Tool-0.7.0.zip`，完整解压并进入同名目录。不要在压缩软件中直接运行。
+从 [tool-v0.7.1 预览版发布页](https://github.com/skiyakubali0-cloud/XiaomiLocalSuite/releases/tag/tool-v0.7.1) 下载 `XiaomiLocalSuite-Tool-0.7.1.zip`，完整解压并进入同名目录。不要在压缩软件中直接运行。
 
 | 文件/产物 | 用途 | 边界 |
 | --- | --- | --- |
-| `XiaomiLocalSuite-Tool-0.7.0.zip` | 电脑端源码、启动器、教程 | 需要本机运行环境，不是签名独立 DMG/EXE，不是手机模块 |
+| `XiaomiLocalSuite-Tool-0.7.1.zip` | 电脑端源码、启动器、教程 | 需要本机运行环境，不是签名独立 DMG/EXE，不是手机模块 |
 | 用户生成的候选 `.zip` 与 `.build.json` | 精确机型、ROM、APK 的候选与构建记录 | 含原厂材料，只留本地，不公开上传 |
 | 原始材料生成的 1.7 parent ZIP | 电脑所选组件、部署计划、统一插件与独立恢复入口 | 用户另行刷入后按 guard 部署，电脑生成不操作手机；首次 EEA 钱包仍待确认 |
 | 自行编译的统一 `.apk` 与 `.build-evidence.json` | 完整模式必需的配套插件输入 | 当前源码/依赖/APK 哈希一致；证据不是 attestation |
 | 私有参考包重建路线 | 保留的开发入口 `tools/build_suite.py` | 该旧路线仍需私有参考包，不能与原始材料路线混用 |
 
-工具包不含小米固件、原厂 APK/OEM 库/DEX、统一 APK 成品、AAR/JAR、签名私钥或第三方工具二进制。版本 **0.7.0** 指电脑工具，不是手机套件 **1.7**、统一插件 code **17** 或历史配方 **1.4** 的版本号。
+工具包不含小米固件、原厂 APK/OEM 库/DEX、统一 APK 成品、AAR/JAR、签名私钥或第三方工具二进制。版本 **0.7.1** 指电脑工具，不是手机套件 **1.7**、统一插件 code **17** 或历史配方 **1.4** 的版本号。
 
 ## 2. 准备环境
 
@@ -100,7 +100,7 @@ python3 launch.py
 
 ## 7. 候选安装与恢复边界
 
-本节后续为默认通用候选。0.7.0 完整 1.7 模式的部署契约另见[完整路线手机步骤](FULL_RECIPE.md#6-手机安装与钱包边界)：电脑生成不操作手机；用户另行刷入 parent 时，同步部署电脑选定且满足 guard 的组件。电话若需商店先重启，先装商店及其他可用项，用户手动重启后由 parent service 仅续装该次固定计划的电话。依赖未就绪或执行失败时停止并留日志，不反复重试；用户启动手动 controller 任务时取消待续装队列。核心 host 执行已通过，整包与 CI 剩余状态见[验证记录](AUTOINSTALL_VALIDATION.md)。
+本节后续为默认通用候选。0.7.1 完整 1.7 模式沿用的部署契约另见[完整路线手机步骤](FULL_RECIPE.md#6-手机安装与钱包边界)：电脑生成不操作手机；用户另行刷入 parent 时，同步部署电脑选定且满足 guard 的组件。电话若需商店先重启，先装商店及其他可用项，用户手动重启后由 parent service 仅续装该次固定计划的电话。依赖未就绪或执行失败时停止并留日志，不反复重试；用户启动手动 controller 任务时取消待续装队列。0.7.0 的整包、host 与最终 CI 已通过，见[历史验证记录](AUTOINSTALL_VALIDATION.md)；不代表 0.7.1 当前 CI。
 
 自动部署保留数据及独立恢复，不自动重启、不写 compat 偏好、不代为启用 LSPosed 或授权作用域。用户仍须单独启用/配置所需兼容。只读能力 CSV 仅限制本包组件配置页的预设选择与安装，未打包项在该页不可选，手机预设默认不选钱包；省略不卸载已有组件，也不自动关闭其他页面的既有兼容开关或 hook，如需停用须单独关闭兼容或恢复组件。能力命令缺失或无效时，组件配置页阻止应用并提示检查或升级 parent。
 
@@ -113,6 +113,14 @@ python3 launch.py
 **一个候选 ZIP 内多选的 APK 是同一恢复组。** 在 KernelSU 禁用该候选模块并手动重启，会一起恢复其覆盖的 APK；通用路线没有既有 1.7 的逐项 WebUI 恢复。要分别恢复，从一开始每次只选一个 APK，用不同配置标识分别生成、安装候选模块。不要用同一配置标识覆盖不同选择；变更既有候选前先卸载该候选并重启，避免未选 APK 残留。
 
 OTA 前必须先禁用候选并重启，升级后重读目标固件再检查。启动阶段版本检测不能替代 OTA 前停用，不保证带候选跨 ROM 升级安全。桌面工具不自动清数据、不生成钱包 reset、不迁移凭据、不改全局 XMSF，不自动接受协议、安装或重启。完整 1.7 钱包即使电脑明确选入，首次 EEA TSM 迁移也不随刷入或续装直接重置，须在手机组件配置作单任务独立确认；确认可能清除 TSM 数据及绑定密钥。已有精确 CN TSM 就绪时，可按 guard 自动安装明确选入的钱包，不重复清除。
+
+### 0.7.1 原电话与短信 · 禁用 / 恢复
+
+用当前源码、现有插件的同一长期签名密钥重建统一 API102 APK 与配套证据，再生成匹配的 parent ZIP；选择 `phone` 自动包含 `market`。用户更新配套包后，旧电话子模块即使版本号相同也须重装并手动重启，因为禁用会核对已安装的恢复/卸载脚本摘要。
+
+在统一插件 App 首页进入「原电话与短信 · 禁用 / 恢复」，先到系统默认应用设置选择小米电话/短信，再返回检查并分别确认禁用原 Google 电话或短信。禁用要求替代 APK 精确哈希、启用状态、对应默认角色及电话模块已生效；电话还核对通话界面。仅对用户 0 执行 `disable-user`，保留数据。恢复按钮只 enable，不设置默认角色；需要切回时自行到系统设置选择。
+
+整项恢复电话组件先启用套件自己禁用的原应用，再停用模块；外部禁用状态保持不变，启用失败即停止恢复。独立卸载与父控制器共用任务锁，持续覆盖恢复流程。刷入、重启和预设均不会自动禁用原应用。完整升级步骤、门禁及验证边界见 [STOCK_APPS.md](STOCK_APPS.md)。
 
 ## 8. CLI 示例
 
@@ -175,4 +183,4 @@ py -3 launch.py --check
 
 新增精确原始材料路线见 [FULL_RECIPE.md](FULL_RECIPE.md)，使用 EEA/CN 及额外 APK 和当前自签名插件，无需私有参考 ZIP。保留的精确 1.7 参考包开发路线仍见 [BUILD_SUITE.md](BUILD_SUITE.md)，只有该旧入口要求私有参考包；新 UI 的 parent 能力命令要求仍须满足。两者都不会由通用 APK 候选自动获得。
 
-0.7.0 核心 host 检查、实际 GUI 生成及全 11 项新包生成事实和剩余整包/CI 状态见 [AUTOINSTALL_VALIDATION.md](AUTOINSTALL_VALIDATION.md)，不标全通过。0.6.0 材料/生成记录保留在 [FULL_RECIPE_VALIDATION.md](FULL_RECIPE_VALIDATION.md)，0.5 历史记录保留在 [TOOL_VALIDATION.md](TOOL_VALIDATION.md)，不转作新版自动部署证据。本轮不操作手机；主机结果也不代替手机功能、原生 Windows、新机型、支付或门卡验证。发布范围见 [RELEASE_TOOL.md](RELEASE_TOOL.md)。
+0.7.0 的材料与全量自动部署历史记录见 [AUTOINSTALL_VALIDATION.md](AUTOINSTALL_VALIDATION.md)。0.7.1 的原电话/短信管理、恢复、当前 APK 与电话＋商店实际材料生成验证见 [STOCK_APPS.md](STOCK_APPS.md#本次验证记录)，最终 CI 和下载摘要见对应 Release；没有新增全 11 项构建或手机证明。0.6.0 与 0.5 的历史记录分别保留在 [FULL_RECIPE_VALIDATION.md](FULL_RECIPE_VALIDATION.md) 和 [TOOL_VALIDATION.md](TOOL_VALIDATION.md)。本轮不操作手机；主机结果也不代替原生 Windows、新机型、支付或门卡验证。发布范围见 [RELEASE_TOOL.md](RELEASE_TOOL.md)。
