@@ -5,6 +5,13 @@ P_ARGC=$# ACTION=${1:-} P_COMPONENTS=${2:-} P_FEATURES=${3:-}
 set -- library
 . "$M/control.sh"
 P_ORDER='market assistant xiaoai phone gallery weather disaster wallet clock calendar mipush'
+if [ "$ACTION" = capabilities ]; then
+ [ "$P_ARGC" = 1 ] || fail 'Expected capabilities without arguments'
+ platform; integrity
+ [ "$(prop "$M" id)" = xuanyuan-os4-suite ] && [ "$(prop "$M" versionCode)" = 2026101604 ] || fail 'Requires suite 1.7 / 2026101604'
+ printf '%s\n' "$ORDER" | tr ' ' ','
+ exit 0
+fi
 P_FEATURE_ORDER='phone privacy suggestions warning clock'
 P_PROFILE=''
 P_STATE=blocked P_BATCH='' P_WALLET=false P_MESSAGE='Preset check failed' P_BOOT='' P_JOB=''

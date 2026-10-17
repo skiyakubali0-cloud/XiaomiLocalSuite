@@ -13,14 +13,14 @@ import zipfile
 from check_public_tree import check
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = '0.5.0'
+VERSION = '0.6.0'
 TAG = 'tool-v' + VERSION
 TITLE = 'XiaomiLocalSuite-Tool-' + VERSION
 MANIFEST = 'SHA256SUMS'
 METADATA = 'SOURCE.json'
 ROOT_FILES = {'README.md', 'LICENSE', 'NOTICE', 'CONTRIBUTING.md', 'SECURITY.md',
               'THIRD_PARTY_NOTICES.md', 'materials.lock.json', 'launch.py'}
-SOURCE_DIRS = {'clock', 'components', 'docs', 'launchers', 'native', 'phone', 'suite', 'tools',
+SOURCE_DIRS = {'clock', 'components', 'docs', 'launchers', 'native', 'phone', 'recipes', 'suite', 'tools',
                'xiaoai-privacy', 'xiaoai-suggestions'}
 TEXT_SUFFIXES = {'.py', '.sh', '.command', '.cmd', '.md', '.txt', '.json', '.xml',
                  '.java', '.cpp', '.S', '.prop', '.in', '.html', '.js', '.css', '.list'}
@@ -33,11 +33,22 @@ WINDOWS_RESERVED = re.compile(r'(?:con|prn|aux|nul|com[1-9]|lpt[1-9])(?:\.|$)', 
 POSIX_LAUNCHERS = {'launchers/macOS.command', 'launchers/linux.sh'}
 REQUIRED_FILES = POSIX_LAUNCHERS | {
     'launch.py', 'launchers/windows.cmd', 'README.md', 'LICENSE', 'NOTICE',
-    'docs/USER_GUIDE.md', 'tools/package_tool.py', 'tools/check_public_tree.py',
+    'docs/USER_GUIDE.md', 'docs/FULL_RECIPE.md', 'tools/package_tool.py', 'tools/check_public_tree.py',
+    'materials.lock.json', 'recipes/xuanyuan-1.7.json', 'recipes/generated.json', 'recipes/apk-materials.json',
+    'tools/build_suite.py', 'tools/recipe_materials.py', 'tools/recipe_assemble.py',
+    'tools/recipe_generated.py', 'tools/recipe_tools.py',
+    'native/assistant/assistant-route.S', 'native/assistant/build-runtime-route.py',
     'suite/multi-device/gui.py', 'suite/multi-device/gui_session.py',
     'suite/multi-device/suite_builder.py', 'suite/multi-device/intake.py',
     'suite/multi-device/environment.py', 'suite/multi-device/selected_suite.py',
+    'suite/multi-device/plugin_builder.py',
     'suite/multi-device/autoinstall.sh',
+    'suite/unified-api102/build_apk.py', 'suite/unified-api102/fetch_dependencies.py',
+    'suite/unified-api102/deps.lock.json', 'suite/unified-api102/AndroidManifest.xml',
+    'suite/unified-api102/META-INF/xposed/java_init.list',
+    'suite/unified-api102/META-INF/xposed/module.prop',
+    'suite/unified-api102/META-INF/xposed/scope.list',
+    'suite/module/control.sh', 'suite/module/preset.sh', 'suite/module/webroot/catalog.json',
     'suite/multi-device/profiles/reviewed-recipes.json',
     'suite/multi-device/profiles/xuanyuan-eea-os4.0.0.6.json',
     'xiaoai-privacy/src/local/xuanyuan/aiprivacy/Manager.java',

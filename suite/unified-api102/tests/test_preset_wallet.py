@@ -19,6 +19,12 @@ def method(source, name):
     return source[start:end]
 
 
+def packaged_class(source):
+    start = source.index("    static final class PackagedComponents {")
+    end = source.index("    /** Start both drains", start)
+    return source[start:end]
+
+
 HARNESS = r'''
 package local.xuanyuan.unified;
 import java.util.*;
@@ -69,12 +75,14 @@ public final class PresetWalletUiTest {
             AlertDialog create(){return dialog;}
         }
     }
+    PACKAGED_CLASS
     static final class Page {
         TITLES
         final SharedPreferences metadata=new SharedPreferences();
         final Map<String,CheckBox> componentChoices=new LinkedHashMap<>(),featureChoices=new LinkedHashMap<>();
         boolean updatingChoices,busy;int generation;
         PresetConfig config,approvalConfig;
+        PackagedComponents packaged=PackagedComponents.parse(String.join(",",PresetSelection.COMPONENTS));
         PresetConfig.ApprovalSession approval,approved;
         XposedService approvedService,service=new XposedService();
         Object lastPlan,poll;
@@ -171,7 +179,8 @@ class WalletPresetUi(unittest.TestCase):
         harness = HARNESS.replace("TITLES\n", titles + "\n").replace("LOAD", activity[start:end])
         harness = harness.replace("METHODS", "\n".join(method(activity, name) for name in
                                   ("updateChoices", "selectionChanged", "chooseSelection", "showWalletConfirmation")))
-        self.assertIn("()->chooseSelection(PresetSelection.defaults())", activity)
+        harness = harness.replace("PACKAGED_CLASS", packaged_class(activity))
+        self.assertIn("chooseSelection(packaged.defaults())", activity)
         with tempfile.TemporaryDirectory(prefix="preset-wallet-ui-") as temp:
             work = Path(temp)
             stub = work / "android/content/SharedPreferences.java"

@@ -13,14 +13,16 @@ from tkinter import filedialog, messagebox, scrolledtext, ttk
 
 import intake
 import environment
+import plugin_builder
 import suite_builder as builder
 from gui_session import Session
 
 HERE = Path(__file__).resolve().parent
-GUI_VERSION = '0.5.0'
+GUI_VERSION = '0.6.0'
 REVIEWED = HERE / 'profiles/xuanyuan-eea-os4.0.0.6.json'
 KNOWN_TITLE = '历史配方 · 小米15 Ultra（需自备完整1.4）'
 NEW_TITLE = '其他机型 · 从目标固件识别'
+FULL_TITLE = '小米15 Ultra · OS4.0.0.6 完整1.7适配'
 SELECTED_TITLE = '历史配方 · 三组件精选（需自备完整1.4）'
 KNOWN_COMPONENTS = [('market', '小米应用商店'), ('assistant', '智能助理负一屏'),
     ('xiaoai', '超级小爱'), ('phone', '电话、短信与录音'), ('gallery', '相册与AI编辑'),
@@ -65,6 +67,7 @@ class App:
         self.profile_id = tk.StringVar(value='my-device-os4')
         self.workspace = tk.StringVar(value=str(Path.home() / 'XiaomiLocalSuite-work'))
         self.artifact = tk.StringVar()
+        self.unified = tk.StringVar()
         self.identity_text = tk.StringVar(value='选择机型配置或导入目标固件')
         self.last_output = None
         self.status = tk.StringVar(value='就绪 · 所有操作在本机完成')
@@ -73,6 +76,7 @@ class App:
         self.target.trace_add('write', lambda *_: self._inputs_changed())
         self.profile_id.trace_add('write', lambda *_: self._inputs_changed())
         self.artifact.trace_add('write', lambda *_: self._artifact_changed())
+        self.unified.trace_add('write', lambda *_: self._plugin_changed())
         self.updating = False
         self._mode_changed()
         root.protocol('WM_DELETE_WINDOW', self.close)
@@ -108,7 +112,7 @@ class App:
         top = ttk.Frame(outer)
         top.pack(fill='x')
         ttk.Label(top, text='机型配置').pack(side='left', padx=(0, 10))
-        self.mode_box = ttk.Combobox(top, textvariable=self.mode, values=[NEW_TITLE, KNOWN_TITLE, SELECTED_TITLE], state='readonly', width=43)
+        self.mode_box = ttk.Combobox(top, textvariable=self.mode, values=[FULL_TITLE, NEW_TITLE, KNOWN_TITLE, SELECTED_TITLE], state='readonly', width=43)
         self.mode_box.pack(side='left', fill='x', expand=True)
         self.mode_box.bind('<<ComboboxSelected>>', lambda _: self._mode_changed())
         self.widgets.append(self.mode_box)
@@ -145,8 +149,18 @@ class App:
         self._button(source_buttons, '解包OTA', lambda: self.extract('source')).pack(side='left', padx=4)
         self._button(source_buttons, '清空', self.clear_sources).pack(side='left')
         ttk.Label(self.new_frame, text='配置标识').grid(row=2, column=0, sticky='w')
-        self._entry(self.new_frame, self.profile_id).grid(row=2, column=1, sticky='ew', padx=8)
+        self.profile_entry = self._entry(self.new_frame, self.profile_id)
+        self.profile_entry.grid(row=2, column=1, sticky='ew', padx=8)
         ttk.Label(self.new_frame, text='英文字母、数字、点、横线', style='Hint.TLabel').grid(row=2, column=2, sticky='w')
+        self.plugin_frame = ttk.Frame(self.new_frame)
+        self.plugin_frame.grid(row=3, column=0, columnspan=3, sticky='ew', pady=(6, 0))
+        self.plugin_frame.columnconfigure(1, weight=1)
+        ttk.Label(self.plugin_frame, text='统一插件APK', width=13).grid(row=0, column=0, sticky='w')
+        self._entry(self.plugin_frame, self.unified).grid(row=0, column=1, sticky='ew', padx=8)
+        buttons = ttk.Frame(self.plugin_frame)
+        buttons.grid(row=0, column=2)
+        self._button(buttons, '选择APK…', self.choose_unified).pack(side='left')
+        self._button(buttons, '本地构建统一插件…', self.build_unified).pack(side='left', padx=4)
         ttk.Label(inputs, text='工作目录', width=13).grid(row=2, column=0, sticky='w', pady=(8, 0))
         self._entry(inputs, self.workspace).grid(row=2, column=1, sticky='ew', padx=8, pady=(8, 0))
         self._button(inputs, '选择目录…', self.choose_workspace).grid(row=2, column=2, pady=(8, 0))
@@ -169,7 +183,7 @@ class App:
         table = ttk.Frame(selection)
         table.pack(fill='both', expand=True, pady=(7, 0))
         columns = ('selected', 'name', 'package', 'state')
-        self.table = ttk.Treeview(table, columns=columns, show='headings', height=5, selectmode='browse')
+        self.table = ttk.Treeview(table, columns=columns, show='headings', height=4, selectmode='browse')
         for name, title, width in [('selected', '选择', 54), ('name', '组件 / APK', 200), ('package', '包名 / 目标', 460), ('state', '状态', 190)]:
             self.table.heading(name, text=title)
             self.table.column(name, width=width, minwidth=45, stretch=name in ('package', 'name'))
@@ -185,7 +199,7 @@ class App:
 
         reports = ttk.LabelFrame(outer, text='3 · 兼容报告与生成结果', padding=(10, 7))
         reports.pack(fill='both', expand=True, pady=(9, 8))
-        self.report_text = scrolledtext.ScrolledText(reports, height=5, wrap='word', font=('Menlo', 11), state='disabled')
+        self.report_text = scrolledtext.ScrolledText(reports, height=4, wrap='word', font=('Menlo', 11), state='disabled')
         self.report_text.pack(fill='both', expand=True)
         foot = ttk.Frame(outer)
         foot.pack(fill='x')
@@ -210,11 +224,18 @@ class App:
     def selected_suite(self):
         return bool(self.session.profile and self.session.profile.get('mode') == 'selected-suite')
 
+    @property
+    def full_recipe(self):
+        return self.mode.get() == FULL_TITLE
+
     def _mode_changed(self):
         if self.busy:
             return
         self.updating = True
         self.session = Session()
+        self.plugin_frame.grid() if self.full_recipe else self.plugin_frame.grid_remove()
+        if self.full_recipe:
+            self.profile_id.set('xuanyuan-eea-os4.0.0.6-full17')
         if self.mode.get() in (KNOWN_TITLE, SELECTED_TITLE):
             self.new_frame.grid_remove()
             self.known_frame.grid()
@@ -234,7 +255,8 @@ class App:
             self.known_frame.grid_remove()
             self.new_frame.grid()
             self.identity_text.set('新机型：选择目标系统与来源材料后，点击“分析材料”。')
-            self._show('目标请选择将要安装的系统固件或已解包目录。来源可添加多个APK，也可选择同机型国行固件。\nOTA需先显式解包；不会自动占用磁盘或生成已验证结论。')
+            self._show('精确1.7配方：目标为小米15 Ultra EEA OS4.0.0.6。来源为同机型国行材料与所需额外APK；无需私有参考ZIP。\n请选择当前源码自行构建的统一插件APK及配套记录。分析后勾选组件，检查将列出缺少的精确材料。钱包不自动重置。'
+                       if self.full_recipe else '目标请选择将要安装的系统固件或已解包目录。来源可添加多个APK，也可选择同机型国行固件。\nOTA需先显式解包；不会自动占用磁盘或生成已验证结论。')
         self.updating = False
         self._render_rows()
         self._refresh()
@@ -242,6 +264,23 @@ class App:
     def check_environment(self):
         self._start('正在检查本机依赖，不下载或安装任何工具…', environment.inspect,
                     lambda result: self._show(environment.format_report(result)))
+
+    def choose_unified(self):
+        path = filedialog.askopenfilename(title='选择当前源码自签名统一APK（保留同名构建记录）', parent=self.root)
+        if path:
+            self.unified.set(path)
+
+    def build_unified(self):
+        plugin_builder.open_dialog(self, lambda path: self.unified.set(str(path)))
+
+    def _plugin_changed(self):
+        if self.updating or self.busy or not self.full_recipe:
+            return
+        if self.session.profile:
+            self.session.profile['unified_apk'] = self.unified.get()
+            self.session._invalidate()
+            self._show('统一插件已更改，保留组件选择；请重新检查源码记录与材料。')
+            self._refresh()
 
     def show_help(self):
         path = HERE.parents[1] / 'docs/USER_GUIDE.md'
@@ -291,6 +330,7 @@ class App:
             widget.state(['disabled'] if self.busy else ['!disabled'])
         if self.busy:
             return
+        self.profile_entry.state(['disabled'] if self.full_recipe else ['!disabled'])
         profile = self.session.profile
         self.analyse_button.configure(text='适配模块已载入' if self.selected_suite else '完整配方已载入' if self.reviewed else '分析材料')
         self.analyse_button.state(['disabled'] if self.reviewed or self.selected_suite else ['!disabled'])
@@ -299,9 +339,9 @@ class App:
         self.save_button.state(['!disabled'] if profile else ['disabled'])
         self.check_button.state(['!disabled'] if profile else ['disabled'])
         report = getattr(self.session, 'report', None)
-        ready = report and report.get('state') in ('reviewed-recipe', 'reviewed-components', 'candidate-static-pass')
+        ready = report and report.get('state') in ('reviewed-recipe', 'reviewed-components', 'candidate-static-pass', 'reviewed-raw-materials')
         self.build_button.state(['!disabled'] if ready else ['disabled'])
-        self.build_button.configure(text='生成自动安装整合包…' if self.selected_suite else '导出1.4完整包…' if self.reviewed else '生成候选ZIP…')
+        self.build_button.configure(text='生成1.7精选整合包…' if self.full_recipe else '生成自动安装整合包…' if self.selected_suite else '导出1.4完整包…' if self.reviewed else '生成候选ZIP…')
         self.report_button.state(['!disabled'] if report else ['disabled'])
 
     def _show(self, text):
@@ -321,7 +361,7 @@ class App:
                     '完整配方内材料；不会在电脑端改写', '单独验证' if wallet else '手机端选择'), tags=('locked',) if wallet else ())
             self.table.yview_moveto(0)
             return
-        self.selection_note.set('选择现有适配模块；小爱会补选智能助理；不含钱包' if self.selected_suite else '点击方框勾选；修改选择后需重新检查。钱包项锁定。')
+        self.selection_note.set('精确1.7适配；依赖自动补选；钱包须手动勾选，不自动重置' if self.full_recipe else '选择现有适配模块；小爱会补选智能助理；不含钱包' if self.selected_suite else '点击方框勾选；修改选择后需重新检查。钱包项锁定。')
         report = getattr(self.session, 'report', None) or {}
         checked = {r.get('id'): r for r in report.get('components', [])}
         components = {c.get('id'): c for c in (self.session.profile or {}).get('components', []) if isinstance(c.get('id'), str)}
@@ -334,15 +374,15 @@ class App:
                 state, tag = ('钱包相关：单独验证' if builder.wallet(str(row.get('package'))) else '配置无效，需检查'), 'locked'
             elif result.get('state') == 'blocked':
                 state, tag = '检查未通过', 'blocked'
-            elif result.get('state') in ('static-pass', 'reviewed-module'):
-                state, tag = ('原适配模块已核对' if self.selected_suite else '静态检查通过'), 'passed'
+            elif result.get('state') in ('static-pass', 'reviewed-module', 'reviewed-materials'):
+                state, tag = ('1.7材料已核对' if self.full_recipe else '原适配模块已核对' if self.selected_suite else '静态检查通过'), 'passed'
             elif row.get('enabled'):
                 state = '待检查'
             source = components.get(row['id'], {}).get('source_apk')
             title = Path(source).name if isinstance(source, str) and source else row.get('title') or row.get('package') or row['id']
             self.table.insert('', 'end', iid=str(index), values=(
                 ('☑' if row.get('enabled') else '☐') if row.get('selectable', True) else '—',
-                title, row.get('package') or ('原子模块ZIP＋共享API102' if self.selected_suite else '未知'), state), tags=(tag,) if tag else ())
+                title, row.get('package') or ('适配模块＋共享API102' if self.full_recipe or self.selected_suite else '未知'), state), tags=(tag,) if tag else ())
         self.table.yview_moveto(0)
 
     def _table_click(self, event):
@@ -370,8 +410,9 @@ class App:
     def select_all(self, enabled):
         if self.busy or self.reviewed or not self.session.profile:
             return
-        self.session.set_selected([r['id'] for r in self.session.rows() if enabled and r.get('selectable', True)])
-        self._show('组件选择已修改，请重新检查。钱包项保持单独验证。')
+        self.session.set_selected([r['id'] for r in self.session.rows() if enabled and r.get('selectable', True)
+                                   and (r.get('bulk_selectable', True) or r.get('enabled'))])
+        self._show('组件选择已修改，请重新检查。钱包须单独手动勾选；不自动重置。')
         self._render_rows()
         self._refresh()
 
@@ -419,14 +460,21 @@ class App:
             self._show('请先选择目标系统与来源APK / 固件。')
             return
         target, sources, profile_id = self.target.get(), list(self.sources), self.profile_id.get()
-        self._start('正在分析固件与APK，较大的文件需要等待…',
-            lambda: self.session.analyse(Path(target), [Path(p) for p in sources], profile_id), self._analysed)
+        if self.full_recipe:
+            plugin = self.unified.get()
+            self._start('正在核对目标固件并载入完整1.7配方…',
+                        lambda: self.session.analyse_recipe(Path(target), sources, plugin), self._analysed)
+        else:
+            self._start('正在分析固件与APK，较大的文件需要等待…',
+                lambda: self.session.analyse(Path(target), [Path(p) for p in sources], profile_id), self._analysed)
 
     def _analysed(self, _result):
         self._identify()
         self._render_rows()
         count = len(self.session.rows())
-        if count:
+        if self.full_recipe:
+            self._show('已载入11项精确1.7适配，默认不选。请勾选需要的组件，再检查材料。\n小爱补选智能助理，电话补选商店；钱包仅手动选择，首次迁移须在手机单独确认。\n统一插件需由当前源码构建并保留配套.build-evidence.json；导入材料缺项会逐项列出。')
+        elif count:
             self._show('已发现{}项来源组件，默认均不勾选。请选择需要的组件，再检查兼容性。\n'
                        '钱包与NFC相关项保持锁定；静态检查不等于实机验证。'.format(count))
         else:
@@ -486,6 +534,11 @@ class App:
         elif state == 'candidate-static-pass':
             lines = ['静态检查通过：可以生成候选ZIP，尚未在该机型实测。',
                      '候选模块在OTA前必须先停用并重启；不会自动跨ROM适配。']
+        elif state == 'reviewed-raw-materials':
+            lines = ['1.7所选组件的精确材料与统一插件构建记录检查通过。',
+                     '生成包保留API102适配和组件恢复入口；无需私有参考ZIP，不自动安装手机。',
+                     '未打包项不会由本包预设安装；已安装组件及其他页面的既有兼容开关保留，停用需单独关闭或恢复。',
+                     '钱包只在勾选时打包，首次迁移仍需手机上单独确认。']
         else:
             lines = ['兼容检查未通过，已阻止生成。']
         for error in result.get('errors', []):
@@ -502,19 +555,20 @@ class App:
     def build(self):
         if not self.session.profile:
             return
-        name = self.session.profile['id'] + ('-autoinstall.zip' if self.selected_suite else '-1.4.zip' if self.reviewed else '-candidate.zip')
+        name = self.session.profile['id'] + ('-selected.zip' if self.full_recipe else '-autoinstall.zip' if self.selected_suite else '-1.4.zip' if self.reviewed else '-candidate.zip')
         output = filedialog.asksaveasfilename(title='选择新安装包保存位置', defaultextension='.zip', initialfile=name,
             filetypes=[('ZIP安装包', '*.zip')], parent=self.root)
         if not output:
             return
         self.last_output = str(Path(output).expanduser().resolve())
+        candidate = not (self.reviewed or self.selected_suite or self.full_recipe)
         self._start('正在重新校验并生成ZIP，已有文件不会被覆盖…',
-            lambda: self.session.build(Path(output), candidate=not (self.reviewed or self.selected_suite)), self._built)
+            lambda: self.session.build(Path(output), candidate=candidate), self._built)
 
     def _built(self, result):
         self._show('生成完成：{}\n大小：{:,}字节\nSHA256：{}\n\n{}\n钱包保持单独验证，不自动重置。'.format(
             self.last_output or result.get('output'), result.get('bytes', 0), result.get('sha256'),
-            '刷入时同步安装所选组件；不含钱包；本轮未安装手机，保留原API102插件与独立恢复。' if self.selected_suite else '完整1.4仍使用原API102统一插件。' if self.reviewed else '这是待实机验证的候选包，不会自动安装到手机。'))
+            '精确1.7适配精选包；安装后在手机启用统一LSP插件，再按配套提示应用所选组件。未安装手机，不自动重置钱包。' if self.full_recipe else '刷入时同步安装所选组件；不含钱包；本轮未安装手机，保留原API102插件与独立恢复。' if self.selected_suite else '完整1.4仍使用原API102统一插件。' if self.reviewed else '这是待实机验证的候选包，不会自动安装到手机。'))
         self.status.set('安装包已生成，保存位置以刚才选择的路径为准')
 
     def open_profile(self):
@@ -526,7 +580,8 @@ class App:
         def loaded(_result):
             self.updating = True
             p = self.session.profile
-            self.mode.set(SELECTED_TITLE if self.selected_suite else KNOWN_TITLE if self.reviewed else NEW_TITLE)
+            self.mode.set(FULL_TITLE if p.get('mode') == 'xuanyuan-1.7' else SELECTED_TITLE if self.selected_suite else KNOWN_TITLE if self.reviewed else NEW_TITLE)
+            self.plugin_frame.grid() if self.full_recipe else self.plugin_frame.grid_remove()
             if self.reviewed or self.selected_suite:
                 self.new_frame.grid_remove()
                 self.known_frame.grid()
@@ -543,6 +598,8 @@ class App:
                 source = [source] if isinstance(source, str) else source
                 self.sources = [display_path(value) for value in source]
                 self.source_summary.set('、'.join(self.sources))
+                if self.full_recipe:
+                    self.unified.set(display_path(p['unified_apk']) if p.get('unified_apk') else '')
             self.updating = False
             self._identify()
             self._render_rows()

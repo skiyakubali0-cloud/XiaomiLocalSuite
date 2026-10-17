@@ -9,5 +9,8 @@ included. The legacy scripts expect a locally prepared `ndk/`, a lawful Zygisk
 header in `native-include/`, and the exact checked OEM input below `live/`.
 Do not execute these reference scripts until those inputs are deliberately
 prepared. The supported public suite builder reuses only hash-locked local
-materials; it does not promise to rebuild every OEM-derived native artifact
-from these sources or from an arbitrary firmware.
+materials. The public [full 1.7 recipe](../../docs/FULL_RECIPE.md) rebuilds the
+locked assistant route library from the exact stock EEA library using
+`tools/recipe_generated.py` and `recipes/generated.json`. It verifies the assembly
+source, patch sites and resulting SHA256 without an NDK or private reference ZIP.
+This does not enable rebuilding from an arbitrary firmware.

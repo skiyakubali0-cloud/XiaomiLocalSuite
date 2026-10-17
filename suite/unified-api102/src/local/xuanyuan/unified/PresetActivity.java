@@ -38,6 +38,7 @@ public final class PresetActivity extends Activity {
     private String diagnostics="";
     private SharedPreferences compat,metadata;
     private PresetConfig config,approvalConfig;
+    private volatile PackagedComponents packaged;
     private final Map<String,CheckBox> componentChoices=new LinkedHashMap<>(),featureChoices=new LinkedHashMap<>();
     private boolean updatingChoices;
     private TextView status,scopeReview;
@@ -53,7 +54,7 @@ public final class PresetActivity extends Activity {
         LinearLayout box=AppUi.page(this,"组件配置","按需选择，再检查并应用");
         AppUi.space(box,AppUi.text(this,"组件按需安装，依赖自动补齐。\n保留现有数据，不自动重置钱包凭据。",12,AppUi.muted(this)),0,14);
         LinearLayout help=AppUi.details(box,"安装与数据说明");
-        TextView note=new TextView(this);note.setText("可选择 11 个组件与 5 个兼容功能。新配置默认选择钱包以外的 10 个组件与全部兼容；已有选择沿用。钱包可按需勾选，首次 TSM 迁移须单独确认。取消组件仅跳过安装，不卸载；取消兼容会保存为关闭。首次操作必须点击应用预设。\n依赖组件会自动勾选并锁定；先取消依赖它的兼容或组件，才能取消该组件。\n"
+        TextView note=new TextView(this);note.setText("仅可选择当前整合包提供的组件及对应兼容功能。新配置默认选择包内钱包以外的组件与可用兼容；已有选择仅在包内沿用。钱包可按需勾选，首次 TSM 迁移须单独确认。取消组件仅跳过安装，不卸载；取消兼容会保存为关闭。首次操作必须点击应用预设。\n依赖组件会自动勾选并锁定；先取消依赖它的兼容或组件，才能取消该组件。\n"
             +"MiPush 的 selection 配置原样保留；新安装不会自动开启中国区路由或加入应用。系统升级后，推送可能需要单独重新扫描并核对每个 APK 的精确证据。\n"
             +"首次迁移若需清除旧小米 TSM 本地数据及绑定密钥，会单独提示确认，现有卡可能失效。不代签隐私协议，不修改 LSPosed 数据库。作用域通过框架正常授权；所有目标确认后才保存兼容开关。配置完成不代表功能业务效果已验收。");note.setTextSize(13);note.setTextColor(AppUi.muted(this));AppUi.space(help,note,8,0);
         AppUi.section(box,"安装组件");LinearLayout componentCard=AppUi.card(box);
@@ -67,7 +68,7 @@ public final class PresetActivity extends Activity {
             featureChoices.put(id,c);AppUi.choice(featureCard,c);c.setOnCheckedChangeListener((button,checked)->selectionChanged());
         }
         updateChoices();
-        defaults=button(box,"恢复当前默认选择（10 组件 / 5 兼容；钱包按需勾选；仍需点击应用）",()->chooseSelection(PresetSelection.defaults()));
+        defaults=button(box,"恢复包内默认选择（钱包按需勾选；仍需点击应用）",()->{if(packaged!=null)chooseSelection(packaged.defaults());});
         LinearLayout review=AppUi.details(box,"作用域明细");scopeReview=AppUi.text(this,"检查后显示所需作用域",12,AppUi.muted(this));AppUi.space(review,scopeReview,8,0);
         apply=button(box,"应用预设",()->{
             if(approval!=null)approval.expire();approved=null;scopeFailure=null;approval=new PresetConfig.ApprovalSession();
@@ -84,6 +85,7 @@ public final class PresetActivity extends Activity {
             a.command("reboot");return "已请求重启；返回后会重新读取实时计划。";
         }));
         LinearLayout result=AppUi.card(box);result.addView(AppUi.text(this,"检查结果",12,AppUi.muted(this)));status=AppUi.text(this,"等待检查…",13,AppUi.ink(this));status.setTextIsSelectable(true);AppUi.space(result,status,7,0);
+        setButtons(true);
         if(!registered){registered=true;local.xuanyuan.unified.FrameworkService.addListener(new ServiceListener());}
     }
     private static final class ServiceListener implements XposedServiceHelper.OnServiceListener {
@@ -139,25 +141,28 @@ public final class PresetActivity extends Activity {
         updatingChoices=true;
         Set<String> required=config.selection.requiredComponents();int i=0;
         for(Map.Entry<String,CheckBox> entry:componentChoices.entrySet()){
-            String id=entry.getKey();CheckBox c=entry.getValue();c.setChecked(config.selection.components.contains(id));
-            c.setText(TITLES[i++]+("wallet".equals(id)?"\n可选安装；首次 TSM 迁移须单独确认，现有卡可能失效":required.contains(id)?"\n相关功能需要此组件":""));
-            c.setEnabled(!busy&&!required.contains(id));
+            String id=entry.getKey();CheckBox c=entry.getValue();boolean available=packaged!=null&&packaged.components.contains(id);
+            c.setChecked(available&&config.selection.components.contains(id));
+            c.setText(TITLES[i++]+(!available?"\n当前整合包未提供或能力尚未核实":"wallet".equals(id)?"\n可选安装；首次 TSM 迁移须单独确认，现有卡可能失效":required.contains(id)?"\n相关功能需要此组件":""));
+            c.setEnabled(available&&!busy&&!required.contains(id));
         }
         for(Map.Entry<String,CheckBox> entry:featureChoices.entrySet()){
-            entry.getValue().setChecked(config.selection.features.contains(entry.getKey()));entry.getValue().setEnabled(!busy);
+            boolean available=packaged!=null&&packaged.features.contains(entry.getKey());
+            entry.getValue().setChecked(available&&config.selection.features.contains(entry.getKey()));entry.getValue().setEnabled(available&&!busy);
         }
         updatingChoices=false;
     }
     private void selectionChanged(){
         if(updatingChoices)return;
-        if(busy){updateChoices();return;}
+        if(busy||packaged==null){updateChoices();return;}
         Set<String> components=new LinkedHashSet<>(),features=new LinkedHashSet<>();
         for(Map.Entry<String,CheckBox> e:componentChoices.entrySet())if(e.getValue().isChecked())components.add(e.getKey());
         for(Map.Entry<String,CheckBox> e:featureChoices.entrySet())if(e.getValue().isChecked())features.add(e.getKey());
         chooseSelection(new PresetSelection(components,features));
     }
     private void chooseSelection(PresetSelection selection){
-        if(busy)return;
+        if(busy||packaged==null)return;
+        selection=packaged.filter(selection);
         if(selection.equals(config.selection)){updateChoices();return;}
         if(approval!=null)approval.expire();walletConfirmation=null;if(walletDialog!=null)walletDialog.dismiss();approval=null;approved=null;approvalConfig=null;approvedService=null;scopeFailure=null;
         generation++;lastPlan=null;handler.removeCallbacks(poll);config=configuration(selection);updateChoices();
@@ -169,32 +174,56 @@ public final class PresetActivity extends Activity {
     }
     private interface Work {String run(PresetConfig snapshot,AndroidAdapter adapter) throws Exception;}
     private void check(){submit((snapshot,a)->{PresetConfig.Plan p=a.plan();return snapshot.describe(a,p);});}
+    private PackagedComponents readPackaged() throws Exception {
+        try{
+            Capture result=Capture.run(Arrays.asList("su","-c",HELPER+"capabilities"),30);
+            appendDiagnostics("capabilities exit="+result.exit+"\nstderr:\n"+result.err);
+            if(result.exit!=0)throw new IOException("Root 能力命令失败");
+            return PackagedComponents.parse(result.out);
+        }catch(Exception error){
+            appendDiagnostics("capabilities: "+error.getMessage());
+            throw new IOException("无法核实整合包能力；已禁止应用及恢复默认。请检查 Root、系统与整合包完整性；旧版 parent 请升级到支持 preset.sh capabilities 的整合包后重新检查。",error);
+        }
+    }
+    private void setPackaged(PackagedComponents value){
+        if(approval!=null)approval.expire();walletConfirmation=null;if(walletDialog!=null)walletDialog.dismiss();approval=null;approved=null;approvalConfig=null;approvedService=null;scopeFailure=null;
+        packaged=value;lastPlan=null;generation++;
+        // Inspection only filters in memory; omitted preferences remain available for a later package.
+        if(value!=null)config=configuration(value.filter(config.selection));
+    }
     private void submit(Work work){
         if(busy||!active)return;
         handler.removeCallbacks(poll);busy=true;setButtons(false);status.setText("正在检查/执行所选步骤…");
         final int epoch=generation;final PresetConfig snapshot=config;
         worker.execute(()->{
-            String text;boolean running=false;String review="";
+            String text;boolean running=false,changed=false;String review="";PackagedComponents capabilities=null;
             try{
                 ensureActive();if(!Platform.exactRom())throw new IllegalStateException("仅支持机主用户的 xuanyuan / OS4.0.0.6.XOAEUXM / Android 17；未执行 Root 或配置操作。");
-                AndroidAdapter a=new AndroidAdapter(snapshot,epoch);a.requireCurrent();text=work.run(snapshot,a);a.requireCurrent();
-                review="所选兼容目标作用域（仅检查所选功能；保留已有额外作用域，不加入 XMSF）：\n"+String.join("\n",snapshot.targets(a))
-                    +(snapshot.selection.components.contains("mipush")?"\n可选 MiPush 范围仅含已安装应用；加入作用域不会开启中国区推送。":"");
-                running=lastPlan!=null&&"running".equals(lastPlan.state);
+                AndroidAdapter a=new AndroidAdapter(snapshot,epoch);a.requireCurrent();capabilities=readPackaged();a.requireCurrent();
+                changed=packaged==null||!packaged.equals(capabilities);
+                if(changed)text="整合包能力已更新；已过滤当前选择，请检查后手动应用。";
+                else{
+                    text=work.run(snapshot,a);a.requireCurrent();
+                    review="所选兼容目标作用域（仅检查所选功能；保留已有额外作用域，不加入 XMSF）：\n"+String.join("\n",snapshot.targets(a))
+                        +(snapshot.selection.components.contains("mipush")?"\n可选 MiPush 范围仅含已安装应用；加入作用域不会开启中国区推送。":"");
+                    running=lastPlan!=null&&"running".equals(lastPlan.state);
+                }
             }catch(Exception error){text="未完成："+clean(error.getMessage());}
-            final String result=text,scopes=review;final boolean repeat=running;
+            final String result=text,scopes=review;final boolean repeat=running,refresh=changed;final PackagedComponents discovered=capabilities;
             handler.post(()->{
                 busy=false;if(!active||epoch!=generation||isFinishing()||isDestroyed()){if(active)check();return;}
+                if(discovered==null||refresh)setPackaged(discovered);
                 setButtons(true);scopeReview.setText(scopes);status.setText((scopeFailure==null?result:scopeFailure+"\n"+result)+diagnostics());
+                if(refresh){check();return;}
                 if(walletConfirmation!=null){showWalletConfirmation();return;}
                 if(approved!=null){completeApproval();return;}
                 if(repeat)handler.postDelayed(poll,3000);
             });
         });
     }
-    private void setButtons(boolean enabled){apply.setEnabled(enabled);recheck.setEnabled(enabled);reboot.setEnabled(enabled);lsp.setEnabled(enabled);defaults.setEnabled(enabled);updateChoices();}
+    private void setButtons(boolean enabled){boolean ready=enabled&&packaged!=null;apply.setEnabled(ready);recheck.setEnabled(enabled);reboot.setEnabled(ready);lsp.setEnabled(ready);defaults.setEnabled(ready);updateChoices();}
     private void ensureActive(){if(!active||Thread.currentThread().isInterrupted())throw new IllegalStateException("页面已离开；请返回后重新检查并手动应用。");}
-    @Override protected void onResume(){super.onResume();active=true;generation++;check();}
+    @Override protected void onResume(){super.onResume();active=true;packaged=null;generation++;check();}
     @Override protected void onStop(){active=false;walletConfirmation=null;if(walletDialog!=null)walletDialog.dismiss();generation++;if(approval!=null)approval.expire();approved=null;handler.removeCallbacks(poll);super.onStop();}
     @Override protected void onDestroy(){active=false;if(approval!=null)approval.expire();if(current.get()==this)current.clear();handler.removeCallbacksAndMessages(null);worker.shutdown();super.onDestroy();}
 
@@ -281,6 +310,36 @@ public final class PresetActivity extends Activity {
     private static String clean(String text){return text==null?"":text.replaceAll("[\\p{Cntrl}&&[^\\n\\t]]","?");}
     private synchronized void appendDiagnostics(String text){diagnostics+="\n"+clean(text);if(diagnostics.length()>16000)diagnostics=diagnostics.substring(diagnostics.length()-16000);}
     private synchronized String diagnostics(){return "\n\nRoot 诊断（原文，仅供排查）："+diagnostics;}
+
+    /** Read-only helper protocol: canonical component CSV, with at most one trailing LF. */
+    static final class PackagedComponents {
+        final Set<String> components,features;
+        private PackagedComponents(Set<String> components,Set<String> features){
+            this.components=Collections.unmodifiableSet(components);this.features=Collections.unmodifiableSet(features);
+        }
+        static PackagedComponents parse(String output){
+            if(output==null||output.length()>256||!output.matches("[a-z]+(?:,[a-z]+)*\\n?"))
+                throw new IllegalArgumentException("缺少或无效的整合包能力 CSV");
+            String csv=output.endsWith("\n")?output.substring(0,output.length()-1):output;
+            List<String> ids=Arrays.asList(csv.split(",",-1));
+            PresetSelection closed=new PresetSelection(ids,Collections.emptySet());
+            // Closure must already be packaged; never invent missing dependency payloads.
+            if(!csv.equals(closed.componentCsv()))throw new IllegalArgumentException("整合包组件顺序或依赖无效");
+            Set<String> features=new LinkedHashSet<>();
+            for(String id:PresetSelection.FEATURES){
+                PresetSelection needed=new PresetSelection(Collections.emptySet(),Collections.singleton(id));
+                if(closed.components.containsAll(needed.components))features.add(id);
+            }
+            return new PackagedComponents(new LinkedHashSet<>(closed.components),features);
+        }
+        PresetSelection filter(PresetSelection selection){
+            Set<String> selected=new LinkedHashSet<>(selection.components),enabled=new LinkedHashSet<>(selection.features);
+            selected.retainAll(components);enabled.retainAll(features);return new PresetSelection(selected,enabled);
+        }
+        PresetSelection defaults(){return filter(PresetSelection.defaults());}
+        @Override public boolean equals(Object other){return other instanceof PackagedComponents&&components.equals(((PackagedComponents)other).components);}
+        @Override public int hashCode(){return components.hashCode();}
+    }
 
     /** Start both drains before waiting. Limits apply even if a child holds pipes open. */
     static final class Capture {

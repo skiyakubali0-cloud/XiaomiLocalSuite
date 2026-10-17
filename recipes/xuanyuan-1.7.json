@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "id": "xuanyuan-eea-os4.0.0.6-full17",
+  "target": {"device": "xuanyuan", "sdk": 37, "incremental": "OS4.0.0.6.XOAEUXM", "abis": ["arm64-v8a"]},
+  "source_roms": ["OS4.0.0.6.XOACNXM", "OS4.0.0.6.XOAEUXM"],
+  "wallet_policy": "explicit-phone-confirmation-only",
+  "components": [
+    {"id": "market", "title": "小米应用商店"},
+    {"id": "assistant", "title": "智能助理负一屏"},
+    {"id": "xiaoai", "title": "超级小爱", "requires": ["assistant"]},
+    {"id": "phone", "title": "电话、短信与录音", "requires": ["market"]},
+    {"id": "gallery", "title": "相册与 AI 编辑"},
+    {"id": "weather", "title": "天气与街道定位"},
+    {"id": "disaster", "title": "自然灾害预警与报警定位"},
+    {"id": "wallet", "title": "小米钱包与 NFC；不自动重置"},
+    {"id": "clock", "title": "时钟法定节假日"},
+    {"id": "calendar", "title": "国行日历"},
+    {"id": "mipush", "title": "MiPush 推送配置"}
+  ]
+}

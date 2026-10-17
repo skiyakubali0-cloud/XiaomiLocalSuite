@@ -1,9 +1,9 @@
-小米本地化电脑工具 0.5.0 · 预览版
+小米本地化电脑工具 0.6.0 · 预览版
 
 完整中文GUI/CLI教程：解压包根目录 docs/USER_GUIDE.md。
 发布与源码打包说明：docs/RELEASE_TOOL.md。
-预览版：https://github.com/skiyakubali0-cloud/XiaomiLocalSuite/releases/tag/tool-v0.5.0
-工具附件：XiaomiLocalSuite-Tool-0.5.0.zip，是电脑源码工具，不是手机模块、签名DMG或独立EXE。
+预览版：https://github.com/skiyakubali0-cloud/XiaomiLocalSuite/releases/tag/tool-v0.6.0
+工具附件：XiaomiLocalSuite-Tool-0.6.0.zip，是电脑源码工具，不是手机模块、签名DMG或独立EXE。
 
 启动（进入解压后的工具根目录）
   python3 launch.py --check
@@ -48,11 +48,25 @@ CLI（工具根目录；示例路径/虚构包名须替换）
 --packages逗号分隔；-表示全部取消。检查state=blocked时退出码2，不能生成候选。
 已有解包目录不需extract，目标固件目录不能用来源APK替代。详细依赖、WSL2与排错见完整教程。
 
+精确小米15 Ultra 完整1.7适配（新入口）
+1. 选择“小米15 Ultra · OS4.0.0.6 完整1.7适配”，目标为xuanyuan EEA OS4.0.0.6.XOAEUXM、SDK37、arm64-v8a。
+2. 导入同机型OS4.0.0.6.XOACNXM材料及配方锁定的额外APK；OTA先解包。无需私有参考ZIP。
+3. 用当前公开源码、本机SDK和自己的密钥构建统一API102插件；GUI“本地构建统一插件”提供入口。
+   缺依赖时显式准备锁定的AAR/JAR，不自动下载OEM材料、SDK或接受许可。
+4. 分析后按需勾选11种组件；小爱自动补智能助理，电话自动补商店。批量全选跳过钱包。
+5. 检查材料/原生补丁/源码构建证据并生成本地精选1.7 ZIP；缺项显示APK包名、版本码和精确SHA。
+6. 电脑只生成文件；用户另行在KernelSU刷parent ZIP、LSPosed启用统一插件，手机“组件配置”仅提供包内组件，按计划应用/重启。
+   刷parent本身不会自动安装全部子组件。子组件保留独立恢复，不自动清应用数据。
+7. 钱包可单独手选；桌面不创建reset标记、不重置凭据。首次EEA→CN TSM迁移须手机弹窗明确确认，仅授权该次任务。
+   不改全局XMSF，不代操作支付或卡片。不能把“生成成功”当成功能或支付/门卡验收。
+本地自签名APK不能覆盖旧私人签名；当前手机升级不能直接刷新签名包。请先核对签名和数据迁移。
+精确输入、离线/联网依赖准备与完整GUI/CLI教程：docs/FULL_RECIPE.md。
+
 历史入口与1.7
 “历史配方...”完整1.4/精选模式只供持有精确原1.4套件的用户；只有这些入口要求旧包。
 历史精选保留商店/智能助理/小爱依赖和精确安装门禁，不能拿任意新机型材料代替。
-精确1.7重建是可选开发路线，见docs/BUILD_SUITE.md；需私有1.7参考包和用户自签名统一APK，不是默认GUI流程。
-工具0.5.0、历史配方1.4、手机套件1.7是不同版本体系。
+旧参考包重建接口见docs/BUILD_SUITE.md；该旧接口需要私有1.7参考包，新完整适配入口不需要。
+工具0.6.0、历史配方1.4、手机套件1.7是不同版本体系。
 
 公开边界
 公开工具ZIP不含OEM材料、第三方依赖二进制、密钥、用户数据、截图或原始验证日志。

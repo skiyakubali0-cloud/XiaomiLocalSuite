@@ -1,20 +1,24 @@
-# 电脑工具 0.5.0 使用教程（预览版）
+# 电脑工具 0.6.0 使用教程（prerelease）
 
-本工具在电脑上读取本地固件/APK、检查兼容性并生成候选 ZIP。默认入口「其他机型 · 从目标固件识别」**不需要原 1.4 套件**。工具不使用 ADB，不连接、安装或重启手机，不自动下载依赖或接受许可。
+本工具在电脑上读取本地固件/APK、检查并生成本地 ZIP。默认入口「其他机型 · 从目标固件识别」**不需要原 1.4 套件**。工具不使用 ADB，不连接、安装或重启手机；依赖仅在用户显式点击「联网准备依赖」或执行下载命令时获取，不自动安装 SDK 或接受许可。
 
 **默认流程只生成普通系统 APK 的受限挂载候选包。** 不包含统一 API102 插件、权限修复或已有 1.7 的 WebUI，不会根据任意固件重建全部 1.7 功能。静态检查通过不等于国行功能移植成功，也不等于手机实测通过。
 
+**精确完整 1.7 模式另见 [FULL_RECIPE.md](FULL_RECIPE.md)。** 在 GUI 选择「小米15 Ultra · OS4.0.0.6 完整1.7适配」，使用 `xuanyuan` EEA `OS4.0.0.6.XOAEUXM` / CN `OS4.0.0.6.XOACNXM` 及锁定额外 APK，不需要私有参考 ZIP。11 项默认全不选，`phone→market`、`xiaoai→assistant` 自动补齐，钱包只能单独手选。该模式生成保留 1.7 WebUI、逐项 Root 恢复和 API102 的 parent；后面的通用候选限制仍仅适用于默认通用入口。
+
 ## 1. 下载与产物区分
 
-在 [tool-v0.5.0 预览版发布页](https://github.com/skiyakubali0-cloud/XiaomiLocalSuite/releases/tag/tool-v0.5.0) 下载 `XiaomiLocalSuite-Tool-0.5.0.zip`，完整解压，进入 `XiaomiLocalSuite-Tool-0.5.0` 文件夹。不要在压缩软件中直接运行。
+从 [tool-v0.6.0 预览版发布页](https://github.com/skiyakubali0-cloud/XiaomiLocalSuite/releases/tag/tool-v0.6.0) 下载 `XiaomiLocalSuite-Tool-0.6.0.zip`，完整解压，进入同名文件夹。不要在压缩软件中直接运行。
 
 | 文件/产物 | 用途 | 边界 |
 | --- | --- | --- |
-| `XiaomiLocalSuite-Tool-0.5.0.zip` | 电脑端源码、启动器、教程 | 需要本机运行环境，不是签名独立 DMG/EXE，不是手机模块 |
+| `XiaomiLocalSuite-Tool-0.6.0.zip` | 电脑端源码、启动器、教程 | 需要本机运行环境，不是签名独立 DMG/EXE，不是手机模块 |
 | 用户生成的候选 `.zip` 与 `.build.json` | 精确机型、ROM、APK 的候选与构建记录 | 含原厂材料，只留本地，不公开上传 |
-| 私有 1.7 套件 | 另一条精确参考系统重建路线 | 需私有参考包和自签名 APK，非默认流程 |
+| 原始材料生成的 1.7 parent ZIP | 用户所选组件、统一插件与独立恢复入口 | 精确配方；无需私有参考 ZIP，生成不等于手机安装 |
+| 自行编译的统一 `.apk` 与 `.build-evidence.json` | 完整模式必需的配套插件输入 | 当前源码/依赖/APK 哈希一致；证据不是 attestation |
+| 私有参考包重建路线 | 保留的开发入口 `tools/build_suite.py` | 该旧路线仍需私有参考包，不能与原始材料路线混用 |
 
-工具包不含小米固件、原厂 APK、签名私钥或第三方工具二进制。版本 **0.5.0** 指电脑工具，不是手机套件 **1.7** 或历史配方 **1.4** 的版本号。
+工具包不含小米固件、原厂 APK/OEM 库/DEX、统一 APK 成品、AAR/JAR、签名私钥或第三方工具二进制。版本 **0.6.0** 指电脑工具，不是手机套件 **1.7**、统一插件 code **17** 或历史配方 **1.4** 的版本号。
 
 ## 2. 准备环境
 
@@ -23,9 +27,11 @@
 | Python/Tk | Python 3.11+，GUI 需 Tk 8.6+ | `python3 --version`、`python3 -m tkinter` |
 | Java | JDK 17+，`java` 可执行 | `java -version` |
 | Android SDK | build-tools 36.0.0 的 `aapt2`、`apksigner` | GUI「环境检查」 |
+| 完整模式插件编译 | SDK platform 36、build-tools 36.0.0，3 份固定 libxposed AAR及自己的 keystore | GUI「本地构建统一插件…」或公开 `build_apk.py`；密码只经环境传递 |
+| 预警 DEX 生成（选择预警时） | 4 份配方固定 JAR | `tools/recipe_tools.py --local-dir`，缓存到根目录 `build/recipe-tools/` |
 | 完整 OTA 解包（可选） | `payload-dumper-go`、erofs-utils 的 `fsck.erofs` | GUI「环境检查」；只用已解包目录/APK 时无需这两项 |
 
-自行安装依赖并决定是否接受其许可。推荐在 Android Studio 的 SDK Manager 中选择 Android SDK Build-Tools **36.0.0**；`ANDROID_SDK_ROOT` 指 SDK 根目录，不能指向 build-tools 子目录。[Android 官方工具说明](https://developer.android.com/tools/sdkmanager) 可供核对环境。工具不执行 SDK 下载或许可接受。
+自行安装依赖并决定是否接受其许可。推荐在 Android Studio 的 SDK Manager 中选择 Android SDK Build-Tools **36.0.0**；完整模式编译插件还需 platform **36**。`ANDROID_SDK_ROOT` 指 SDK 根目录，不能指向 build-tools 子目录。[Android 官方工具说明](https://developer.android.com/tools/sdkmanager) 可供核对环境。工具不执行 SDK 下载或许可接受。固定 AAR/JAR 支持离线准备或用户显式联网，详见[完整路线依赖步骤](FULL_RECIPE.md#2-显式准备依赖)。
 
 macOS：使用带 Tk 的 Python。Homebrew 用户可按 [python-tk@3.13 官方配方](https://formulae.brew.sh/formula/python-tk@3.13) 执行 `brew install python-tk@3.13`，再使用对应 `python3.13`。旧 Tk 8.5 可能显示空白窗口，应先更换环境。
 
@@ -71,6 +77,8 @@ python3 launch.py
 
 ## 5. GUI：分析 → 勾选 → 检查 → 生成
 
+以下步骤用于默认通用模式。精确完整 1.7 模式按 [FULL_RECIPE.md 的 GUI 步骤](FULL_RECIPE.md#4-gui-操作) 操作：先选精确材料及当前统一 APK，或通过「本地构建统一插件…」使用自己的密钥构建。其密码框遮蔽输入，不自动生成密钥。不能把旧私人 APK 或缺少配套证据的 APK 当作当前构建。
+
 1. 保持默认「其他机型 · 从目标固件识别」。配置标识仅用英文字母、数字、点或横线，例如 `exampledevice-os4-build1`。
 2. 在「目标系统」选 EEA OTA/解包目录；在「来源材料」选同机型国行 OTA/目录，或点「添加APK」一次选择多个 APK。
 3. 若选 OTA，先确认外接磁盘工作目录，再点对应「解包OTA」，目标与来源分别解包到新目录。「分析材料」不自动解包，已有解包目录不用重复操作。
@@ -92,15 +100,19 @@ python3 launch.py
 
 ## 7. 候选安装与恢复边界
 
+本节为默认通用候选。完整 1.7 parent 保留逐项恢复，但电脑选择不触发手机自动安装；parent 安装统一插件后，用户仍需手动重启、启用 LSPosed 插件/核对作用域，再在手机预设检查并应用，按依赖分批和重启。只读能力 CSV 仅限制本包组件配置页的预设选择与安装，未打包项在该页不可选，默认不选钱包；省略不卸载已有组件，也不自动关闭其他页面的既有兼容开关或 hook，如需停用须单独关闭兼容或恢复组件。能力命令缺失或无效时，组件配置页阻止应用并提示检查或升级 parent，见[完整路线手机步骤](FULL_RECIPE.md#6-手机安装与钱包边界)。
+
 工具不执行手机操作。用户若另行决定评估候选，需要 KernelSU 和**已启用且重启生效的 OverlayFS 1.3.1**，并满足精确机型、ROM、单用户 0、当前 APK 路径和 SHA 等门禁。不要把电脑工具 ZIP 交给 KernelSU 安装。
 
 活动 APK 位于 `/data/app`、应用商店更新、分包或哈希变化可能阻断安装。不要通过自动清数据、卸载更新、重置密钥或改校验值绕过；先重新评估系统与材料。
 
 **一个候选 ZIP 内多选的 APK 是同一恢复组。** 在 KernelSU 禁用该候选模块并手动重启，会一起恢复其覆盖的 APK；通用路线没有既有 1.7 的逐项 WebUI 恢复。要分别恢复，从一开始每次只选一个 APK，用不同配置标识分别生成、安装候选模块。不要用同一配置标识覆盖不同选择；变更既有候选前先卸载该候选并重启，避免未选 APK 残留。
 
-OTA 前必须先禁用候选并重启，升级后重读目标固件再检查。启动阶段版本检测不能替代 OTA 前停用，不保证带候选跨 ROM 升级安全。工具不自动清数据、不生成钱包 reset、不迁移凭据、不改全局 XMSF，不自动接受协议、安装或重启。
+OTA 前必须先禁用候选并重启，升级后重读目标固件再检查。启动阶段版本检测不能替代 OTA 前停用，不保证带候选跨 ROM 升级安全。桌面工具不自动清数据、不生成钱包 reset、不迁移凭据、不改全局 XMSF，不自动接受协议、安装或重启。完整 1.7 钱包若明确选入，首次 EEA TSM 迁移仍需手机端单任务独立确认，可能清除 TSM 数据及绑定密钥；已有精确 CN TSM 保留，不等同于桌面端授权重置。
 
 ## 8. CLI 示例
+
+本节保留 0.5 通用候选 CLI。新增完整模式使用 `tools/recipe_materials.py check/build --target ... --source ... --components ... --unified-apk ...`；`--source` 可重复，`build` 还需新 `--output`。精确额外 APK、缺项清单、自签名插件及完整命令见 [FULL_RECIPE.md](FULL_RECIPE.md#5-cli-检查与生成)。
 
 从工具根目录运行。`/local/materials`、`/local/work` 是需替换的示例路径，输出名必须未占用。macOS/Linux/WSL2 使用对应 Python 3.11+，命令不连接手机。
 
@@ -146,13 +158,17 @@ py -3 launch.py --check
 | 目标属性冲突/未知机型 | 检查是否混入不同 ROM，补齐同一目标版本材料再分析 |
 | 签名/降级/权限/依赖阻断 | 取消该组件或请求精确配方审阅；不通过重签、清数据、改 SHA 绕过 |
 | 输出文件已存在 | 换新文件名；工具故意不覆盖已有配置、报告、安装包 |
+| 完整模式缺材料或生成输入 | 查看 `missing` 的路径、字节数、SHA256 和原因，补齐锁定的天气 23/27、SecurityCenter 13.6.5 等精确材料；不使用私有 ZIP 回退 |
+| 统一插件证据缺失/过期 | 用当前公开源码与固定依赖重新编译，成对保留 `.apk` 和同名 `.build-evidence.json`；code 17 相同不代表构建相同 |
+| 新签名无法覆盖旧插件 | 不用清数据/卸载来绕过；自己的签名密钥需保管供未来升级，旧私人密钥不随工具提供 |
+| 新手机预设要求升级 parent | 新 UI 必须配合支持只读 `preset.sh capabilities` 的 parent；旧私有 1.7 parent 不回退为全组件 |
 | macOS 的 JSON 被置灰 | 文件选择框切换「所有文件」，内容仍会校验 |
 | 想分别恢复多个 APK | 每次单选一个，用不同配置标识生成；同一候选多选只支持整组禁用并重启恢复 |
 
-## 10. 历史配方与精确 1.7
+## 10. 完整 1.7、历史配方与验证
 
 带「历史配方」的完整 1.4/精选入口只供合法持有精确原 1.4 套件的用户；只有这些入口要求旧包，不随工具分发。原机型、ROM、SHA 和依赖规则继续适用，不能用任意固件代替。
 
-可选精确 1.7 开发路线见 [BUILD_SUITE.md](BUILD_SUITE.md)，需要本地私有 1.7 参考包与用户自行签名的统一 APK。它不是默认 GUI 模式，也不会由通用 APK 候选自动生成。
+新增精确原始材料路线见 [FULL_RECIPE.md](FULL_RECIPE.md)，使用 EEA/CN 及额外 APK 和当前自签名插件，无需私有参考 ZIP。保留的精确 1.7 参考包开发路线仍见 [BUILD_SUITE.md](BUILD_SUITE.md)，只有该旧入口要求私有参考包；新 UI 的 parent 能力命令要求仍须满足。两者都不会由通用 APK 候选自动获得。
 
-本预览版 macOS GUI 与 Linux CI 的验证范围不能扩展成原生 Windows、新机型实机、完整功能移植或钱包/支付/卡片证明。0.5 验证记录见 [TOOL_VALIDATION.md](TOOL_VALIDATION.md)，发布范围见 [RELEASE_TOOL.md](RELEASE_TOOL.md)。
+0.6.0 原始材料全量构建、macOS GUI 及主机回归见 [FULL_RECIPE_VALIDATION.md](FULL_RECIPE_VALIDATION.md)；0.5 历史记录保留在 [TOOL_VALIDATION.md](TOOL_VALIDATION.md)。Linux CI 核对发布 tag 对应提交；这些结果不代替手机功能、原生 Windows、新机型、支付或门卡验证。发布范围见 [RELEASE_TOOL.md](RELEASE_TOOL.md)。

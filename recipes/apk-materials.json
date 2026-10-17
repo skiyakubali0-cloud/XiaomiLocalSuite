@@ -1,0 +1,162 @@
+{
+  "017d613137c0512a937dc6b8565da856099e988feab47b9eabc5c3d0a13f06e6": {
+    "bytes": 41311702,
+    "package": "com.miui.weather2",
+    "version_code": 180000270
+  },
+  "044f18277d3f22d46abd6fc3456d26c2794954a8b4d6094d449b1cba0d470328": {
+    "bytes": 250508294,
+    "package": "com.miui.voiceassist",
+    "version_code": 508001015
+  },
+  "0a59d7338d31c70a0fb8f5477f264033d77abf4101f2897a60ffbabacbb1da14": {
+    "bytes": 20403558,
+    "package": "com.android.mms",
+    "version_code": 180000032
+  },
+  "0c5c655fe93ffc0eade6a77dc56c05754d4a3afab8a6c122acd3a2f8a160c0ba": {
+    "bytes": 6431224,
+    "package": "com.miui.yellowpage",
+    "version_code": 240260731
+  },
+  "203b4404c35e1a40fcb22e75608dbe54e4a54d6e0d5ab5efa0c0c6c73521e205": {
+    "bytes": 32525965,
+    "package": "com.xiaomi.mibrain.speech",
+    "version_code": 65
+  },
+  "2a8faed30ce5ffe4ae0229dce0d520d882dff990f6ef158e5fbb555153b7e887": {
+    "bytes": 63138625,
+    "package": "com.miui.weather2",
+    "version_code": 180000230
+  },
+  "2aa4d85ae0e23764fdc96d0d5d4b314a5a90e915f0ed02a85093522e216e7d51": {
+    "bytes": 115360140,
+    "package": "com.mipay.wallet",
+    "version_code": 20577679
+  },
+  "32ee609ca478bd13bd635a3dd27ff042da91f903c26c744d7fd68374a7bdb020": {
+    "bytes": 49647,
+    "package": "com.xiaomi.aireco",
+    "version_code": 7
+  },
+  "365954e0e94263b7372fa5e6f4d244690b5edd9607b5642a1488a622732f7756": {
+    "bytes": 221712646,
+    "package": "com.miui.mediaeditor",
+    "version_code": 210994031
+  },
+  "5064cf66116be09de5af33780cc04e80c9669caf436ca6c5ae96d6bae625e3af": {
+    "bytes": 39657880,
+    "package": "com.miui.voicetrigger",
+    "version_code": 2036081214
+  },
+  "51b10fde445e804f1f6e1fd9181fe2795294b9c966a6a0615c68e5702efcb788": {
+    "bytes": 1538276,
+    "package": "com.miui.voiceassistProxy",
+    "version_code": 7
+  },
+  "567e8f05e4b2cbc7c203ce5f10672756ea8af0542c3fc5aafaa3e677ebcaa671": {
+    "bytes": 32680220,
+    "package": "com.miui.tsmclient",
+    "version_code": 4175
+  },
+  "585703b25f0bce27f06f76ed568af9a9bbf58bcf7810600ad23eb4ab57be6902": {
+    "bytes": 4286582,
+    "package": "com.miui.core",
+    "version_code": 1202513
+  },
+  "590f2ed0e5e0923e79a452d72cd9c6e9783e1dde4cb8c987355ebcfce7b8c3bd": {
+    "bytes": 9063609,
+    "package": "com.android.incallui",
+    "version_code": 5810
+  },
+  "5abe56881dafbe3540e11c4ff4a450ae7bcd19d93753a251326f09314a2bb9e9": {
+    "bytes": 45682504,
+    "package": "com.miui.core",
+    "version_code": 1202614
+  },
+  "6ecb326cd18351e032f5fe493c1bc1bb28e417bd03954e5133c237bcffc43562": {
+    "bytes": 25022781,
+    "package": "com.miui.personalassistant",
+    "version_code": 2540310
+  },
+  "81857e2c0bb83a7b910ea51789546220b028c76c4e620dc712d02a69401d7b1b": {
+    "bytes": 61786777,
+    "package": "com.xiaomi.market",
+    "version_code": 40007522
+  },
+  "83133a62f37cefe873075064d39c5e176e768af251d678438a242116be8178b1": {
+    "bytes": 8681616,
+    "package": "com.miui.audiomonitor",
+    "version_code": 20260603
+  },
+  "860dadde411073cd69d1cfaffedb116d90fa1fa8eb18ab056cbd8afc6852660e": {
+    "bytes": 10594197,
+    "package": "com.xiaomi.macro",
+    "version_code": 31220535
+  },
+  "9439e87555133762d362bfba651e7ab6e2f01e78b280fdd7ec745cbb6403b025": {
+    "bytes": 45334680,
+    "package": "com.miui.weather2",
+    "version_code": 180000240
+  },
+  "b6149345f1aa4f3b84d84152b186f5c60bc6bc4c95957ac3cc232fb047722756": {
+    "bytes": 98562373,
+    "package": "com.miui.extraphoto",
+    "version_code": 202010001
+  },
+  "be6bb05752cf667430c9359cd46fa8f4ed3552ecbe2e90a7b6279eaeb471f4a2": {
+    "bytes": 103381723,
+    "package": "com.miui.gallery",
+    "version_code": 5040204
+  },
+  "d8d21e7d3ae0de9cfb0dd443a491b4baa774e104ac364ffed6de80196b1a0872": {
+    "bytes": 321131,
+    "package": "com.miui.contentcatcher",
+    "version_code": 520260807
+  },
+  "e07e59b9d9a99b0cce4bf06b9734002016b1c3bebe701c6ee368cdc8161cb733": {
+    "bytes": 7018438,
+    "package": "com.miui.yellowpage",
+    "version_code": 240260731
+  },
+  "e2f2e6f2cc5d5ab32480447c23b91c90b2c5db863a38907c6dff61fec80566e7": {
+    "bytes": 22042966,
+    "package": "com.xiaomi.calendar",
+    "version_code": 180006000
+  },
+  "e7810ef31917cd64c80bdd338d4434e9cb6c49f4c823ca9b8f7be6688f0b9c5b": {
+    "bytes": 10951376,
+    "package": "com.miui.contentextension",
+    "version_code": 50015
+  },
+  "ed8f4356bb7c44038abbe5f215f215277c114e75de4bd21ac0a65f77d75f75f0": {
+    "bytes": 17831333,
+    "package": "com.android.calendar",
+    "version_code": 180001300
+  },
+  "f3d338484cc5fd3f3fec9e8d9d0b4c6370923fba0f5e0d81975a45e914cbc776": {
+    "bytes": 81091182,
+    "package": "com.miui.securitycenter",
+    "version_code": 40001365
+  },
+  "f763216706094ca04cf2c4e67600595bbfa55f0533b8468a7c36ca2463bf9497": {
+    "bytes": 24891386,
+    "package": "com.hyper.gallery.plugin",
+    "version_code": 5040203
+  },
+  "f84954e6ef361a8204c565bfe365e66344e2984036febe784c1485e113d1ba71": {
+    "bytes": 9779344,
+    "package": "com.miui.audiomonitor",
+    "version_code": 20260603
+  },
+  "fc034b8e27cac5559bcacf0455b3d3c13eb7129b8b3e8d1b8acaf3b482078c1a": {
+    "bytes": 24280129,
+    "package": "com.xiaomi.aiasst.service",
+    "version_code": 2730
+  },
+  "fed1ba5413833206f94d34183e1954c63489baa50c7969c825bfe211fd81da22": {
+    "bytes": 19868679,
+    "package": "com.android.contacts",
+    "version_code": 300053
+  }
+}

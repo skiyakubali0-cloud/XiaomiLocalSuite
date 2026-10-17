@@ -4,15 +4,18 @@ import copy
 import json
 from pathlib import Path
 import subprocess
+import sys
 import zipfile
 
 import intake
 import suite_builder as b
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools'))
+import recipe_materials as full
 
 
 FAILURES = (ValueError, OSError, TypeError, KeyError, AttributeError,
             subprocess.SubprocessError, zipfile.BadZipFile)
-PASSED = ('reviewed-recipe', 'reviewed-components', 'candidate-static-pass')
+PASSED = ('reviewed-recipe', 'reviewed-components', 'candidate-static-pass', 'reviewed-raw-materials')
 
 
 class Session:
@@ -46,7 +49,7 @@ class Session:
         b.require(profile.get('schema') == 1, 'Unsupported profile schema')
         pid = profile.get('id')
         b.require(isinstance(pid, str) and b.TOKEN.fullmatch(pid), 'Invalid profile id')
-        b.require(profile.get('mode') in ('reviewed-suite', 'selected-suite', 'apk-overlay'), 'Unknown profile mode')
+        b.require(profile.get('mode') in ('reviewed-suite', 'selected-suite', 'apk-overlay', 'xuanyuan-1.7'), 'Unknown profile mode')
         b.require(isinstance(profile.get('target'), dict), 'Target must be an object')
         b.require(profile.get('wallet_policy') == 'separate-validation-no-reset', 'Wallet must remain separate, no reset')
         if profile['mode'] == 'apk-overlay':
@@ -65,6 +68,21 @@ class Session:
         self.base = path.parent
         self.materials = materials
         self._lock_wallet()
+        return self.profile
+
+    def analyse_recipe(self, target_path, sources, unified_apk):
+        self._invalidate()
+        target_path = Path(target_path).expanduser().resolve(strict=True)
+        target, warnings = full.validate_target(target_path)
+        sources = [Path(p).expanduser().resolve(strict=True) for p in sources]
+        b.require(sources, 'Select at least one source APK or directory')
+        spec = full.recipe()
+        self.profile = dict(schema=1, id=spec['id'], mode='xuanyuan-1.7', target={k: target[k] for k in spec['target']},
+            target_input=str(target_path), source_inputs=list(map(str, sources)),
+            unified_apk=str(Path(unified_apk).expanduser().resolve()) if unified_apk else '',
+            wallet_policy='separate-validation-no-reset',
+            components=[dict(id=c['id'], enabled=False) for c in spec['components']], warnings=warnings)
+        self.base = Path.cwd().resolve()
         return self.profile
 
     def use_reviewed(self, profile_path, materials=None):
@@ -117,6 +135,14 @@ class Session:
 
     def rows(self):
         self._lock_wallet()
+        if self.profile and self.profile.get('mode') == 'xuanyuan-1.7':
+            spec = full.recipe()['components']
+            rows = self.profile.get('components', [])
+            b.require(isinstance(rows, list) and all(isinstance(c, dict) and type(c.get('enabled')) is bool for c in rows)
+                      and [c.get('id') for c in rows] == [c['id'] for c in spec], 'Invalid full recipe selection')
+            return [dict(id=c['id'], title=s['title'], package='', enabled=c['enabled'], selectable=True,
+                         bulk_selectable=c['id'] != 'wallet', reason='精确 1.7 配方；从导入材料生成')
+                    for c, s in zip(rows, spec)]
         if self.profile and self.profile.get('mode') == 'selected-suite':
             import selected_suite as s
             rows = self.profile.get('components', [])
@@ -146,13 +172,15 @@ class Session:
     def set_selected(self, ids: list):
         self._invalidate()
         self._lock_wallet()
-        b.require(self.profile is not None and self.profile.get('mode') in ('apk-overlay', 'selected-suite'),
+        b.require(self.profile is not None and self.profile.get('mode') in ('apk-overlay', 'selected-suite', 'xuanyuan-1.7'),
                   'Reviewed suites keep their existing phone selection UI')
         available = {r['id'] for r in self.rows() if r['selectable']}
         b.require(all(isinstance(cid, str) and cid in available for cid in ids),
                   'Unknown, invalid or wallet-locked component selection')
         if self.profile['mode'] == 'selected-suite' and 'xiaoai' in ids:
             ids = list(set(ids) | {'assistant'})
+        if self.profile['mode'] == 'xuanyuan-1.7' and ids:
+            ids = full.selection(ids)
         for c in self.profile['components']:
             c['enabled'] = c.get('id') in ids
 
@@ -167,7 +195,10 @@ class Session:
             b.require(self.profile is not None, 'Load or analyse a profile first')
             fingerprint = self._fingerprint()
             profile = copy.deepcopy(self.profile)
-            report = b.check_profile(profile, self.base, self.materials)
+            if profile.get('mode') == 'xuanyuan-1.7':
+                report = full.check(*self._recipe_args(profile))
+            else:
+                report = b.check_profile(profile, self.base, self.materials)
             b.require(self._fingerprint() == fingerprint, 'Profile changed during check; check again')
             if report.get('state') in PASSED:
                 self._checked = fingerprint
@@ -190,7 +221,10 @@ class Session:
             profile = copy.deepcopy(self.profile)
             self._invalidate()
             # build() checks actual files again; the prior report is never passed in.
-            report = b.build(profile, self.base, Path(output), materials=self.materials, candidate=candidate)
+            if profile.get('mode') == 'xuanyuan-1.7':
+                report = full.build(*self._recipe_args(profile), Path(output))
+            else:
+                report = b.build(profile, self.base, Path(output), materials=self.materials, candidate=candidate)
             b.require(report.get('state') in PASSED, 'Compatibility checks failed during build')
             b.require(self._fingerprint() == fingerprint, 'Profile changed during build; check again')
             self.report = report
@@ -201,11 +235,21 @@ class Session:
             self.report = {'state': 'blocked', 'errors': [str(error)], 'components': []}
             raise
 
+    def _recipe_args(self, profile):
+        self.rows()
+        selected = [c['id'] for c in profile['components'] if c['enabled']]
+        target = b.path_of(profile['target_input'], self.base)
+        sources = [b.path_of(p, self.base) for p in profile['source_inputs']]
+        plugin = Path(profile.get('unified_apk') or '__missing-unified.apk').expanduser()
+        if not plugin.is_absolute():
+            plugin = self.base / plugin
+        return target, sources, selected, plugin
+
     def save_profile(self, path):
         b.require(self.profile is not None, 'Load or analyse a profile first')
         self._lock_wallet()
         profile = copy.deepcopy(self.profile)
-        for key in ('target_input', 'source_input', 'source_inputs'):
+        for key in ('target_input', 'source_input', 'source_inputs', 'unified_apk'):
             value = profile.get(key)
             if value:
                 profile[key] = ([str(b.path_of(p, self.base)) for p in value] if isinstance(value, list)

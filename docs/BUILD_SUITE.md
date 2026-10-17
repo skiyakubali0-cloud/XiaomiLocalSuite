@@ -1,9 +1,13 @@
-# 离线重建 1.7 Root suite
+# 历史参考包路线：离线重建 1.7 Root suite
+
+新用户请使用 [0.6.0 完整 1.7 原始材料路线](FULL_RECIPE.md)：从精确固件/APK
+与当前公开源码编译的 API102 插件生成所选组件，不需要私有参考 ZIP。
+本文保留旧 `build_suite.py` 开发接口；它不是新版 GUI 的完整适配入口。
 
 `tools/build_suite.py` 只重建 `materials.lock.json` 对应的单一参考 release：
 小米 15 Ultra / `xuanyuan`、EEA `OS4.0.0.6.XOAEUXM`、Android 17 / SDK 37。
 它使用 `suite/module` 和 `components/*` 的公开文本模板，生成包含 8 个子模块的 Root suite。
-GUI 的多机型 0.4 流程不在此构建器范围内。
+GUI 的通用候选和 0.6.0 原始材料流程不在此旧构建器范围内。
 
 ## 准备本地输入
 

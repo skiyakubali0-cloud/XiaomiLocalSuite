@@ -3,6 +3,7 @@ import contextlib
 import copy
 import hashlib
 import io
+import json
 from pathlib import Path
 import stat
 import tempfile
@@ -85,14 +86,19 @@ class PackageTests(unittest.TestCase):
                 self.assertLess(info.extract_version, 45)
                 self.assertEqual(info.extra, b'')
             self.assertEqual(archive.getinfo(p.TITLE + '/launchers/linux.sh').external_attr >> 16, 0o100755)
-        self.assertEqual(p.verify(first), {'softwarecommit': self.head, 'buildversion': '0.5.0'})
+        self.assertEqual(p.verify(first), {'softwarecommit': self.head, 'buildversion': '0.6.0'})
 
     def test_allowlist_excludes_even_tracked_outputs_deps_private_and_oem(self):
         banned = ['.env', '.github/token.txt', 'materials/stock.apk', 'releases/previous.zip',
                   'suite/build/generated.py', 'suite/deps/vendor.py', 'suite/private/local.py',
                   'suite/.git/config', 'suite/dist/local.py', 'suite/gui-workspace/report.json',
                   'suite/test-work-old/source.py', 'suite/host-old/temp.py', 'suite/tmp/stale.md',
-                  'suite/input.apk', 'suite/kernel.img', 'tools/native.exe', 'docs/photo.png']
+                  'suite/input.apk', 'suite/kernel.img', 'tools/native.exe', 'docs/photo.png',
+                  'recipes/stock.apk', 'recipes/stock.so', 'recipes/warning.dex',
+                  'recipes/dependency.jar', 'recipes/dependency.aar', 'recipes/reference.zip',
+                  'recipes/signing.jks', 'recipes/build/generated.py', 'recipes/private/material.json',
+                  'suite/unified-api102/build/plugin.apk', 'build/recipe-tools/dependency.jar',
+                  'native/assistant/live/stock.so', 'components/weather/system/lib64/stock.so']
         # Git refuses nested .git entries, so a hidden local input represents that boundary here.
         banned.remove('suite/.git/config')
         banned.append('suite/.env')
@@ -107,6 +113,35 @@ class PackageTests(unittest.TestCase):
         self.assertIn('native/assistant/source.cpp', names)
         self.assertIn('suite/module/skip_mount', names)
 
+    def test_full_recipe_json_and_own_patch_sources_are_required_and_packaged_exactly(self):
+        sources = {
+            'materials.lock.json', 'recipes/xuanyuan-1.7.json', 'recipes/generated.json',
+            'recipes/apk-materials.json', 'tools/build_suite.py', 'tools/recipe_materials.py',
+            'tools/recipe_assemble.py', 'tools/recipe_generated.py', 'tools/recipe_tools.py',
+            'native/assistant/assistant-route.S', 'native/assistant/build-runtime-route.py',
+            'suite/multi-device/plugin_builder.py', 'docs/FULL_RECIPE.md',
+            'suite/unified-api102/build_apk.py', 'suite/unified-api102/fetch_dependencies.py',
+            'suite/unified-api102/deps.lock.json', 'suite/unified-api102/AndroidManifest.xml',
+            'suite/unified-api102/META-INF/xposed/java_init.list',
+            'suite/unified-api102/META-INF/xposed/module.prop',
+            'suite/unified-api102/META-INF/xposed/scope.list',
+            'suite/module/control.sh', 'suite/module/preset.sh', 'suite/module/webroot/catalog.json',
+        }
+        self.assertTrue(sources <= p.REQUIRED_FILES)
+        contents = {name: (p.ROOT / name).read_bytes() for name in sources}
+        for name, raw in contents.items():
+            self.write(name, raw)
+        self.commit()
+        output = self.build()
+        with zipfile.ZipFile(output) as archive:
+            for name, raw in contents.items():
+                with self.subTest(name=name):
+                    actual = archive.read(p.TITLE + '/' + name)
+                    self.assertEqual(actual, raw)
+                    if name.endswith('.json'):
+                        self.assertEqual(json.loads(actual), json.loads(raw))
+        self.assertEqual(p.verify(output)['buildversion'], '0.6.0')
+
     def test_explicit_old_ref_uses_original_commit(self):
         self.write('README.md', 'Later source\n')
         self.commit()
@@ -114,14 +149,16 @@ class PackageTests(unittest.TestCase):
         self.assertEqual(metadata['softwarecommit'], self.head)
 
     def test_audit_rejects_binary_and_secrets_before_creating_output(self):
-        for raw in (b'\x00binary', b'ghp_' + b'a' * 30, b'\xffinvalid UTF8'):
-            with self.subTest(raw_kind=raw[:4]):
-                self.write('docs/input.txt', raw)
-                self.commit()
-                with self.assertRaisesRegex(ValueError, 'Public-tree audit failed') as caught:
-                    self.build()
-                self.assertNotIn(repr(raw), str(caught.exception))
-                self.assertFalse(self.output().exists())
+        for name in ('docs/input.txt', 'recipes/input.json', 'recipes/patch.py'):
+            for raw in (b'\x00binary', b'ghp_' + b'a' * 30, b'\xffinvalid UTF8'):
+                with self.subTest(name=name, raw_kind=raw[:4]):
+                    self.write(name, raw)
+                    self.commit()
+                    with self.assertRaisesRegex(ValueError, 'Public-tree audit failed') as caught:
+                        self.build()
+                    self.assertNotIn(repr(raw), str(caught.exception))
+                    self.assertFalse(self.output().exists())
+            (self.repo / name).unlink()
 
     def test_symlink_is_rejected_without_reading_target(self):
         (self.repo / 'docs/link.txt').symlink_to('missing-private-target')
@@ -176,9 +213,12 @@ class PackageTests(unittest.TestCase):
         self.assertFalse(self.output().exists())
 
     def test_missing_runtime_or_docs_rejected_in_snapshot_and_verify(self):
-        for name in ('launch.py', 'suite/multi-device/environment.py', 'docs/USER_GUIDE.md'):
+        for name in ('launch.py', 'suite/multi-device/environment.py', 'docs/USER_GUIDE.md',
+                     'recipes/xuanyuan-1.7.json', 'recipes/generated.json', 'recipes/apk-materials.json',
+                     'native/assistant/assistant-route.S', 'tools/recipe_generated.py',
+                     'suite/multi-device/plugin_builder.py', 'docs/FULL_RECIPE.md'):
             with self.subTest(name=name):
-                output = self.build(name.split('/')[-1] + '.zip')
+                output = self.build(name.replace('/', '-') + '.zip')
 
                 def remove_and_rehash(entries):
                     entries = [(info, raw) for info, raw in entries if info.filename != p.TITLE + '/' + name]

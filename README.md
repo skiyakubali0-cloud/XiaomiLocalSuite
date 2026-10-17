@@ -2,9 +2,11 @@
 
 面向小米 HyperOS 的本地化适配工具源码：一个 modern API 102 LSPosed 插件、独立 Root 组件、按需勾选安装入口，以及电脑端 APK/固件兼容检查工具。
 
-**电脑工具 0.5.0 预览版**：[下载 `XiaomiLocalSuite-Tool-0.5.0.zip`](https://github.com/skiyakubali0-cloud/XiaomiLocalSuite/releases/tag/tool-v0.5.0) · [中文使用教程](docs/USER_GUIDE.md) · [发布说明](docs/RELEASE_TOOL.md)。需自备 Python/Tk、Java 和 SDK，不是独立 DMG/EXE 或手机模块。解压后运行 `python3 launch.py`，默认从目标固件识别，无须旧 1.4。
+**电脑工具 0.6.0 预览版**：[下载 `XiaomiLocalSuite-Tool-0.6.0.zip`](https://github.com/skiyakubali0-cloud/XiaomiLocalSuite/releases/tag/tool-v0.6.0) · [中文使用教程](docs/USER_GUIDE.md) · [完整 1.7 原始材料路线](docs/FULL_RECIPE.md) · [发布说明](docs/RELEASE_TOOL.md)。需自备 Python/Tk、Java 和 SDK，不是独立 DMG/EXE 或手机模块。解压后运行 `python3 launch.py`，默认通用入口保留，无须旧 1.4。
 
 默认 GUI 只生成目标已有、同签名、非 split 的普通系统 APK 受限候选包；不含统一 API102 插件、权限修复或 1.7 WebUI，不能从任意固件复原全部 1.7 功能。同一候选内多选 APK 作为一组恢复；静态通过不等于手机功能验证。含原厂材料的结果仅本地使用，不公开发布。Windows 原生完整流程未就绪，优先使用具备 GUI 的 WSL2。
+
+0.6.0 新增「小米15 Ultra · OS4.0.0.6 完整1.7适配」：用精确 EEA `OS4.0.0.6.XOAEUXM`、同机型 CN `OS4.0.0.6.XOACNXM` 及锁定额外 APK，无需私有参考 ZIP，按需生成保留 1.7 WebUI、逐项 Root 恢复与 API102 的 parent。11 行默认全不选，电话依赖商店、小爱依赖智能助理，钱包只能单独手选。须提供当前公开源码自行签名的统一 APK 与配套 `.build-evidence.json`，也可在 GUI 本地构建；缺项报告路径、大小和 SHA，不回退私有 ZIP。完整操作、离线依赖、密钥和手机分批安装边界见[完整教程](docs/FULL_RECIPE.md)。已完成原始材料全量构建及 macOS GUI 生成验证，详见[验证与复用记录](docs/FULL_RECIPE_VALIDATION.md)；手机功能仍须单独验证。
 
 当前参考实现为小米15 Ultra `xuanyuan`、EEA `OS4.0.0.6.XOAEUXM`、Android17/API37。它不是通用跨机型一键移植工具，未知机型、ROM、APK 或共享 UID 应停止安装并重新审查。
 
@@ -14,10 +16,11 @@
 - `suite/module/`：1.7父套件控制器、勾选计划、WebUI、旧插件迁移与钱包协作逻辑的文本模板。
 - `native/assistant/`：自主编写的桌面路由原生代码参考；不附NDK、Zygisk头文件或原厂库。
 - `components/`：商店、智能助理、小爱、电话/短信、相册、天气、预警和钱包组件的脚本及配置。
-- `suite/multi-device/`：0.5.0 本地 GUI、固件/APK读取与保守兼容检查，默认通用候选流程；1.4 入口标记为历史配方，不自动生成当前1.7或通用钱包移植。
+- `suite/multi-device/`：本地 GUI、固件/APK读取与兼容检查；保留 0.5 通用候选和历史 1.4 入口，0.6.0 增加独立的精确 1.7 原始材料模式。
 - `materials.lock.json`：私有二进制材料的相对路径、字节数及精确SHA256；不包含这些材料本身。
 - `tools/build_suite.py`：使用本地精确参考包和自行签名统一APK重建当前套件。
-- 其余历史packager及fixture保留作回归参考；通用候选使用桌面工具入口，精确1.7重建使用 `tools/build_suite.py` 并自备私有材料。
+- `tools/recipe_materials.py`、`recipes/`：精确 1.7 原始材料检查/构建及公开配方；只解析所选组件与依赖，调用者提供固件/APK及当前统一插件。
+- 其余历史packager及fixture保留作回归参考；私有参考包重建仍是独立开发路线，不能替代原始材料模式的输入及构建证据。
 
 ## 不包含什么
 
@@ -36,15 +39,15 @@ python3 tools/check_public_tree.py
 python3 tools/run_tests.py
 ```
 
-插件签名方式见[suite/unified-api102/README.md](suite/unified-api102/README.md)，套件重建见[docs/BUILD_SUITE.md](docs/BUILD_SUITE.md)。本地构建产物默认属于私有材料，不自动上传或安装手机。
+插件签名方式见[suite/unified-api102/README.md](suite/unified-api102/README.md)，公开原始材料路线见[docs/FULL_RECIPE.md](docs/FULL_RECIPE.md)，保留的私有参考包开发路线见[docs/BUILD_SUITE.md](docs/BUILD_SUITE.md)。新插件仍为 versionCode 17，但新手机预设依赖支持 `preset.sh capabilities` 的新 parent；旧 parent 缺少能力命令会提示升级并阻止应用。本地构建产物不自动上传或安装手机。
 
 **自行签名APK无法直接覆盖此前私人签名的同包名插件。** 仓库不提供旧私钥，也不承诺重现旧APK哈希。签名、APK哈希与CLI校验必须成套生成；原已部署手机的升级需要原签名和重新验证，不要为绕过签名直接卸载旧插件或清数据。
 
-## 私有 1.7 手机端参考安装流程
+## 1.7 手机端安装与参考验证边界
 
-以下属于精确参考套件，不是默认通用候选的功能或安装承诺。通用候选的 KernelSU/OverlayFS 门禁、整组恢复和 OTA 前停用要求见[使用教程](docs/USER_GUIDE.md#7-候选安装与恢复边界)。
+以下为精确 1.7 路线的手机端步骤，不是默认通用候选的功能或安装承诺。电脑组件勾选仅决定 ZIP 内容，不在手机自动安装组件。通用候选的 KernelSU/OverlayFS 门禁、整组恢复和 OTA 前停用要求见[使用教程](docs/USER_GUIDE.md#7-候选安装与恢复边界)。
 
-仅对已重新核对的精确系统：准备Root、Zygisk、支持modern API102的LSPosed及已启用并重启生效的OverlayFS MetaModule1.3.1；安装私有构建的匹配套件，重启后启用唯一统一插件，在组件配置中勾选并应用，按依赖、作用域与重启提示分批完成。
+仅对已重新核对的精确系统：准备Root、Zygisk、支持modern API102的LSPosed及已启用并重启生效的OverlayFS MetaModule1.3.1；用户另行决定安装匹配 parent，由 parent 安装统一插件，手动重启后启用插件并核对/授权作用域，在手机组件配置中检查、勾选并应用，按依赖、分批与重启提示完成。只读能力 CSV 仅限制本包组件配置页的预设选择与安装，未打包项在该页不可选，包内默认选择仍不含钱包；检查只在内存中过滤选择，不清除旧偏好。省略组件不卸载已有组件，也不自动关闭其他页面的既有兼容开关或 hook；如需停用，须单独关闭相应兼容或恢复组件。
 
 钱包默认不选。首次匹配EEA TSM迁移必须单次明确确认，会清旧小米TSM本地数据并可能使UID关联密钥/旧卡失效；私人备份不能保证恢复密钥。已有精确CN TSM重装不重复清除。取消勾选只跳过安装，钱包反向共享UID迁移不作为普通无损恢复。不要操作支付、卡片或报警接口来冒充安装验证。
 
