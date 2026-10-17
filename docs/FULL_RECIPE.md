@@ -1,10 +1,10 @@
 # 小米 15 Ultra · OS4.0.0.6 完整 1.7 原始材料路线
 
-本文对应电脑工具 **0.6.0 prerelease**，tag 为 `tool-v0.6.0`。它用公开源码和用户自己的固件/APK 材料，生成包含所选组件的本地 1.7 parent ZIP，**不需要私有 1.7 参考 ZIP**。「完整」指精确 1.7 配方能力；仍可只打包部分组件，不代表所有功能已实机验收。
+本文对应电脑工具 **0.7.0 prerelease**，tag 为 `tool-v0.7.0`。它用公开源码和用户自己的固件/APK 材料生成本地 1.7 parent ZIP，**不需要私有 1.7 参考 ZIP**。新版方案在用户另行刷入 ZIP 时部署电脑勾选的组件，保留数据和独立恢复；特殊的电话续装及首次钱包迁移见第 6 节。「完整」指精确配方能力，不表示全部功能已实机验收。
 
 只支持小米 15 Ultra `xuanyuan`、EEA **`OS4.0.0.6.XOAEUXM`**、Android 17 / API 37 / `arm64-v8a`，配合同机型 CN **`OS4.0.0.6.XOACNXM`** 原始材料及配方锁定的额外 APK。不同 ROM、机型或同版本号但 SHA256 不符的材料不能替代。该路线不是通用移植器。
 
-电脑端只读取材料、编译和生成文件，不连接手机，不调用 ADB，不安装、启用、重启或重置手机。生成成功也不证明电话、云端 AI、通知、报警定位、支付或门卡可用。原始材料全量构建、macOS GUI 与主机回归结果见[验证与复用记录](FULL_RECIPE_VALIDATION.md)。
+电脑端只读取材料、编译和生成文件，不连接手机，不调用 ADB，不安装、启用、重启或重置手机。自动部署仅由用户另行刷入生成的 parent 触发，不发生在电脑生成阶段。0.7.0 的原始材料、整包与 GUI 生成及主机执行验证见 [AUTOINSTALL_VALIDATION.md](AUTOINSTALL_VALIDATION.md)；0.6.0 的[材料与生成记录](FULL_RECIPE_VALIDATION.md)不能作为新版自动部署证明。生成成功也不证明电话、云端 AI、通知、报警定位、支付或门卡可用。
 
 ## 1. 准备环境和材料
 
@@ -55,7 +55,9 @@ python3 suite/multi-device/suite_builder.py extract "/local/materials/xuanyuan-c
 
 ### 当前材料验证范围
 
-已从现有原始材料匹配 214/214 项，并完成全量 ZIP 和实际 GUI 部分包生成。完整记录见 [FULL_RECIPE_VALIDATION.md](FULL_RECIPE_VALIDATION.md)。本轮没有重新解包全量 OTA，也没有操作手机。CN 固件之外仍需配方锁定的更新 APK 和 EEA 恢复 APK，按缺项清单补齐。
+0.6.0 已从现有原始材料匹配 214/214 项，并完成全量 ZIP 和实际 GUI 部分包生成，记录见 [FULL_RECIPE_VALIDATION.md](FULL_RECIPE_VALIDATION.md)。该证据不覆盖 0.7.0 新增的刷入部署或重启续装。本轮没有重新解包全量 OTA，也不操作手机。CN 固件之外仍需配方锁定的更新 APK 和 EEA 恢复 APK，按缺项清单补齐。
+
+0.7.0 已核对当前 APK 构建证据及 214/214 原始材料，生成全 11 项包 **1,101,469,378 字节**，并通过父子校验和、52 份 shell 及最终安装脚本核对；没有使用私有参考 ZIP。实际 GUI 生成商店/智能助理包 **68,561,763 字节**，固定自动部署计划正确。详细证据和未验证的设备范围见 [AUTOINSTALL_VALIDATION.md](AUTOINSTALL_VALIDATION.md)。
 
 ## 2. 显式准备依赖
 
@@ -125,7 +127,7 @@ PY
 2. 选择精确 EEA 目标目录，导入精确 CN 来源目录及额外 APK。若输入完整 OTA，先明确执行对应的解包操作。
 3. 选择自己的当前统一 APK 和配套证据；或使用「本地构建统一插件…」。缺依赖时自行离线准备，或显式点击「联网准备依赖」。
 4. 分析材料。下列 11 行初始全部不选，按需勾选；`phone` 自动补齐 `market`，`xiaoai` 自动补齐 `assistant`。钱包只能单独手动勾选，不由批量全选加入。
-5. 点「检查兼容性」，处理所有材料与证据阻断/缺项后，点「生成1.7精选整合包…」，生成到源码目录外、尚不存在的新 ZIP。更改材料、插件或选择后重新检查，生成仍重读材料。
+5. 点「检查兼容性」，处理所有材料与证据阻断/缺项后，生成到源码目录外、尚不存在的新 ZIP。电脑选择同时确定生成包的部署计划：用户日后刷入时安装满足 guard 的所选组件。更改材料、插件或选择后重新检查，生成仍重读材料。实际 GUI 选择 market/assistant 已生成正确的自动部署计划，验证范围见 [AUTOINSTALL_VALIDATION.md](AUTOINSTALL_VALIDATION.md)。
 
 | ID | 组件 |
 | --- | --- |
@@ -172,17 +174,27 @@ python3 tools/recipe_materials.py build \
 
 ## 6. 手机安装与钱包边界
 
-生成的 parent 保留 1.7 WebUI、各 Root 组件独立恢复入口及统一 API102 功能；catalog 与能力列表只包含所选组件及依赖。电脑勾选只决定 ZIP 内容，**不触发手机组件自动安装**。后续手机操作由用户另行明确执行：
+以下为 0.7.0 已通过核心 host 执行验证的部署契约，证据状态见 [AUTOINSTALL_VALIDATION.md](AUTOINSTALL_VALIDATION.md)。生成包保留 1.7 WebUI、各 Root 组件独立恢复入口与统一 API102 功能；catalog、能力列表及部署计划只覆盖电脑选定的组件和依赖。**电脑生成文件不操作手机；用户另行刷入 parent 才启动部署。**
 
-1. 在重新核对精确 ROM、Root、Zygisk、modern API102 LSPosed，以及已启用并重启生效的 OverlayFS MetaModule 1.3.1 等门禁后，决定是否安装新 parent。parent 安装统一插件，不自动完成所选 Root 组件安装。
-2. 手动重启，启用统一插件，并在 LSPosed 核对/授权作用域。
-3. 打开手机组件预设，检查、选择并手动应用；按 1.7 的依赖、分批安装与重启提示完成。只读能力 CSV 仅筛选本包组件配置页的组件与兼容预设选项，未打包项在该页不可选；该页默认选择包内钱包以外的组件和可用兼容，已有预设选择在内存中仅保留包内允许项。
+1. 用户先核对精确 ROM、Root、Zygisk、modern API102 LSPosed、已启用并重启生效的 OverlayFS MetaModule 1.3.1，以及原有 APK/签名/哈希、用户及版本等 guard。安装不绕过这些门禁，不通过清应用数据或凭据来解决检查失败。
+2. 刷入 parent 时安装统一插件，并同步安装电脑勾选且当前满足 guard 的组件。若电话依赖的商店需要先完成一次重启，先安装商店和其他当前可用的所选项，将电话留在该次固定部署计划中。
+3. 用户**手动重启**后，有 pending 的 parent service 最多等待 `sys.boot_completed` 120 秒，再调用 `install-selected.sh resume`，仍由 resume 核对记录和 guard，仅针对该次固定计划续装电话；没有 pending 时只执行原有 reconcile。等待结束不等于真实启动行为已获设备验证。电话续装完成后还需再手动重启一次，使新挂载生效；首次从零部署可能需要两次手动重启。不自动重启，不建立持续重试的安装循环。
+4. 被选项所需依赖未准备、guard 未通过或安装失败时停止并留日志，不自动反复重试。续装前发现手动 controller 任务已改变记录时，取消尚未完成的续装队列，避免稍后覆盖手动安装或恢复意图。helper 非零退出清 pending/ok 并持久记录失败；customize 会提示自动部署失败并保留 parent 供恢复，不 abort 父包安装。**父包安装成功不等于自动部署成功。**
+5. Root 组件部署不写 `compat` 偏好，不代为启用 LSPosed 插件或授权作用域。用户仍须在 LSPosed 中启用统一插件并核对/授权作用域，按需在手机组件配置或兼容设置中明确应用配置。已安装不等于兼容开关已开启或业务功能可用。
+
+原有数据和逐组件恢复入口保留；恢复仍遵循组件依赖和现有 guard，不能把逐项恢复理解为钱包、共享 UID 或密钥迁移的无损逆转。需要中断续装时，先按日志核对已完成项及待处理项，不能把停止当作整组回滚。
+
+安装后须读取 parent 目录 `M/install-selected.result` 的 `state/selected/wallet/job`，有 job 时查看其日志。`M/install-selected.pending` 为包指纹、刷入 boot、上次 job、`phone` 四行记录；`M/install-selected.ok` 仅表示所选项部署完成且没有首次 EEA 钱包待确认。文件状态及失败含义见 [AUTOINSTALL_VALIDATION.md](AUTOINSTALL_VALIDATION.md#部署结果与恢复)。native KernelSU、真实 boot 续装及数据保留仍无本轮设备证明。
+
+手机组件配置页仍通过只读能力 CSV 筛选包内组件与兼容预设选项，未打包项在该页不可选；该页默认选择包内钱包以外的组件和可用兼容，已有预设选择仅在内存中过滤。此默认值与电脑固定部署计划分别处理，不能把手机预设默认值当成续装指令。
 
 capabilities 只限制本包的组件配置与安装，不是运行时 hook 门禁。省略某项不会卸载手机上已有的组件，也不会自动清除旧偏好或关闭其他页面的既有兼容开关。`UnifiedModule` 仍遵循已保存的 `compat` 配置，`SettingsActivity` 的独立开关仍可控制兼容；不能据此保证未打包项不运行。如需停用，须单独关闭相应兼容或恢复组件。
 
 能力数据缺失、无效或依赖不完整时，组件配置页禁止应用及恢复默认，并提示检查 Root、完整性或升级 parent。新 parent 与新源码编译的插件必须配套。
 
-钱包只有明确选择时才带 payload；桌面端始终不创建钱包 reset 授权标记。即使 ZIP 包含钱包，手机新配置也不会默认选中。用户先前保存的钱包选择可在包内沿用，但首次 EEA TSM 迁移仍要求手机端独立、仅限一次安装任务的确认；该确认可能清除旧 TSM 数据及 UID 绑定密钥，旧卡可能失效。已有精确 CN TSM 就绪时不重复清除。普通 Root 恢复不能承诺无损逆转共享 UID 或恢复密钥。
+钱包只有明确选择时才带 payload，批量全选不加入；桌面生成、刷入自动部署及电话续装都不创建首次 EEA 钱包 reset 授权。首次 EEA→CN TSM 迁移须延后到手机「组件配置」，由用户单独选择并作仅限一次安装任务的明确确认；不能把电脑勾选或重启当作确认。手机新配置仍默认不选钱包，先前保存的包内选择可沿用，但不会绕过本次确认。该迁移可能清除旧 TSM 数据及 UID 绑定密钥，旧卡可能失效。
+
+若已有精确 CN TSM 就绪，明确选入的钱包可按原有 guard 自动安装，不重复清除数据或密钥；未知身份或不满足条件时停止，不改为自动 reset。保留普通 Root 恢复入口不保证能恢复卡片或凭据。
 
 全局 XMSF 保持不变，不加入统一插件作用域。MiPush 路由/应用选择不自动开启；隐私协议、卡片、支付和真实业务验证需分别处理。本次文档与电脑构建工作不安排任何手机操作。
 
@@ -192,4 +204,4 @@ capabilities 只限制本包的组件配置与安装，不是运行时 hook 门�
 - 标注「历史配方」的 1.4/精选入口仍要求精确旧材料，不用任意固件代替。
 - `tools/build_suite.py` 与 [BUILD_SUITE.md](BUILD_SUITE.md) 保留作持有精确私有参考 ZIP 的开发路线。本文原始材料路线无需该 ZIP；不要把两条路线的输入、证据或安装兼容性混用。
 
-公开产物仅为 **`XiaomiLocalSuite-Tool-0.6.0.zip`** 源码包；不携带 OEM APK/库/DEX、第三方 AAR/JAR、SDK、签名密钥或本地生成的手机安装 ZIP。发布和验证边界见 [RELEASE_TOOL.md](RELEASE_TOOL.md)。
+公开产物仅为 **`XiaomiLocalSuite-Tool-0.7.0.zip`** 源码包；不携带 OEM APK/库/DEX、第三方 AAR/JAR、SDK、签名密钥或本地生成的手机安装 ZIP。发布和验证边界见 [RELEASE_TOOL.md](RELEASE_TOOL.md)。

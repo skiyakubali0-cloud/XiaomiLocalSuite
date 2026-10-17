@@ -185,7 +185,8 @@ class AssembleTests(unittest.TestCase):
         self.assertEqual(report["available_features"], ["phone"])
         self.assertEqual(report["sha256"], b.digest(self.output))
         self.assertEqual(report["bytes"], self.output.stat().st_size)
-        self.assertFalse(report["auto_install_components"])
+        self.assertTrue(report["auto_install_components"])
+        self.assertEqual(report["wallet_first_migration"], "phone-confirmation-only")
         self.assertFalse(report["device_tested"])
         self.assertTrue(report["clean_install_only"])
         with zipfile.ZipFile(self.output) as archive:
@@ -273,7 +274,11 @@ class AssembleTests(unittest.TestCase):
         with zipfile.ZipFile(self.output) as archive:
             self.verify(archive, a.IDS)
             self.assertEqual(archive.read("wallet.sh"), (self.source / "suite/module/wallet.sh").read_bytes())
-            self.assertEqual(archive.read("service.sh"), (self.source / "suite/module/service.sh").read_bytes())
+            helper = archive.read("install-selected.sh").decode()
+            self.assertIn("AUTO_IDS='" + ",".join(a.IDS) + "'", helper)
+            self.assertNotIn('@SELECTED_IDS@', helper)
+            self.assertIn('sh "$M/install-selected.sh" resume', archive.read("service.sh").decode())
+            self.assertIn('sh "$MODPATH/install-selected.sh" flash', archive.read("customize.sh").decode())
             self.assertEqual(archive.read("owned-packages.txt"), (self.source / "suite/module/owned-packages.txt").read_bytes())
             control = archive.read("control.sh").decode()
             before = (self.source / "suite/module/control.sh").read_text()

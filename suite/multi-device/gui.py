@@ -18,7 +18,7 @@ import suite_builder as builder
 from gui_session import Session
 
 HERE = Path(__file__).resolve().parent
-GUI_VERSION = '0.6.0'
+GUI_VERSION = '0.7.0'
 REVIEWED = HERE / 'profiles/xuanyuan-eea-os4.0.0.6.json'
 KNOWN_TITLE = '历史配方 · 小米15 Ultra（需自备完整1.4）'
 NEW_TITLE = '其他机型 · 从目标固件识别'
@@ -341,7 +341,7 @@ class App:
         report = getattr(self.session, 'report', None)
         ready = report and report.get('state') in ('reviewed-recipe', 'reviewed-components', 'candidate-static-pass', 'reviewed-raw-materials')
         self.build_button.state(['!disabled'] if ready else ['disabled'])
-        self.build_button.configure(text='生成1.7精选整合包…' if self.full_recipe else '生成自动安装整合包…' if self.selected_suite else '导出1.4完整包…' if self.reviewed else '生成候选ZIP…')
+        self.build_button.configure(text='生成1.7自动安装包…' if self.full_recipe else '生成自动安装整合包…' if self.selected_suite else '导出1.4完整包…' if self.reviewed else '生成候选ZIP…')
         self.report_button.state(['!disabled'] if report else ['disabled'])
 
     def _show(self, text):
@@ -536,7 +536,7 @@ class App:
                      '候选模块在OTA前必须先停用并重启；不会自动跨ROM适配。']
         elif state == 'reviewed-raw-materials':
             lines = ['1.7所选组件的精确材料与统一插件构建记录检查通过。',
-                     '生成包保留API102适配和组件恢复入口；无需私有参考ZIP，不自动安装手机。',
+                     '生成包刷入时自动部署所选组件；电话若等待商店生效，会在手动重启后自动续装。电脑不连接手机。',
                      '未打包项不会由本包预设安装；已安装组件及其他页面的既有兼容开关保留，停用需单独关闭或恢复。',
                      '钱包只在勾选时打包，首次迁移仍需手机上单独确认。']
         else:
@@ -568,7 +568,7 @@ class App:
     def _built(self, result):
         self._show('生成完成：{}\n大小：{:,}字节\nSHA256：{}\n\n{}\n钱包保持单独验证，不自动重置。'.format(
             self.last_output or result.get('output'), result.get('bytes', 0), result.get('sha256'),
-            '精确1.7适配精选包；安装后在手机启用统一LSP插件，再按配套提示应用所选组件。未安装手机，不自动重置钱包。' if self.full_recipe else '刷入时同步安装所选组件；不含钱包；本轮未安装手机，保留原API102插件与独立恢复。' if self.selected_suite else '完整1.4仍使用原API102统一插件。' if self.reviewed else '这是待实机验证的候选包，不会自动安装到手机。'))
+            '刷入时自动部署电脑所选组件；电话依赖商店时，手动重启后自动续装。保留数据与逐项恢复；LSPosed及兼容开关仍需配置。首次钱包TSM迁移须单独确认。本轮未安装手机。' if self.full_recipe else '刷入时同步安装所选组件；不含钱包；本轮未安装手机，保留原API102插件与独立恢复。' if self.selected_suite else '完整1.4仍使用原API102统一插件。' if self.reviewed else '这是待实机验证的候选包，不会自动安装到手机。'))
         self.status.set('安装包已生成，保存位置以刚才选择的路径为准')
 
     def open_profile(self):

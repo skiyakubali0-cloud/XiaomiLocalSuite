@@ -107,6 +107,34 @@ def limit_capabilities(parent, chosen):
     return {"available_ids": list(chosen), "available_features": features}
 
 
+def install_during_flash(parent, chosen):
+    helper = parent / "install-selected.sh"
+    b.edit(helper, r"^AUTO_IDS='@SELECTED_IDS@'$", lambda _: "AUTO_IDS='" + ",".join(chosen) + "'")
+    # Re-enable inside the existing worker lock, before a manual restore can start.
+    b.edit(parent / "control.sh", r'^(  if \[ "\$ID" = wallet \]; then wallet_install; else "\$K" module install .*; fi)$',
+           lambda m: m[0] + '\n  if [ "${XLS_FLASH_WORKER:-0}" = 1 ] && [ -e "$MODULES/$MID/disable" ]; then "$K" module enable "$MID"; fi')
+    b.edit(parent / "customize.sh", r"^set_perm_recursive ", lambda m:
+           'if ! AUTO_PAIRED_XIAOAI="$PAIR_XIAOAI" sh "$MODPATH/install-selected.sh" flash; then\n'
+           " ui_print '自动组件部署失败，已停止；父套件保留用于查看日志和逐项恢复，不能视为全部安装成功。'\nfi\n" + m[0])
+    b.edit(parent / "customize.sh", r"^ui_print '统一兼容与推送设置已安装；.*$", lambda _:
+           "ui_print '已执行电脑所选组件部署计划；核对上方结果，手动重启使挂载生效。'")
+    service = parent / "service.sh"
+    service.write_text('''#!/system/bin/sh
+M=${0%/*}
+if [ -f "$M/install-selected.pending" ]; then
+ # Only the one explicit flash plan may continue, after a user-initiated boot.
+ COUNT=0
+ while [ "$(getprop sys.boot_completed)" != 1 ] && [ "$COUNT" -lt 60 ]; do
+  sleep 2
+  COUNT=$((COUNT + 1))
+ done
+ sh "$M/install-selected.sh" resume
+else
+ sh "$M/control.sh" reconcile
+fi
+''', encoding="utf-8")
+
+
 def assemble(source_root, resolved_dir, unified_apk, selected_ids, output, apk_checker=b.check_apk):
     """No reference ZIP required. Resolved files live under COMPONENT/LOCK_PATH.
 
@@ -157,6 +185,7 @@ def assemble(source_root, resolved_dir, unified_apk, selected_ids, output, apk_c
             shutil.rmtree(child)
         trim_catalog(parent, chosen)
         capabilities = limit_capabilities(parent, chosen)
+        install_during_flash(parent, chosen)
         # The existing WebUI renders only catalog.json rows and checks their dependency closure.
         b.checksums(parent, "control.sha256", [p for p in b.files(parent)
                     if p.relative_to(parent).parts[0] != "payload" and p.name != "customize.sh"])
@@ -175,4 +204,6 @@ def assemble(source_root, resolved_dir, unified_apk, selected_ids, output, apk_c
     return {"output": str(output.resolve()), "sha256": sha, "bytes": size,
             "selected": list(chosen), "wallet_reset": False,
             **capabilities, "unified_always_included": True, "clean_install_only": True,
-            "device_tested": False, "auto_install_components": False}
+            "device_tested": False, "auto_install_components": True,
+            "install_policy": "during-flash-with-phone-continuation",
+            "wallet_first_migration": "phone-confirmation-only"}

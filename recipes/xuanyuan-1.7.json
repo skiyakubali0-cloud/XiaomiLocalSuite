@@ -4,6 +4,7 @@
   "target": {"device": "xuanyuan", "sdk": 37, "incremental": "OS4.0.0.6.XOAEUXM", "abis": ["arm64-v8a"]},
   "source_roms": ["OS4.0.0.6.XOACNXM", "OS4.0.0.6.XOAEUXM"],
   "wallet_policy": "explicit-phone-confirmation-only",
+  "install_policy": "during-flash-with-phone-continuation",
   "components": [
     {"id": "market", "title": "小米应用商店"},
     {"id": "assistant", "title": "智能助理负一屏"},

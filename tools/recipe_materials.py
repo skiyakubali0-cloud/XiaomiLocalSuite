@@ -227,6 +227,7 @@ def check(target, sources, ids, unified_apk, source=ROOT, *, generator=None, apk
     return dict(state='blocked' if resolved['missing'] or errors else 'reviewed-raw-materials', mode='xuanyuan-1.7',
                 target=resolved['target'], selected=resolved['selected'], components=rows,
                 missing=resolved['missing'], unified_sha256=plugin_sha, wallet_reset=False,
+                auto_install_components=True, install_policy=recipe(source)['install_policy'],
                 private_reference_required=False, device_tested=False, warnings=resolved['warnings'], errors=errors)
 
 

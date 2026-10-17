@@ -86,7 +86,7 @@ class PackageTests(unittest.TestCase):
                 self.assertLess(info.extract_version, 45)
                 self.assertEqual(info.extra, b'')
             self.assertEqual(archive.getinfo(p.TITLE + '/launchers/linux.sh').external_attr >> 16, 0o100755)
-        self.assertEqual(p.verify(first), {'softwarecommit': self.head, 'buildversion': '0.6.0'})
+        self.assertEqual(p.verify(first), {'softwarecommit': self.head, 'buildversion': '0.7.0'})
 
     def test_allowlist_excludes_even_tracked_outputs_deps_private_and_oem(self):
         banned = ['.env', '.github/token.txt', 'materials/stock.apk', 'releases/previous.zip',
@@ -140,7 +140,23 @@ class PackageTests(unittest.TestCase):
                     self.assertEqual(actual, raw)
                     if name.endswith('.json'):
                         self.assertEqual(json.loads(actual), json.loads(raw))
-        self.assertEqual(p.verify(output)['buildversion'], '0.6.0')
+        self.assertEqual(p.verify(output)['buildversion'], '0.7.0')
+
+    def test_autoinstall_script_and_validation_doc_are_required_and_packaged(self):
+        names = {'suite/module/install-selected.sh', 'docs/AUTOINSTALL_VALIDATION.md'}
+        self.assertTrue(names <= p.REQUIRED_FILES)
+        # setUp creates safe placeholders only in this disposable fixture repository.
+        with zipfile.ZipFile(self.build()) as archive:
+            for name in sorted(names):
+                self.assertEqual(archive.read(p.TITLE + '/' + name), b'# Synthetic public source\n')
+        for name in sorted(names):
+            with self.subTest(name=name):
+                (self.repo / name).unlink()
+                self.commit()
+                with self.assertRaisesRegex(ValueError, 'Incomplete tool source'):
+                    self.build('missing-' + Path(name).name + '.zip')
+                self.write(name, '# Synthetic public source\n')
+                self.commit()
 
     def test_explicit_old_ref_uses_original_commit(self):
         self.write('README.md', 'Later source\n')
@@ -216,7 +232,8 @@ class PackageTests(unittest.TestCase):
         for name in ('launch.py', 'suite/multi-device/environment.py', 'docs/USER_GUIDE.md',
                      'recipes/xuanyuan-1.7.json', 'recipes/generated.json', 'recipes/apk-materials.json',
                      'native/assistant/assistant-route.S', 'tools/recipe_generated.py',
-                     'suite/multi-device/plugin_builder.py', 'docs/FULL_RECIPE.md'):
+                     'suite/multi-device/plugin_builder.py', 'docs/FULL_RECIPE.md',
+                     'suite/module/install-selected.sh', 'docs/AUTOINSTALL_VALIDATION.md'):
             with self.subTest(name=name):
                 output = self.build(name.replace('/', '-') + '.zip')
 
